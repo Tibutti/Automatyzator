@@ -29,11 +29,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup session middleware
   app.use(
     session({
-      secret: randomBytes(32).toString("hex"),
+      secret: "automatyzator-admin-panel-secret", // Stały sekret dla rozwoju
       resave: false,
       saveUninitialized: false,
       cookie: {
-        secure: process.env.NODE_ENV === "production",
+        secure: false, // Ustawione na false dla rozwoju
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       },
