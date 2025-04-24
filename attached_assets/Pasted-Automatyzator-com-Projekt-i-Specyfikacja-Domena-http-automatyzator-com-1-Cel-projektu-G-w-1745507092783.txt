@@ -1,0 +1,172 @@
+Automatyzator.com – Projekt i Specyfikacja
+
+Domena: http://automatyzator.com/
+
+1. Cel projektu
+
+Główny cel: Pozyskanie klientów B2B i prywatnych poprzez ofertę usług automatyzacji i edukację.
+
+Dodatkowe cele: Sprzedaż gotowych szablonów, budowa eksperckiego wizerunku przez blog i materiały edukacyjne.
+
+Odbiorcy: Małe i duże firmy, e‑commerce, startupy technologiczne, działy marketingu, deweloperzy.
+
+2. Architektura strony (One Page + 5 Podstron)
+
+Struktura nawigacji
+
+Home (Strona główna)
+
+Blog
+
+Sklep (Templates)
+
+Portfolio / Case Studies
+
+Kontakt
+
+Globalnie:
+
+Chat Widget (LLM) w prawym dolnym rogu
+
+Przełącznik motywu (jasny/ciemny) w nagłówku
+
+2.1 Home (Strona główna)
+
+Hero:
+
+Nagłówek: „Automatyzuj. Integruj. Skaluj.”
+
+Podtytuł: „Zbuduj przewagę rynkową dzięki botom i zautomatyzowanym przepływom pracy.”
+
+CTA: [Rozpocznij projekt] [Zobacz demo Chatbota]
+
+Usługi: ikony dla Make.com, n8n, Zapier, botów, agentów LLM
+
+Dlaczego my: 4 wyróżniki (szybkie wdrożenia, wsparcie 24/7, gotowe szablony, bez kodu)
+
+Portfolio (preview): karuzela 3 mini-case studies
+
+Szablony (preview): 3 kafelki: Automatyzacja sprzedaży, Integracja CRM, Discord Bot
+
+Blog (preview): ostatnie 3 wpisy + link do bloga
+
+Footer: social media, linki, newsletter signup
+
+2.2 Blog
+
+Lista artykułów z CMS
+
+Filtr kategoriami (n8n, Make, Zapier, boty, agenty)
+
+Zakładki z najpopularniejszymi wpisami
+
+2.3 Sklep (Templates)
+
+Siatka produktów (tytuł, opis, cena)
+
+Dedykowany modal/podstrona produktu
+
+Stripe Checkout + automatyczne wysyłanie linku
+
+2.4 Portfolio / Case Studies
+
+Pełne opisy projektów (logo klienta, przed/po, narzędzia, ROI)
+
+CTA „Poproś o ofertę”
+
+2.5 Kontakt
+
+Formularz (imię, e‑mail, firma, potrzeby)
+
+Dane kontaktowe (e-mail, telefon, LinkedIn)
+
+Newsletter signup
+
+3. Brand & Visual Identity
+
+Logo: stylizowana litera „A” z motywem koła zębatego/piksela
+
+Paleta kolorów:
+
+Primary: Electric Blue #00AEEF
+
+Accent: Neon Green #39FF14
+
+Neutral jasny: Snow #FFFFFF
+
+Neutral ciemny: Charcoal #1F1F1F
+
+Typografia:
+
+Nagłówki: Montserrat Bold
+
+Tekst: Inter Regular
+
+CTA: Inter Semi-Bold
+
+Styl: minimalistyczny + odważne akcenty, nowoczesna typografia
+
+4. Tech Stack & Architektura
+
+project-root/
+├── frontend/                  # Next.js + TypeScript + Tailwind CSS
+│   ├── components/            # Atomowe i molekułowe komponenty
+│   ├── pages/                 # Strony: index.tsx, blog.tsx, shop.tsx, portfolio.tsx, contact.tsx
+│   ├── styles/                # global.css, variables.css
+│   └── lib/                   # Helpery, klienci API
+│
+├── backend/                   # API Routes w Next.js (Node.js/TS)
+│   ├── prisma/                # schema.prisma + migracje (PostgreSQL)
+│   ├── api/                   # /api/posts, /api/products, /api/contact, /api/chat
+│   └── auth/                  # NextAuth.js config (email + OAuth)
+│
+├── cms/                       # Strapi lub Sanity (headless-CMS)
+│   ├── schemas/               # Kolekcje: Posts, Products, Cases, Settings
+│   └── plugins/               # Media library, newsletter plugin
+│
+├── infra/                     # IaC (opcjonalnie): Terraform/PM2
+├── .github/workflows/         # CI/CD: testy, lint, deploy na Vercel
+└── package.json
+
+Frontend: Next.js (SSG/SSR/ISR) + Tailwind CSS
+
+Backend: Next.js API Routes + Prisma + PostgreSQL (Supabase/Neon)
+
+CMS: Strapi lub Sanity (hostowane)
+
+Auth: NextAuth.js (e-mail, Google, LinkedIn)
+
+Chatbot: endpoint /api/chat → OpenAI GPT-4
+
+Płatności: Stripe Checkout + Webhooks
+
+Hosting: Vercel (frontend + API), CMS w chmurze
+
+CI/CD: GitHub Actions → deploy na push do main
+
+5. Przykładowa Treść Hero
+
+Nagłówek:
+Automatyzuj. Integruj. Skaluj.
+
+Podtytuł:
+Zbuduj przewagę rynkową dzięki botom i zautomatyzowanym przepływom pracy.
+
+CTA: [Rozpocznij projekt] [Zobacz demo Chatbota]
+
+6. Kolejne Kroki
+
+Przygotować wireframe/mockup (Figma, Codepen lub Replit).
+
+Zainicjować projekt Next.js + Tailwind + TypeScript.
+
+Skonfigurować headless CMS (Strapi/Sanity) i zdefiniować schematy.
+
+Zaimplementować kluczowe komponenty (Navbar, Hero, Services, BlogList, ProductCard, ChatWidget).
+
+Dodać integracje: NextAuth.js, Stripe, OpenAI API.
+
+Uruchomić CI/CD (GitHub Actions → Vercel).
+
+Dokument przygotowany jako punkt wyjścia do implementacji w CURSOR / Replit.
+
