@@ -1,125 +1,116 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useAuth } from "@/lib/auth-context";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
-
-const loginSchema = z.object({
-  username: z.string().min(1, "Nazwa użytkownika jest wymagana"),
-  password: z.string().min(1, "Hasło jest wymagane"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function AdminLogin() {
   const [location, navigate] = useLocation();
   const { login, isLoading } = useAuth();
-  const [loginError, setLoginError] = useState(false);
+  const { toast } = useToast();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (data: LoginFormValues) => {
-    setLoginError(false);
-    const success = await login(data.username, data.password);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!username || !password) {
+      toast({
+        title: "Błąd logowania",
+        description: "Wprowadź nazwę użytkownika i hasło",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const success = await login(username, password);
     
     if (success) {
+      toast({
+        title: "Zalogowano pomyślnie",
+        description: "Witamy w panelu administracyjnym",
+      });
       navigate("/admin");
     } else {
-      setLoginError(true);
+      toast({
+        title: "Błąd logowania",
+        description: "Nieprawidłowa nazwa użytkownika lub hasło",
+        variant: "destructive",
+      });
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Panel Administratora</CardTitle>
-          <CardDescription className="text-center">
-            Zaloguj się, aby zarządzać treścią strony
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {loginError && (
-                <Alert variant="destructive">
-                  <AlertDescription>
-                    Nieprawidłowa nazwa użytkownika lub hasło
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nazwa użytkownika</FormLabel>
-                    <FormControl>
-                      <Input placeholder="admin" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hasło</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Logowanie...
-                  </>
-                ) : (
-                  "Zaloguj się"
-                )}
-              </Button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md p-4">
+        <Card>
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center">Panel administratora</CardTitle>
+            <CardDescription className="text-center">
+              Zaloguj się, aby zarządzać stroną
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="username">Nazwa użytkownika</Label>
+                  <Input
+                    id="username"
+                    placeholder="admin"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Hasło</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Logowanie...</>
+                  ) : (
+                    "Zaloguj się"
+                  )}
+                </Button>
+              </div>
             </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="text-center text-sm text-muted-foreground">
-          <span className="w-full">
-            Automatyzator.com - Panel administratora
-          </span>
-        </CardFooter>
-      </Card>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button 
+              variant="link" 
+              className="px-0"
+              onClick={() => navigate("/")}
+            >
+              Powrót do strony głównej
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          <p className="mb-2">Dane testowego konta administratora:</p>
+          <div className="bg-muted p-2 rounded-md inline-block text-left">
+            <p>Login: <strong>admin</strong></p>
+            <p>Hasło: <strong>admin123</strong></p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,17 +2,18 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
-import { 
-  LayoutDashboard, 
-  FileText, 
-  ShoppingBag, 
-  Briefcase, 
-  Mail, 
-  Users, 
-  LogOut 
+import { Separator } from "@/components/ui/separator";
+import {
+  LayoutDashboard,
+  FileText,
+  ShoppingBag,
+  Briefcase,
+  MessageSquare,
+  Mail,
+  LogOut,
+  Settings,
+  ChevronRight,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { ThemeToggle } from "../theme-toggle";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -22,101 +23,111 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const { logout } = useAuth();
   const [location] = useLocation();
 
-  const navItems = [
+  const menuItems = [
     {
-      label: "Dashboard",
-      href: "/admin",
+      title: "Panel główny",
       icon: <LayoutDashboard className="h-5 w-5" />,
+      href: "/admin",
     },
     {
-      label: "Blog",
-      href: "/admin/blog",
+      title: "Blog",
       icon: <FileText className="h-5 w-5" />,
+      href: "/admin/blog",
     },
     {
-      label: "Szablony",
-      href: "/admin/templates",
+      title: "Szablony",
       icon: <ShoppingBag className="h-5 w-5" />,
+      href: "/admin/templates",
     },
     {
-      label: "Case Studies",
-      href: "/admin/case-studies",
+      title: "Case studies",
       icon: <Briefcase className="h-5 w-5" />,
+      href: "/admin/case-studies",
     },
     {
-      label: "Wiadomości",
+      title: "Wiadomości",
+      icon: <MessageSquare className="h-5 w-5" />,
       href: "/admin/messages",
-      icon: <Mail className="h-5 w-5" />,
     },
     {
-      label: "Newsletter",
+      title: "Newsletter",
+      icon: <Mail className="h-5 w-5" />,
       href: "/admin/newsletter",
-      icon: <Users className="h-5 w-5" />,
+    },
+    {
+      title: "Ustawienia",
+      icon: <Settings className="h-5 w-5" />,
+      href: "/admin/settings",
     },
   ];
 
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/* Top navigation */}
-      <header className="bg-white dark:bg-gray-800 h-16 border-b border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between h-full px-4 sm:px-6">
-          <div className="flex items-center">
-            <Link to="/admin">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 relative">
-                  <div className="absolute inset-0 bg-primary rounded-lg flex items-center justify-center text-white font-montserrat font-bold text-xl">
-                    A
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent rounded-full"></div>
-                </div>
-                <span className="hidden md:block text-lg font-semibold dark:text-white">
-                  Admin Panel
-                </span>
-              </div>
-            </Link>
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Sidebar */}
+      <div className="hidden md:flex md:w-64 md:flex-col">
+        <div className="flex flex-col flex-grow pt-5 overflow-y-auto border-r bg-white dark:bg-gray-800 dark:border-gray-700">
+          <div className="flex items-center flex-shrink-0 px-4">
+            <h1 className="text-xl font-bold">Automatyzator</h1>
+            <span className="ml-2 px-2 py-1 text-xs rounded-md bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+              Admin
+            </span>
           </div>
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
+          <div className="mt-5 flex-grow flex flex-col">
+            <nav className="flex-1 px-2 pb-4 space-y-1">
+              {menuItems.map((item) => (
+                <Link 
+                  key={item.href} 
+                  href={item.href}
+                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                    location === item.href
+                      ? "bg-gray-100 text-blue-600 dark:bg-gray-700 dark:text-blue-400"
+                      : "text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  {item.icon}
+                  <span className="ml-3">{item.title}</span>
+                  {location === item.href && (
+                    <ChevronRight className="ml-auto h-4 w-4" />
+                  )}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          <div className="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
             <Button
-              variant="ghost"
-              size="sm"
-              onClick={logout}
-              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30"
+              variant="outline"
+              className="w-full justify-start text-gray-600 dark:text-gray-400"
+              onClick={handleLogout}
             >
-              <LogOut className="h-5 w-5 mr-2" />
-              <span className="hidden sm:inline">Wyloguj</span>
+              <LogOut className="mr-2 h-4 w-4" />
+              Wyloguj się
             </Button>
           </div>
         </div>
-      </header>
+      </div>
 
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <aside className="w-16 md:w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
-          <nav className="p-2 md:p-4 space-y-1">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <div className={cn(
-                  "flex items-center p-2 rounded-md transition-colors cursor-pointer",
-                  "hover:bg-gray-100 dark:hover:bg-gray-700",
-                  location === item.href 
-                    ? "bg-gray-100 dark:bg-gray-700 text-primary" 
-                    : "text-gray-700 dark:text-gray-300"
-                )}>
-                  <div className="flex items-center justify-center">
-                    {item.icon}
-                  </div>
-                  <span className="ml-3 hidden md:block">{item.label}</span>
-                </div>
-              </Link>
-            ))}
-          </nav>
-        </aside>
+      {/* Mobile header */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-800 border-b dark:border-gray-700 w-full">
+        <h1 className="text-xl font-bold flex items-center">
+          Automatyzator
+          <span className="ml-2 px-2 py-1 text-xs rounded-md bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+            Admin
+          </span>
+        </h1>
+        <Button variant="outline" onClick={handleLogout} size="sm">
+          <LogOut className="h-4 w-4" />
+        </Button>
+      </div>
 
-        {/* Main content */}
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
+      {/* Main content */}
+      <div className="flex flex-col flex-1">
+        <div className="py-6 px-4 sm:px-6 md:px-8 flex-1">
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );
