@@ -83,6 +83,19 @@ const apiSettingsSchema = z.object({
   supportedCurrencies: z.string(),
 });
 
+const interfaceSettingsSchema = z.object({
+  theme: z.enum(["light", "dark", "system"]),
+  accentColor: z.enum(["blue", "green", "purple", "orange", "pink"]),
+  sidebarCompact: z.boolean(),
+  itemsPerPage: z.number().min(5).max(100),
+  tableLayout: z.enum(["compact", "default", "spacious"]),
+  animations: z.boolean(),
+  showWelcomeMessage: z.boolean(),
+  customizeAdminHome: z.boolean(),
+  dashboardLayout: z.enum(["grid", "list", "cards"]),
+  useSystemFont: z.boolean(),
+});
+
 const languageSettingsSchema = z.object({
   defaultLanguage: z.enum(["pl", "en"]),
   enableEnglish: z.boolean(),
@@ -262,6 +275,22 @@ export default function SettingsPage() {
     },
   });
 
+  const interfaceForm = useForm<z.infer<typeof interfaceSettingsSchema>>({
+    resolver: zodResolver(interfaceSettingsSchema),
+    defaultValues: {
+      theme: "system",
+      accentColor: "blue",
+      sidebarCompact: false,
+      itemsPerPage: 20,
+      tableLayout: "default",
+      animations: true,
+      showWelcomeMessage: true,
+      customizeAdminHome: false,
+      dashboardLayout: "grid",
+      useSystemFont: false,
+    },
+  });
+
   const onAccountSubmit = (data: z.infer<typeof accountSettingsSchema>) => {
     toast({
       title: "Zaktualizowano ustawienia konta",
@@ -300,6 +329,13 @@ export default function SettingsPage() {
   const onBackupSubmit = (data: z.infer<typeof backupSettingsSchema>) => {
     toast({
       title: "Zaktualizowano ustawienia kopii zapasowej",
+      description: "Zmiany zostały zapisane.",
+    });
+  };
+
+  const onInterfaceSubmit = (data: z.infer<typeof interfaceSettingsSchema>) => {
+    toast({
+      title: "Zaktualizowano ustawienia interfejsu",
       description: "Zmiany zostały zapisane.",
     });
   };
@@ -1260,7 +1296,289 @@ export default function SettingsPage() {
                 </Card>
               )}
 
-              {(activeTab === "communications" || activeTab === "media" || activeTab === "interface") && (
+              {activeTab === "interface" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Ustawienia interfejsu</CardTitle>
+                    <CardDescription>
+                      Dostosuj wygląd i funkcjonalność panelu administracyjnego.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Form {...interfaceForm}>
+                      <form
+                        onSubmit={interfaceForm.handleSubmit(onInterfaceSubmit)}
+                        className="space-y-8"
+                      >
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-medium">Wygląd</h3>
+                          <FormField
+                            control={interfaceForm.control}
+                            name="theme"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Motyw panelu</FormLabel>
+                                <FormControl>
+                                  <select
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(e.target.value as "light" | "dark" | "system")}
+                                  >
+                                    <option value="light">Jasny</option>
+                                    <option value="dark">Ciemny</option>
+                                    <option value="system">Systemowy</option>
+                                  </select>
+                                </FormControl>
+                                <FormDescription>
+                                  Wybierz motyw kolorystyczny panelu administracyjnego.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="accentColor"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Kolor akcentu</FormLabel>
+                                <div className="flex flex-wrap gap-3">
+                                  {(["blue", "green", "purple", "orange", "pink"] as const).map((color) => (
+                                    <div key={color} className="flex items-center">
+                                      <button
+                                        type="button"
+                                        className={`w-8 h-8 rounded-full mr-2 ${
+                                          color === "blue" ? "bg-blue-600" :
+                                          color === "green" ? "bg-green-600" :
+                                          color === "purple" ? "bg-purple-600" :
+                                          color === "orange" ? "bg-orange-600" :
+                                          "bg-pink-600"
+                                        } ${field.value === color ? "ring-2 ring-ring ring-offset-2" : ""}`}
+                                        onClick={() => field.onChange(color)}
+                                        aria-label={`Kolor ${color}`}
+                                      />
+                                      <span className="capitalize">{color}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                                <FormDescription>
+                                  Wybierz kolor akcentu dla przycisków i elementów interaktywnych.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="useSystemFont"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                <div className="space-y-0.5">
+                                  <FormLabel className="text-base">
+                                    Używaj czcionki systemowej
+                                  </FormLabel>
+                                  <FormDescription>
+                                    Zamiast ładować własne czcionki, używaj czcionki systemowej urządzenia.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="animations"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                <div className="space-y-0.5">
+                                  <FormLabel className="text-base">
+                                    Animacje interfejsu
+                                  </FormLabel>
+                                  <FormDescription>
+                                    Włącz lub wyłącz animacje w interfejsie użytkownika.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-medium">Układ i nawigacja</h3>
+                          <FormField
+                            control={interfaceForm.control}
+                            name="sidebarCompact"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                <div className="space-y-0.5">
+                                  <FormLabel className="text-base">
+                                    Kompaktowy pasek boczny
+                                  </FormLabel>
+                                  <FormDescription>
+                                    Zmniejsza szerokość paska bocznego, pokazując tylko ikony.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="itemsPerPage"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Elementy na stronę</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    min="5"
+                                    max="100"
+                                    {...field}
+                                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  Liczba elementów wyświetlanych na jednej stronie list i tabel.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="tableLayout"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Styl tabel</FormLabel>
+                                <FormControl>
+                                  <select
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(e.target.value as "compact" | "default" | "spacious")}
+                                  >
+                                    <option value="compact">Kompaktowy</option>
+                                    <option value="default">Standardowy</option>
+                                    <option value="spacious">Przestronny</option>
+                                  </select>
+                                </FormControl>
+                                <FormDescription>
+                                  Wybierz gęstość i styl wyświetlania tabel w panelu.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-medium">Personalizacja pulpitu</h3>
+                          <FormField
+                            control={interfaceForm.control}
+                            name="showWelcomeMessage"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                <div className="space-y-0.5">
+                                  <FormLabel className="text-base">
+                                    Powitanie na pulpicie
+                                  </FormLabel>
+                                  <FormDescription>
+                                    Pokazuj wiadomość powitalną na stronie głównej panelu.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="customizeAdminHome"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                <div className="space-y-0.5">
+                                  <FormLabel className="text-base">
+                                    Personalizacja pulpitu
+                                  </FormLabel>
+                                  <FormDescription>
+                                    Pozwala na dostosowanie widżetów i układu strony głównej panelu.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={interfaceForm.control}
+                            name="dashboardLayout"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Układ pulpitu</FormLabel>
+                                <FormControl>
+                                  <select
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(e.target.value as "grid" | "list" | "cards")}
+                                  >
+                                    <option value="grid">Siatka</option>
+                                    <option value="list">Lista</option>
+                                    <option value="cards">Karty</option>
+                                  </select>
+                                </FormControl>
+                                <FormDescription>
+                                  Wybierz sposób prezentacji danych na pulpicie głównym.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        
+                        <div className="p-4 border rounded-lg bg-muted/50">
+                          <p className="text-sm text-muted-foreground mb-2">Podgląd motywu</p>
+                          <div className="flex gap-2 flex-wrap">
+                            <Button>Przycisk podstawowy</Button>
+                            <Button variant="secondary">Przycisk drugorzędny</Button>
+                            <Button variant="destructive">Przycisk usuwania</Button>
+                            <Button variant="outline">Przycisk konturowy</Button>
+                            <Button variant="ghost">Przycisk ghost</Button>
+                          </div>
+                        </div>
+                        
+                        <Button type="submit">
+                          <Save className="mr-2 h-4 w-4" /> Zapisz zmiany
+                        </Button>
+                      </form>
+                    </Form>
+                  </CardContent>
+                </Card>
+              )}
+              
+              {(activeTab === "communications" || activeTab === "media") && (
                 <Card>
                   <CardHeader>
                     <CardTitle>{settingsSections.find(s => s.id === activeTab)?.title}</CardTitle>
