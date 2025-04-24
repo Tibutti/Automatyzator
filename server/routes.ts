@@ -1,13 +1,130 @@
-import type { Express, Request, Response } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { 
   insertContactSubmissionSchema, 
-  insertNewsletterSubscriberSchema 
+  insertNewsletterSubscriberSchema,
+  insertBlogPostSchema,
+  insertTemplateSchema,
+  insertCaseStudySchema
 } from "@shared/schema";
 import { z } from "zod";
+import session from "express-session";
+import { randomBytes } from "crypto";
+
+// Interface for a user from the session
+interface SessionUser {
+  id: number;
+  username: string;
+}
+
+// Extend Express.Session to include a user property
+declare module "express-session" {
+  interface SessionData {
+    user?: SessionUser;
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup session middleware
+  app.use(
+    session({
+      secret: randomBytes(32).toString("hex"),
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      },
+    })
+  );
+
+  // Middleware to check authentication for admin routes
+  const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    next();
+  };
+
+  // Admin login
+  app.post("/api/admin/login", async (req: Request, res: Response) => {
+    try {
+      const { username, password } = req.body;
+
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+      }
+
+      // Get user by username
+      const user = await storage.getUserByUsername(username);
+
+      // Check if user exists and password matches
+      if (!user || user.password !== password) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+
+      // Set user in session (omit password)
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+      };
+
+      res.json({
+        id: user.id,
+        username: user.username,
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Admin logout
+  app.post("/api/admin/logout", (req: Request, res: Response) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Failed to logout" });
+      }
+      res.json({ success: true });
+    });
+  });
+
+  // Get current logged in user
+  app.get("/api/admin/me", (req: Request, res: Response) => {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    res.json(req.session.user);
+  });
+
+  // Create admin user (this would usually be restricted or done via a seeder script)
+  app.post("/api/admin/setup", async (req: Request, res: Response) => {
+    try {
+      // Check if an admin user already exists
+      const adminUser = await storage.getUserByUsername("admin");
+      
+      if (adminUser) {
+        return res.status(400).json({ message: "Admin user already exists" });
+      }
+      
+      // Create admin user
+      const user = await storage.createUser({
+        username: "admin",
+        password: "admin123" // This would be hashed in a real application
+      });
+      
+      res.status(201).json({
+        id: user.id,
+        username: user.username,
+        message: "Admin user created successfully"
+      });
+    } catch (error) {
+      console.error("Setup error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
   // Blog posts endpoints
   app.get("/api/blog-posts", async (req: Request, res: Response) => {
     try {
@@ -40,6 +157,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching blog post:", error);
       return res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
+  
+  // Admin routes for blog posts
+  app.post("/api/blog-posts", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const blogPostData = insertBlogPostSchema.parse(req.body);
+      
+      // Check if slug already exists
+      const existingPost = await storage.getBlogPostBySlug(blogPostData.slug);
+      if (existingPost) {
+        return res.status(400).json({ message: "Slug already exists" });
+      }
+      
+      const post = await storage.createBlogPost(blogPostData);
+      return res.status(201).json(post);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid blog post data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating blog post:", error);
+      return res.status(500).json({ message: "Failed to create blog post" });
     }
   });
 

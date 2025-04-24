@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/lib/auth-context";
 import Layout from "@/components/layout/layout";
 import NotFound from "@/pages/not-found";
 
@@ -15,6 +16,11 @@ import Shop from "@/pages/shop";
 import Portfolio from "@/pages/portfolio";
 import Contact from "@/pages/contact";
 
+// Admin Pages
+import AdminLogin from "@/pages/admin/login";
+import AdminDashboard from "@/pages/admin/index";
+import AdminBlog from "@/pages/admin/blog";
+
 function Router() {
   // Scroll to top on route change
   useEffect(() => {
@@ -22,28 +28,58 @@ function Router() {
   }, []);
 
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/shop" component={Shop} />
-        <Route path="/portfolio" component={Portfolio} />
-        <Route path="/contact" component={Contact} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      {/* Admin Routes */}
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/admin/blog" component={AdminBlog} />
+      
+      {/* Public Routes */}
+      <Route path="/">
+        <Layout>
+          <Home />
+        </Layout>
+      </Route>
+      <Route path="/blog">
+        <Layout>
+          <Blog />
+        </Layout>
+      </Route>
+      <Route path="/shop">
+        <Layout>
+          <Shop />
+        </Layout>
+      </Route>
+      <Route path="/portfolio">
+        <Layout>
+          <Portfolio />
+        </Layout>
+      </Route>
+      <Route path="/contact">
+        <Layout>
+          <Contact />
+        </Layout>
+      </Route>
+      <Route>
+        <Layout>
+          <NotFound />
+        </Layout>
+      </Route>
+    </Switch>
   );
 }
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="automatyzator-theme">
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

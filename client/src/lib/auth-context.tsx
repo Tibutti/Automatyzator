@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const userData = await apiRequest("GET", "/api/admin/me");
+        const userData = await apiRequest<AdminUser>("GET", "/api/admin/me");
         setUser(userData);
         setIsAuthenticated(true);
       } catch (error) {
@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
       setIsLoading(true);
-      const userData = await apiRequest("POST", "/api/admin/login", { username, password });
+      const userData = await apiRequest<AdminUser>("POST", "/api/admin/login", { username, password });
       setUser(userData);
       setIsAuthenticated(true);
       return true;
