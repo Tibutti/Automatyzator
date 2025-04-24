@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/lib/auth-context";
 import Layout from "@/components/layout/layout";
 import NotFound from "@/pages/not-found";
+import AdminLayout from "@/components/admin/admin-layout";
+import ProtectedRoute from "@/components/admin/protected-route";
 
 // Pages
 import Home from "@/pages/home";
@@ -20,6 +22,7 @@ import Contact from "@/pages/contact";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import AdminBlog from "@/pages/admin/blog";
+import PlaceholderPage from "@/pages/admin/placeholder";
 
 function Router() {
   // Scroll to top on route change
@@ -33,6 +36,21 @@ function Router() {
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/blog" component={AdminBlog} />
+      <Route path="/admin/templates">
+        <PlaceholderPage title="Zarządzanie szablonami" />
+      </Route>
+      <Route path="/admin/case-studies">
+        <PlaceholderPage title="Zarządzanie case studies" />
+      </Route>
+      <Route path="/admin/messages">
+        <PlaceholderPage title="Wiadomości kontaktowe" />
+      </Route>
+      <Route path="/admin/newsletter">
+        <PlaceholderPage title="Zarządzanie newsletterem" />
+      </Route>
+      <Route path="/admin/settings">
+        <PlaceholderPage title="Ustawienia" />
+      </Route>
       
       {/* Public Routes */}
       <Route path="/">
