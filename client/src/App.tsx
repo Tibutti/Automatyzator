@@ -22,6 +22,7 @@ import Contact from "@/pages/contact";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import AdminBlog from "@/pages/admin/blog";
+import AdminSettings from "@/pages/admin/settings";
 import PlaceholderPage from "@/pages/admin/placeholder";
 
 function Router() {
@@ -48,9 +49,7 @@ function Router() {
       <Route path="/admin/newsletter">
         <PlaceholderPage title="Zarządzanie newsletterem" />
       </Route>
-      <Route path="/admin/settings">
-        <PlaceholderPage title="Ustawienia" />
-      </Route>
+      <Route path="/admin/settings" component={AdminSettings} />
       
       {/* Public Routes */}
       <Route path="/">
