@@ -6,6 +6,8 @@ import {
   contactSubmissions, type ContactSubmission, type InsertContactSubmission,
   newsletterSubscribers, type NewsletterSubscriber, type InsertNewsletterSubscriber
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, desc, and } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
@@ -37,6 +39,241 @@ export interface IStorage {
   
   // Newsletter methods
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
+}
+
+// Database storage implementation using Drizzle ORM
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
+  }
+  
+  // Blog post methods
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return db.select().from(blogPosts).orderBy(desc(blogPosts.publishedAt));
+  }
+  
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post;
+  }
+  
+  async getFeaturedBlogPosts(limit = 3): Promise<BlogPost[]> {
+    return db.select()
+      .from(blogPosts)
+      .where(eq(blogPosts.featured, true))
+      .orderBy(desc(blogPosts.publishedAt))
+      .limit(limit);
+  }
+  
+  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    const [blogPost] = await db.insert(blogPosts).values(post).returning();
+    return blogPost;
+  }
+  
+  // Template methods
+  async getTemplates(): Promise<Template[]> {
+    return db.select().from(templates);
+  }
+  
+  async getTemplateBySlug(slug: string): Promise<Template | undefined> {
+    const [template] = await db.select().from(templates).where(eq(templates.slug, slug));
+    return template;
+  }
+  
+  async getFeaturedTemplates(limit = 3): Promise<Template[]> {
+    return db.select()
+      .from(templates)
+      .where(eq(templates.featured, true))
+      .limit(limit);
+  }
+  
+  async createTemplate(template: InsertTemplate): Promise<Template> {
+    const [newTemplate] = await db.insert(templates).values(template).returning();
+    return newTemplate;
+  }
+  
+  // Case Study methods
+  async getCaseStudies(): Promise<CaseStudy[]> {
+    return db.select().from(caseStudies);
+  }
+  
+  async getCaseStudyBySlug(slug: string): Promise<CaseStudy | undefined> {
+    const [study] = await db.select().from(caseStudies).where(eq(caseStudies.slug, slug));
+    return study;
+  }
+  
+  async getFeaturedCaseStudies(limit = 3): Promise<CaseStudy[]> {
+    return db.select()
+      .from(caseStudies)
+      .where(eq(caseStudies.featured, true))
+      .limit(limit);
+  }
+  
+  async createCaseStudy(caseStudy: InsertCaseStudy): Promise<CaseStudy> {
+    const [newCaseStudy] = await db.insert(caseStudies).values(caseStudy).returning();
+    return newCaseStudy;
+  }
+  
+  // Contact form methods
+  async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
+    const [contactSubmission] = await db.insert(contactSubmissions)
+      .values({
+        ...submission,
+        createdAt: new Date()
+      })
+      .returning();
+    return contactSubmission;
+  }
+  
+  // Newsletter methods
+  async createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
+    // Check if email already exists
+    const [existingSubscriber] = await db.select()
+      .from(newsletterSubscribers)
+      .where(eq(newsletterSubscribers.email, subscriber.email));
+      
+    if (existingSubscriber) {
+      return existingSubscriber;
+    }
+    
+    const [newSubscriber] = await db.insert(newsletterSubscribers)
+      .values({
+        ...subscriber,
+        subscribedAt: new Date()
+      })
+      .returning();
+    return newSubscriber;
+  }
+  
+  // Initialize sample data if database is empty
+  async initializeSampleData() {
+    // Check if we already have blog posts
+    const existingPosts = await db.select().from(blogPosts).limit(1);
+    if (existingPosts.length > 0) return;
+    
+    // Sample blog posts
+    await db.insert(blogPosts).values([
+      {
+        title: "Jak zacząć z automatyzacją procesów w firmie?",
+        slug: "jak-zaczac-z-automatyzacja-procesow-w-firmie",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl.",
+        excerpt: "Praktyczny przewodnik dla firm, które chcą rozpocząć przygodę z automatyzacją i nie wiedzą od czego zacząć...",
+        imageUrl: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        category: "Poradnik",
+        author: "Adam Nowak",
+        authorImage: "https://randomuser.me/api/portraits/men/32.jpg",
+        readTime: 5,
+        publishedAt: new Date("2023-05-23"),
+        featured: true
+      },
+      {
+        title: "Make.com vs Zapier - co wybrać w 2023 roku?",
+        slug: "make-com-vs-zapier-co-wybrac-w-2023-roku",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl.",
+        excerpt: "Szczegółowe porównanie dwóch najpopularniejszych platform do automatyzacji bez kodu. Które narzędzie wygrywa...",
+        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        category: "Porównanie",
+        author: "Monika Kowalska",
+        authorImage: "https://randomuser.me/api/portraits/women/44.jpg",
+        readTime: 8,
+        publishedAt: new Date("2023-04-10"),
+        featured: true
+      },
+      {
+        title: "Modele LLM w automatyzacji procesów biznesowych",
+        slug: "modele-llm-w-automatyzacji-procesow-biznesowych",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vitae aliquam nisl nisl sit amet nisl.",
+        excerpt: "Jak wykorzystać potencjał modeli językowych w automatyzacji procesów firmowych i budowie inteligentnych botów...",
+        imageUrl: "https://images.unsplash.com/photo-1673187236949-3bbcd78e03a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        category: "AI",
+        author: "Piotr Wiśniewski",
+        authorImage: "https://randomuser.me/api/portraits/men/67.jpg",
+        readTime: 12,
+        publishedAt: new Date("2023-03-02"),
+        featured: true
+      }
+    ] as any[]);
+    
+    // Sample templates
+    await db.insert(templates).values([
+      {
+        title: "Automatyzacja sprzedaży",
+        slug: "automatyzacja-sprzedazy",
+        description: "Gotowy szablon do automatyzacji procesu sprzedaży i follow-up.",
+        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        price: 29900, // in cents
+        rating: 45, // out of 50
+        reviewCount: 24,
+        featured: true,
+        isBestseller: true
+      },
+      {
+        title: "Integracja CRM",
+        slug: "integracja-crm",
+        description: "Połącz swój CRM z narzędziami marketingowymi i komunikacyjnymi.",
+        imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        price: 24900, // in cents
+        rating: 40, // out of 50
+        reviewCount: 18,
+        featured: true,
+        isBestseller: false
+      },
+      {
+        title: "Discord Bot",
+        slug: "discord-bot",
+        description: "Customizowany bot dla Discorda z funkcjami moderacji i automatyzacji.",
+        imageUrl: "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        price: 34900, // in cents
+        rating: 50, // out of 50
+        reviewCount: 12,
+        featured: true,
+        isBestseller: false
+      }
+    ] as any[]);
+    
+    // Sample case studies
+    await db.insert(caseStudies).values([
+      {
+        title: "Automatyzacja e-commerce",
+        slug: "automatyzacja-ecommerce",
+        description: "Pełna automatyzacja procesów zamówień i wysyłek dla sklepu internetowego.",
+        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        tools: ["Make.com", "Shopify"],
+        tags: ["e-commerce", "automatyzacja", "integracja"],
+        featured: true
+      },
+      {
+        title: "Discord Bot dla startupu",
+        slug: "discord-bot-dla-startupu",
+        description: "Bot wspomagający onboarding użytkowników i automatyczne odpowiedzi na FAQ.",
+        imageUrl: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        tools: ["Bot", "Discord"],
+        tags: ["bot", "discord", "startup"],
+        featured: true
+      },
+      {
+        title: "Integracja CRM i Marketingu",
+        slug: "integracja-crm-i-marketingu",
+        description: "Połączenie systemów CRM z narzędziami marketingowymi dla agencji.",
+        imageUrl: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        tools: ["Zapier", "HubSpot"],
+        tags: ["crm", "marketing", "integracja"],
+        featured: true
+      }
+    ] as any[]);
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -306,4 +543,14 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
+
+// Initialize sample data
+(async () => {
+  try {
+    await (storage as DatabaseStorage).initializeSampleData();
+    console.log("Database initialized with sample data if needed");
+  } catch (error) {
+    console.error("Error initializing database with sample data:", error);
+  }
+})();
