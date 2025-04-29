@@ -34,11 +34,11 @@ export default function InteractiveHeroSection() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Punkty połączeń w animacji - nowe bardziej skoncentrowane pozycje
+  // Punkty połączeń w animacji
   const connectionPoints: ConnectionPoint[] = [
     {
-      x: 0.3,
-      y: 0.35,
+      x: 0.15,
+      y: 0.3,
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-blue-500" />,
       connections: [1, 2, 3],
@@ -47,8 +47,8 @@ export default function InteractiveHeroSection() {
       description: "Zintegruj dane z różnych systemów biznesowych"
     },
     {
-      x: 0.4,
-      y: 0.2,
+      x: 0.35,
+      y: 0.15,
       label: "Analiza AI",
       icon: <Cpu className="h-6 w-6 text-purple-500" />,
       connections: [0, 2, 4],
@@ -58,7 +58,7 @@ export default function InteractiveHeroSection() {
     },
     {
       x: 0.5,
-      y: 0.5,
+      y: 0.4,
       label: "Automatyzacja Procesów",
       icon: <Zap className="h-6 w-6 text-yellow-500" />,
       connections: [0, 1, 3, 4],
@@ -67,7 +67,7 @@ export default function InteractiveHeroSection() {
       description: "Zautomatyzuj powtarzalne zadania i procesy biznesowe"
     },
     {
-      x: 0.6,
+      x: 0.7,
       y: 0.6,
       label: "Integracja",
       icon: <Layers className="h-6 w-6 text-green-500" />,
@@ -77,8 +77,8 @@ export default function InteractiveHeroSection() {
       description: "Bezproblemowa integracja z istniejącymi systemami"
     },
     {
-      x: 0.7,
-      y: 0.3,
+      x: 0.85,
+      y: 0.35,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-blue-400" />,
       connections: [1, 2, 3],
@@ -124,15 +124,14 @@ export default function InteractiveHeroSection() {
     }
     
     // Obliczanie optymalnej liczby cząstek na podstawie rozmiaru obszaru
-    // Bazowo używamy gęstości 1 cząstka na 2000 pikseli kwadratowych
-    const calculateParticleCount = () => {
+    function calculateParticleCount() {
       const density = 1 / 2000; // Można dostosować - mniejsza wartość = więcej cząstek
       const area = canvas.width * canvas.height;
       return Math.max(30, Math.min(100, Math.floor(area * density))); // Min 30, max 100 cząstek
-    };
+    }
     
     // Funkcja dostosowująca wielkość canvasa
-    const handleResize = () => {
+    function handleResize() {
       if (canvas && canvas.parentElement) {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
@@ -144,14 +143,10 @@ export default function InteractiveHeroSection() {
           createParticle();
         }
       }
-    };
-
-    // Nasłuchiwanie na zmiany rozmiaru okna
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Inicjalizacja rozmiaru i cząstek
+    }
 
     // Główna funkcja animacji
-    const animate = () => {
+    function animate() {
       if (!ctx || !canvas) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -216,8 +211,11 @@ export default function InteractiveHeroSection() {
       }
 
       animationRef.current = requestAnimationFrame(animate);
-    };
+    }
 
+    // Nasłuchiwanie na zmiany rozmiaru okna
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Inicjalizacja rozmiaru i cząstek
     animate();
 
     return () => {
@@ -321,11 +319,7 @@ export default function InteractiveHeroSection() {
               {connectionPoints.map((point, index) => (
                 <div 
                   key={index}
-                  className={`
-                    rounded-full p-2 
-                    ${'bg-primary shadow-lg shadow-primary/20'}
-                    transition-all duration-300
-                  `}
+                  className="rounded-full p-2 bg-primary shadow-lg shadow-primary/20 transition-all duration-300"
                 >
                   {point.icon}
                 </div>
