@@ -40,51 +40,51 @@ export default function InteractiveHeroSection() {
       x: 0.2,
       y: 0.35,
       label: "Dane Biznesowe",
-      icon: <Database className="h-6 w-6 text-blue-500" />,
+      icon: <Database className="h-6 w-6 text-cyan-500" />,
       connections: [1, 2, 3],
       pulse: true,
       active: true,
-      description: "Zintegruj dane z różnych systemów biznesowych"
+      description: "Jednolita baza danych z różnych źródeł i systemów biznesowych"
     },
     {
       x: 0.35,
       y: 0.15,
       label: "Analiza AI",
-      icon: <Cpu className="h-6 w-6 text-purple-500" />,
+      icon: <Cpu className="h-6 w-6 text-violet-600" />,
       connections: [0, 2, 4],
       pulse: true,
       active: true,
-      description: "Inteligentna analiza danych i przewidywanie potrzeb"
+      description: "Zaawansowane uczenie maszynowe i predykcja trendów biznesowych"
     },
     {
       x: 0.5,
       y: 0.5,
       label: "Automatyzacja Procesów",
-      icon: <Zap className="h-6 w-6 text-yellow-500" />,
+      icon: <Zap className="h-6 w-6 text-amber-500" />,
       connections: [0, 1, 3, 4],
       pulse: true,
       active: true,
-      description: "Zautomatyzuj powtarzalne zadania i procesy biznesowe"
+      description: "Eliminacja powtarzalnych zadań i błyskawiczna optymalizacja procesów"
     },
     {
       x: 0.75,
       y: 0.7,
       label: "Integracja",
-      icon: <Layers className="h-6 w-6 text-green-500" />,
+      icon: <Layers className="h-6 w-6 text-emerald-600" />,
       connections: [0, 2, 4],
       pulse: true,
       active: true,
-      description: "Bezproblemowa integracja z istniejącymi systemami"
+      description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
     },
     {
       x: 0.8,
       y: 0.25,
       label: "Chmura",
-      icon: <Cloud className="h-6 w-6 text-blue-400" />,
+      icon: <Cloud className="h-6 w-6 text-sky-500" />,
       connections: [1, 2, 3],
       pulse: true,
       active: true,
-      description: "Wszystko dostępne w chmurze, z dowolnego miejsca"
+      description: "Natychmiastowy dostęp do danych i procesów z dowolnego miejsca"
     }
   ];
 
