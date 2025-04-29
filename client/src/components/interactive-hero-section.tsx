@@ -219,7 +219,7 @@ export default function InteractiveHeroSection() {
   }, [activePoint]);
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-br from-background to-secondary dark:from-background dark:to-secondary/20">
+    <section className="relative py-10 md:py-20 overflow-hidden bg-gradient-to-br from-background to-secondary dark:from-background dark:to-secondary/20">
       {/* Animowany gradient w tle */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute -inset-[100px] bg-[radial-gradient(60%_60%_at_50%_50%,hsl(var(--gradient-purple))_0%,transparent_70%)] opacity-20 animate-pulse"></div>
@@ -230,41 +230,41 @@ export default function InteractiveHeroSection() {
       <div className="container relative z-10 mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center">
           {/* Lewa kolumna z tekstem */}
-          <div className="md:w-1/2 space-y-6 mb-12 md:mb-0 stagger-children">
+          <div className="w-full md:w-1/2 space-y-6 mb-16 md:mb-0 stagger-children">
             <div className={`opacity-0 ${isVisible ? 'animate-fade-in' : ''}`}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                <span className="gradient-text">Automatyzuj.</span> <span className="block">Integruj. Skaluj.</span>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+                <span className="gradient-text">Automatyzuj.</span> <span className="block mt-1">Integruj. Skaluj.</span>
               </h1>
             </div>
             <div className={`max-w-xl opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.2s'}}>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base md:text-lg text-muted-foreground">
                 Kompleksowe rozwiązania automatyzacji, które transformują Twój biznes. Wykorzystaj sztuczną inteligencję i zaawansowane algorytmy do optymalizacji procesów biznesowych.
               </p>
             </div>
-            <div className={`flex flex-wrap gap-4 opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.4s'}}>
+            <div className={`flex flex-wrap gap-3 md:gap-4 opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.4s'}}>
               <Button 
                 size="lg" 
-                className="button-3d group"
+                className="button-3d group text-sm md:text-base"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <span>Rozpocznij transformację</span>
-                <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
               </Button>
-              <Button size="lg" variant="outline" className="gradient-border">
+              <Button size="lg" variant="outline" className="gradient-border text-sm md:text-base">
                 Poznaj nasze szablony
               </Button>
             </div>
           </div>
 
-          {/* Prawa kolumna z interaktywną wizualizacją */}
-          <div className="md:w-1/2 h-[450px] relative">
+          {/* Prawa kolumna z interaktywną wizualizacją - na mobilnych tylko canvas bez punktów */}
+          <div className="w-full md:w-1/2 h-[300px] md:h-[450px] relative">
             <div className="absolute inset-0 z-0">
               <canvas ref={canvasRef} className="w-full h-full" />
             </div>
 
-            {/* Punkty połączeń na canvasie */}
-            <div className="absolute inset-0 z-10">
+            {/* Punkty połączeń na canvasie - widoczne tylko powyżej breakpointa md */}
+            <div className="absolute inset-0 z-10 hidden md:block">
               {connectionPoints.map((point, index) => (
                 <div 
                   key={index}
@@ -293,15 +293,31 @@ export default function InteractiveHeroSection() {
                     {point.icon}
                   </div>
                   <div className={`
-                    absolute left-1/2 -translate-x-1/2 top-16 w-max
+                    absolute left-1/2 -translate-x-1/2 top-16 w-max max-w-[180px]
                     ${activePoint === index ? 'opacity-100' : 'opacity-0'} 
                     transition-opacity duration-300
                   `}>
                     <div className="glass-card p-3 text-center shadow-xl">
-                      <div className="font-semibold">{point.label}</div>
+                      <div className="font-semibold text-sm">{point.label}</div>
                       <div className="text-xs text-muted-foreground mt-1">{point.description}</div>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Uproszczona wersja dla urządzeń mobilnych */}
+            <div className="md:hidden absolute inset-x-0 bottom-4 flex justify-center gap-4 z-10">
+              {connectionPoints.map((point, index) => (
+                <div 
+                  key={index}
+                  className={`
+                    rounded-full p-2 
+                    ${index === 2 ? 'bg-primary shadow-lg shadow-primary/20' : 'bg-card/80 shadow-md'}
+                    transition-all duration-300
+                  `}
+                >
+                  {point.icon}
                 </div>
               ))}
             </div>
