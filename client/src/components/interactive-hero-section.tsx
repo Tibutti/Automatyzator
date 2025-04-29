@@ -108,27 +108,34 @@ export default function InteractiveHeroSection() {
     function createParticle() {
       if (!canvas) return;
       
-      const size = Math.random() * 3 + 1;
-      const colors = ['rgba(147, 51, 234, 0.3)', 'rgba(59, 130, 246, 0.3)', 'rgba(16, 185, 129, 0.3)'];
+      const size = Math.random() * 3.5 + 1;
+      // Dostosowano kolory do naszej zaktualizowanej palety
+      const colors = [
+        'rgba(14, 165, 233, 0.3)',  // sky-500 (Chmura)
+        'rgba(139, 92, 246, 0.3)',  // violet-600 (Analiza AI)
+        'rgba(16, 185, 129, 0.3)',  // emerald-600 (Integracja)
+        'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
+        'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
+      ];
       const particle: Particle = {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1,
-        vy: (Math.random() - 0.5) * 1,
+        vx: (Math.random() - 0.5) * 1.5, // Zwiększono prędkość dla bardziej dynamicznego efektu
+        vy: (Math.random() - 0.5) * 1.5,
         size,
         color: colors[Math.floor(Math.random() * colors.length)],
         lifetime: 0,
-        maxLifetime: Math.random() * 500 + 500,
+        maxLifetime: Math.random() * 400 + 400, // Zmniejszono czas życia dla szybszych zmian
       };
       particlesRef.current.push(particle);
     }
     
     // Obliczanie optymalnej liczby cząstek na podstawie rozmiaru obszaru
-    // Bazowo używamy gęstości 1 cząstka na 2000 pikseli kwadratowych
+    // Zwiększona gęstość dla większej ilości cząstek
     const calculateParticleCount = () => {
-      const density = 1 / 2000; // Można dostosować - mniejsza wartość = więcej cząstek
+      const density = 1 / 1500; // Zwiększona gęstość (mniejszy dzielnik = więcej cząstek)
       const area = canvas.width * canvas.height;
-      return Math.max(30, Math.min(100, Math.floor(area * density))); // Min 30, max 100 cząstek
+      return Math.max(40, Math.min(120, Math.floor(area * density))); // Zwiększone wartości min/max
     };
     
     // Funkcja dostosowująca wielkość canvasa
@@ -168,9 +175,28 @@ export default function InteractiveHeroSection() {
           const x2 = connPoint.x * (canvas?.width || 0);
           const y2 = connPoint.y * (canvas?.height || 0);
 
-          // Aktywne połączenie jest jaśniejsze
+          // Aktywne połączenie jest jaśniejsze i w kolorze odpowiadającym ikonie
           if (activePoint === index || activePoint === connIndex) {
-            ctx.strokeStyle = 'rgba(147, 51, 234, 0.5)';
+            // Wybieramy kolor linii na podstawie aktywnego punktu
+            switch (activePoint) {
+              case 0: // Dane Biznesowe - cyan
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.5)'; 
+                break;
+              case 1: // Analiza AI - violet
+                ctx.strokeStyle = 'rgba(139, 92, 246, 0.5)'; 
+                break;
+              case 2: // Automatyzacja Procesów - amber
+                ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
+                break;
+              case 3: // Integracja - emerald
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)'; 
+                break;
+              case 4: // Chmura - sky
+                ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
+                break;
+              default:
+                ctx.strokeStyle = 'rgba(147, 51, 234, 0.5)'; // Domyślny kolor
+            }
             ctx.lineWidth = 2;
           } else {
             ctx.strokeStyle = 'rgba(148, 163, 184, 0.15)';
@@ -197,9 +223,36 @@ export default function InteractiveHeroSection() {
           continue;
         }
 
+        // Sprawdzenie czy istnieje aktywny punkt, do którego cząstki powinny być przyciągane
+        if (activePoint !== null) {
+          const point = connectionPoints[activePoint];
+          const attractX = point.x * (canvas?.width || 0);
+          const attractY = point.y * (canvas?.height || 0);
+
+          // Obliczenie wektora przyciągania
+          const dx = attractX - p.x;
+          const dy = attractY - p.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          // Siła przyciągania maleje wraz z odległością
+          if (distance < 150) {
+            const force = 0.02; // Siła przyciągania
+            p.vx += (dx / distance) * force;
+            p.vy += (dy / distance) * force;
+          }
+        }
+
         // Ruch cząstek
         p.x += p.vx;
         p.y += p.vy;
+
+        // Ograniczenie maksymalnej prędkości cząstek
+        const maxSpeed = 2;
+        const currentSpeed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (currentSpeed > maxSpeed) {
+          p.vx = (p.vx / currentSpeed) * maxSpeed;
+          p.vy = (p.vy / currentSpeed) * maxSpeed;
+        }
 
         // Zawracanie po dotarciu do krawędzi
         if (p.x < 0 || p.x > (canvas?.width || 0)) p.vx *= -1;
