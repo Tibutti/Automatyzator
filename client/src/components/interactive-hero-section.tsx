@@ -42,8 +42,8 @@ export default function InteractiveHeroSection() {
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-blue-500" />,
       connections: [1, 2, 3],
-      pulse: false,
-      active: false,
+      pulse: true,
+      active: true,
       description: "Zintegruj dane z różnych systemów biznesowych"
     },
     {
@@ -52,8 +52,8 @@ export default function InteractiveHeroSection() {
       label: "Analiza AI",
       icon: <Cpu className="h-6 w-6 text-purple-500" />,
       connections: [0, 2, 4],
-      pulse: false,
-      active: false,
+      pulse: true,
+      active: true,
       description: "Inteligentna analiza danych i przewidywanie potrzeb"
     },
     {
