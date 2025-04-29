@@ -112,6 +112,21 @@
   100% { box-shadow: 0 0 0 0 rgba(var(--primary), 0); }
 }
 
+@keyframes status-pulse {
+  0%, 100% { 
+    background: #10B981; /* Green */
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+  }
+  33% { 
+    background: #F59E0B; /* Amber/Orange */
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+  }
+  66% { 
+    background: #EF4444; /* Red */
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
+  }
+}
+
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -273,6 +288,10 @@
   .animate-gradient {
     background-size: 200% 200%;
     animation: gradient 15s ease infinite;
+  }
+  
+  .animate-status {
+    animation: status-pulse 8s infinite;
   }
   
   .rotate-180 {
