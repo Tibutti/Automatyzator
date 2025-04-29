@@ -72,8 +72,8 @@ export default function InteractiveHeroSection() {
       label: "Integracja",
       icon: <Layers className="h-6 w-6 text-green-500" />,
       connections: [0, 2, 4],
-      pulse: false,
-      active: false,
+      pulse: true,
+      active: true,
       description: "Bezproblemowa integracja z istniejącymi systemami"
     },
     {
@@ -82,8 +82,8 @@ export default function InteractiveHeroSection() {
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-blue-400" />,
       connections: [1, 2, 3],
-      pulse: false,
-      active: false,
+      pulse: true,
+      active: true,
       description: "Wszystko dostępne w chmurze, z dowolnego miejsca"
     }
   ];
@@ -313,7 +313,7 @@ export default function InteractiveHeroSection() {
                   key={index}
                   className={`
                     rounded-full p-2 
-                    ${index === 2 ? 'bg-primary shadow-lg shadow-primary/20' : 'bg-card/80 shadow-md'}
+                    ${'bg-primary shadow-lg shadow-primary/20'}
                     transition-all duration-300
                   `}
                 >
