@@ -32,14 +32,14 @@ export default function Navbar() {
       isScrolled ? "bg-background shadow-md py-3" : "py-4"
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo - w układzie pionowym */}
+        {/* Logo */}
         <div>
           <Link href="/">
-            <div className="flex flex-col items-center cursor-pointer">
-              <div className="flex-shrink-0">
+            <div className="flex items-center cursor-pointer">
+              <div className="flex-shrink-0 mr-3">
                 <Logo />
               </div>
-              <span className="text-xl font-bold mt-3">Automatyzator</span>
+              <span className="text-xl font-bold ml-2">Automatyzator</span>
             </div>
           </Link>
         </div>
