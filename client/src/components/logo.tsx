@@ -18,7 +18,7 @@ export default function Logo() {
   }, []);
 
   return (
-    <div className="w-10 h-10 md:w-12 md:h-12 relative flex items-center justify-center">
+    <div className="w-9 h-9 md:w-10 md:h-10 relative flex items-center justify-center">
       {/* Pierścień automatyzacji z gradientem */}
       <div className={`absolute inset-0 rounded-full 
         bg-gradient-to-r from-primary to-accent overflow-hidden

@@ -33,24 +33,28 @@ export default function Navbar() {
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/">
-          <a className="flex items-center">
-            <div className="flex-shrink-0">
-              <Logo />
+        <div className="flex items-center">
+          <Link href="/">
+            <div className="flex items-center gap-3 cursor-pointer">
+              <div className="flex-shrink-0 mr-4">
+                <Logo />
+              </div>
+              <span className="text-xl font-bold relative" style={{ marginLeft: '8px', zIndex: 5 }}>
+                <span className="bg-background px-1 py-0.5 rounded">Auto</span>matyzator
+              </span>
             </div>
-            <span className="ml-4 md:ml-5 text-xl font-bold">Automatyzator</span>
-          </a>
-        </Link>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
-              <a className={`font-inter hover:text-primary transition-colors ${
+              <div className={`font-inter hover:text-primary transition-colors cursor-pointer ${
                 location === link.href ? "text-primary" : ""
               }`}>
                 {link.title}
-              </a>
+              </div>
             </Link>
           ))}
           <ThemeToggle />
@@ -70,11 +74,11 @@ export default function Navbar() {
               <nav className="flex flex-col space-y-6 mt-10">
                 {navLinks.map((link) => (
                   <Link key={link.href} href={link.href}>
-                    <a className={`text-lg font-inter hover:text-primary transition-colors ${
+                    <div className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
                       location === link.href ? "text-primary" : ""
                     }`}>
                       {link.title}
-                    </a>
+                    </div>
                   </Link>
                 ))}
               </nav>
