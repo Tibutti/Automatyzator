@@ -46,20 +46,14 @@ export default function Footer() {
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">Zasoby</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/blog">
-                  <a className="text-gray-400 hover:text-white transition-colors">Blog</a>
-                </Link>
+                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
               </li>
               <li>
-                <Link href="/shop">
-                  <a className="text-gray-400 hover:text-white transition-colors">Szablony</a>
-                </Link>
+                <Link href="/shop" className="text-gray-400 hover:text-white transition-colors">Szablony</Link>
               </li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Dokumentacja</a></li>
               <li>
-                <Link href="/portfolio">
-                  <a className="text-gray-400 hover:text-white transition-colors">Case Studies</a>
-                </Link>
+                <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Case Studies</Link>
               </li>
             </ul>
           </div>
@@ -71,9 +65,7 @@ export default function Footer() {
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Zespół</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Kariera</a></li>
               <li>
-                <Link href="/contact">
-                  <a className="text-gray-400 hover:text-white transition-colors">Kontakt</a>
-                </Link>
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">Kontakt</Link>
               </li>
             </ul>
           </div>
