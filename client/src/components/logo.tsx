@@ -96,16 +96,16 @@ export default function Logo() {
             />
           </g>
           
-          {/* Litera A utworzona z dwóch diagonalnych linii */}
+          {/* Litera A utworzona z dwóch diagonalnych linii - obniżona */}
           <path 
-            d="M40 70L50 30L60 70" 
+            d="M40 75L50 38L60 75" 
             stroke="#6366F1" 
             strokeWidth="8" 
             strokeLinecap="round" 
             strokeLinejoin="round"
           />
           <path 
-            d="M42 60H58" 
+            d="M42 65H58" 
             stroke="#6366F1" 
             strokeWidth="8" 
             strokeLinecap="round"
@@ -113,14 +113,14 @@ export default function Logo() {
           
           {/* Podświetlenie litery A dla lepszej widoczności */}
           <path 
-            d="M40 70L50 30L60 70" 
+            d="M40 75L50 38L60 75" 
             stroke="white" 
             strokeWidth="3" 
             strokeLinecap="round" 
             strokeLinejoin="round"
           />
           <path 
-            d="M42 60H58" 
+            d="M42 65H58" 
             stroke="white" 
             strokeWidth="3" 
             strokeLinecap="round"
