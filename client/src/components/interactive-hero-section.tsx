@@ -50,7 +50,7 @@ export default function InteractiveHeroSection() {
       x: 0.35,
       y: 0.15,
       label: "Analiza AI",
-      icon: <Cpu className="h-6 w-6 text-violet-600" />,
+      icon: <Cpu className="h-6 w-6 text-indigo-500" />,
       connections: [0, 2, 4],
       pulse: true,
       active: true,
@@ -112,7 +112,7 @@ export default function InteractiveHeroSection() {
       // Dostosowano kolory do naszej zaktualizowanej palety
       const colors = [
         'rgba(14, 165, 233, 0.3)',  // sky-500 (Chmura)
-        'rgba(139, 92, 246, 0.3)',  // violet-600 (Analiza AI)
+        'rgba(79, 70, 229, 0.3)',   // indigo-500 (Analiza AI) - zmieniony z violet na indigo
         'rgba(16, 185, 129, 0.3)',  // emerald-600 (Integracja)
         'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
         'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
@@ -182,8 +182,8 @@ export default function InteractiveHeroSection() {
               case 0: // Dane Biznesowe - cyan
                 ctx.strokeStyle = 'rgba(6, 182, 212, 0.5)'; 
                 break;
-              case 1: // Analiza AI - violet
-                ctx.strokeStyle = 'rgba(139, 92, 246, 0.5)'; 
+              case 1: // Analiza AI - indigo
+                ctx.strokeStyle = 'rgba(79, 70, 229, 0.5)'; 
                 break;
               case 2: // Automatyzacja Procesów - amber
                 ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
