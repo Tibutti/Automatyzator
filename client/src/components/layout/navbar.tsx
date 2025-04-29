@@ -35,8 +35,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/">
           <a className="flex items-center">
-            <Logo />
-            <span className="ml-2 text-xl font-montserrat font-bold">Automatyzator</span>
+            <div className="flex-shrink-0">
+              <Logo />
+            </div>
+            <span className="ml-4 md:ml-5 text-xl font-bold">Automatyzator</span>
           </a>
         </Link>
 
