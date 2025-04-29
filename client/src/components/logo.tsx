@@ -49,18 +49,21 @@ export default function Logo() {
             {/* Zęby zębatki - widoczne */}
             <path 
               d="M35 31C33.3431 31 32 32.3431 32 34C32 35.6569 33.3431 37 35 37C36.6569 37 38 35.6569 38 34C38 32.3431 36.6569 31 35 31ZM35 35C34.4477 35 34 34.5523 34 34C34 33.4477 34.4477 33 35 33C35.5523 33 36 33.4477 36 34C36 34.5523 35.5523 35 35 35Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#9333EA"
+              stroke="#9333EA"
+              strokeWidth="0.5"
             />
             <path
               d="M33.5 45.5C33.5 46.8807 32.3807 48 31 48C29.6193 48 28.5 46.8807 28.5 45.5C28.5 44.1193 29.6193 43 31 43C32.3807 43 33.5 44.1193 33.5 45.5Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#9333EA"
+              stroke="#9333EA"
+              strokeWidth="0.5"
             />
             <path
               d="M25 39C25 40.1046 24.1046 41 23 41C21.8954 41 21 40.1046 21 39C21 37.8954 21.8954 37 23 37C24.1046 37 25 37.8954 25 39Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#9333EA"
+              stroke="#9333EA"
+              strokeWidth="0.5"
             />
           </g>
           
@@ -75,36 +78,52 @@ export default function Logo() {
             {/* Zęby zębatki - widoczne */}
             <path 
               d="M65 59C66.6569 59 68 57.6569 68 56C68 54.3431 66.6569 53 65 53C63.3431 53 62 54.3431 62 56C62 57.6569 63.3431 59 65 59ZM65 57C65.5523 57 66 56.5523 66 56C66 55.4477 65.5523 55 65 55C64.4477 55 64 55.4477 64 56C64 56.5523 64.4477 57 65 57Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#10B981"
+              stroke="#10B981"
+              strokeWidth="0.5"
             />
             <path
               d="M66.5 44.5C66.5 43.1193 67.6193 42 69 42C70.3807 42 71.5 43.1193 71.5 44.5C71.5 45.8807 70.3807 47 69 47C67.6193 47 66.5 45.8807 66.5 44.5Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#10B981"
+              stroke="#10B981"
+              strokeWidth="0.5"
             />
             <path
               d="M75 51C75 49.8954 75.8954 49 77 49C78.1046 49 79 49.8954 79 51C79 52.1046 78.1046 53 77 53C75.8954 53 75 52.1046 75 51Z"
-              fill="currentColor"
-              className="text-primary"
+              fill="#10B981"
+              stroke="#10B981"
+              strokeWidth="0.5"
             />
           </g>
           
           {/* Litera A utworzona z dwóch diagonalnych linii */}
           <path 
             d="M40 70L50 30L60 70" 
-            stroke="currentColor" 
+            stroke="#6366F1" 
             strokeWidth="8" 
             strokeLinecap="round" 
             strokeLinejoin="round"
-            className="text-primary"
           />
           <path 
             d="M42 60H58" 
-            stroke="currentColor" 
+            stroke="#6366F1" 
             strokeWidth="8" 
             strokeLinecap="round"
-            className="text-primary"
+          />
+          
+          {/* Podświetlenie litery A dla lepszej widoczności */}
+          <path 
+            d="M40 70L50 30L60 70" 
+            stroke="white" 
+            strokeWidth="3" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          />
+          <path 
+            d="M42 60H58" 
+            stroke="white" 
+            strokeWidth="3" 
+            strokeLinecap="round"
           />
         </svg>
       </div>
