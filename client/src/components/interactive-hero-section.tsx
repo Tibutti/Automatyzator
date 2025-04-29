@@ -34,10 +34,10 @@ export default function InteractiveHeroSection() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Punkty połączeń w animacji - nowe bardziej skoncentrowane pozycje
+  // Punkty połączeń w animacji - bardziej rozproszone po całym obszarze
   const connectionPoints: ConnectionPoint[] = [
     {
-      x: 0.3,
+      x: 0.2,
       y: 0.35,
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-blue-500" />,
@@ -47,8 +47,8 @@ export default function InteractiveHeroSection() {
       description: "Zintegruj dane z różnych systemów biznesowych"
     },
     {
-      x: 0.4,
-      y: 0.2,
+      x: 0.35,
+      y: 0.15,
       label: "Analiza AI",
       icon: <Cpu className="h-6 w-6 text-purple-500" />,
       connections: [0, 2, 4],
@@ -67,8 +67,8 @@ export default function InteractiveHeroSection() {
       description: "Zautomatyzuj powtarzalne zadania i procesy biznesowe"
     },
     {
-      x: 0.6,
-      y: 0.6,
+      x: 0.75,
+      y: 0.7,
       label: "Integracja",
       icon: <Layers className="h-6 w-6 text-green-500" />,
       connections: [0, 2, 4],
@@ -77,8 +77,8 @@ export default function InteractiveHeroSection() {
       description: "Bezproblemowa integracja z istniejącymi systemami"
     },
     {
-      x: 0.7,
-      y: 0.3,
+      x: 0.8,
+      y: 0.25,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-blue-400" />,
       connections: [1, 2, 3],
