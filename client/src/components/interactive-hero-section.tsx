@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Cpu, Database, Cloud, Zap, Layers } from "lucide-react";
+import { ArrowRight, Cpu, Database, Cloud, Zap, Layers, Code } from "lucide-react";
 
 // Typ pojedynczej cząstki w animacji
 interface Particle {
@@ -41,7 +41,7 @@ export default function InteractiveHeroSection() {
       y: 0.8,
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-cyan-500" />,
-      connections: [1, 2, 3, 4],
+      connections: [1, 2, 3, 4, 5],
       pulse: true,
       active: true,
       description: "Jednolita baza danych z różnych źródeł i systemów biznesowych"
@@ -51,7 +51,7 @@ export default function InteractiveHeroSection() {
       y: 0.15,
       label: "Analiza AI",
       icon: <Cpu className="h-6 w-6 text-indigo-500" />,
-      connections: [0, 2, 3, 4],
+      connections: [0, 2, 3, 4, 5],
       pulse: true,
       active: true,
       description: "Zaawansowane uczenie maszynowe i predykcja trendów biznesowych"
@@ -61,7 +61,7 @@ export default function InteractiveHeroSection() {
       y: 0.5,
       label: "Automatyzacja Procesów",
       icon: <Zap className="h-6 w-6 text-amber-500" />,
-      connections: [0, 1, 3, 4],
+      connections: [0, 1, 3, 4, 5],
       pulse: true,
       active: true,
       description: "Eliminacja powtarzalnych zadań i błyskawiczna optymalizacja procesów"
@@ -71,7 +71,7 @@ export default function InteractiveHeroSection() {
       y: 0.8,
       label: "Integracja",
       icon: <Layers className="h-6 w-6 text-emerald-600" />,
-      connections: [0, 1, 2, 4],
+      connections: [0, 1, 2, 4, 5],
       pulse: true,
       active: true,
       description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
@@ -81,10 +81,20 @@ export default function InteractiveHeroSection() {
       y: 0.5,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-sky-500" />,
-      connections: [0, 1, 2, 3],
+      connections: [0, 1, 2, 3, 5],
       pulse: true,
       active: true,
       description: "Natychmiastowy dostęp do danych i procesów z dowolnego miejsca"
+    },
+    {
+      x: 0.5,
+      y: 0.35,
+      label: "API i Integracje",
+      icon: <Code className="h-6 w-6 text-fuchsia-500" />,
+      connections: [0, 1, 2, 3, 4],
+      pulse: true,
+      active: true,
+      description: "Zaawansowane interfejsy programistyczne i gotowe integracje z popularnymi usługami"
     }
   ];
 
@@ -116,6 +126,7 @@ export default function InteractiveHeroSection() {
         'rgba(16, 185, 129, 0.3)',  // emerald-600 (Integracja)
         'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
         'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
+        'rgba(217, 70, 239, 0.3)',  // fuchsia-500 (API i Integracje)
       ];
       const particle: Particle = {
         x: Math.random() * canvas.width,
@@ -193,6 +204,9 @@ export default function InteractiveHeroSection() {
                 break;
               case 4: // Chmura - sky
                 ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
+                break;
+              case 5: // API i Integracje - fuchsia
+                ctx.strokeStyle = 'rgba(217, 70, 239, 0.5)';
                 break;
               default:
                 ctx.strokeStyle = 'rgba(147, 51, 234, 0.5)'; // Domyślny kolor
