@@ -43,6 +43,7 @@ interface ConnectionPoint {
 }
 
 export default function InteractiveHeroSection() {
+  const { t } = useTranslation('common');
   const [activePoint, setActivePoint] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -56,62 +57,62 @@ export default function InteractiveHeroSection() {
     {
       x: 0.3,
       y: 0.8,
-      label: "Dane Biznesowe",
+      label: t('features.businessData'),
       icon: <Database className="h-6 w-6 text-cyan-500" />,
       connections: [1, 2, 3, 4, 5],
       pulse: true,
       active: true,
-      description: "Jednolita baza danych z różnych źródeł i systemów biznesowych"
+      description: t('services.service1.description')
     },
     {
       x: 0.5,
       y: 0.15,
-      label: "Analiza AI",
+      label: t('features.aiAnalysis'),
       icon: <Cpu className="h-6 w-6 text-red-600" />,
       connections: [0, 2, 3, 4, 5],
       pulse: true,
       active: true,
-      description: "Zaawansowane uczenie maszynowe i predykcja trendów biznesowych"
+      description: t('services.service6.description')
     },
     {
       x: 0.4,
       y: 0.5,
-      label: "Automatyzacja Procesów",
+      label: t('features.automation'),
       icon: <Zap className="h-6 w-6 text-amber-500" />,
       connections: [0, 1, 3, 4, 5],
       pulse: true,
       active: true,
-      description: "Eliminacja powtarzalnych zadań i błyskawiczna optymalizacja procesów"
+      description: t('services.service3.description')
     },
     {
       x: 0.7,
       y: 0.8,
-      label: "Integracja",
+      label: t('features.integration'),
       icon: <Layers className="h-6 w-6 text-yellow-500" />,
       connections: [0, 1, 2, 4, 5],
       pulse: true,
       active: true,
-      description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
+      description: t('services.service4.description')
     },
     {
       x: 0.6,
       y: 0.5,
-      label: "Chmura",
+      label: t('features.cloud'),
       icon: <Cloud className="h-6 w-6 text-sky-500" />,
       connections: [0, 1, 2, 3, 5],
       pulse: true,
       active: true,
-      description: "Natychmiastowy dostęp do danych i procesów z dowolnego miejsca"
+      description: t('services.service2.description')
     },
     {
       x: 0.5,
       y: 0.65,
-      label: "API i Integracje",
+      label: t('features.api'),
       icon: <Code className="h-6 w-6 text-fuchsia-500" />,
       connections: [0, 1, 2, 3, 4],
       pulse: true,
       active: true,
-      description: "Zaawansowane interfejsy programistyczne i gotowe integracje z popularnymi usługami"
+      description: t('services.service5.description')
     }
   ];
 
@@ -389,12 +390,12 @@ export default function InteractiveHeroSection() {
           <div className="w-full md:w-1/2 space-y-6 mb-16 md:mb-0 stagger-children">
             <div className={`opacity-0 ${isVisible ? 'animate-fade-in' : ''}`}>
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                <span className="gradient-text translate-y-6 inline-block">Automatyzuj.</span> <span className="block mt-1 translate-y-5 inline-block">Integruj. Skaluj.</span>
+                <span className="gradient-text translate-y-6 inline-block">{t('hero.title')}</span> <span className="block mt-1 translate-y-5 inline-block">{t('hero.subtitle')}</span>
               </h1>
             </div>
             <div className={`max-w-xl opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.2s'}}>
               <p className="text-base md:text-lg text-muted-foreground">
-                Kompleksowe rozwiązania automatyzacji, które transformują Twój biznes. Wykorzystaj sztuczną inteligencję i zaawansowane algorytmy do optymalizacji procesów biznesowych.
+                {t('hero.description')}
               </p>
             </div>
             <div className={`flex flex-wrap gap-3 md:gap-4 opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.4s'}}>
@@ -404,12 +405,12 @@ export default function InteractiveHeroSection() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <span>Rozpocznij transformację</span>
+                <span>{t('whyUs.title')}</span>
                 <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
               </Button>
               <Link href="/consultation">
                 <Button size="lg" variant="outline" className="gradient-border text-sm md:text-base">
-                  Bezpłatna konsultacja
+                  {t('hero.cta')}
                 </Button>
               </Link>
             </div>
@@ -508,7 +509,9 @@ export default function InteractiveHeroSection() {
                        onClick={(e) => e.stopPropagation()}>
                     <div className="font-semibold mb-2">{connectionPoints[activePoint].label}</div>
                     <div className="text-sm text-muted-foreground">{connectionPoints[activePoint].description}</div>
-                    <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>Zamknij</Button>
+                    <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>
+                      {t('blog.readMore')}
+                    </Button>
                   </div>
                 </div>
               )}

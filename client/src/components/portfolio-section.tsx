@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { CaseStudy } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function PortfolioSection() {
+  const { t } = useTranslation('common');
   const carouselRef = useRef<HTMLDivElement>(null);
   const [showControls, setShowControls] = useState(false);
   
@@ -38,10 +40,10 @@ export default function PortfolioSection() {
     <section id="portfolio" className="py-16 bg-gray-50 dark:bg-gray-900/30">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-          <h2 className="text-3xl font-montserrat font-bold text-foreground">Portfolio</h2>
+          <h2 className="text-3xl font-montserrat font-bold text-foreground">{t('portfolio.title')}</h2>
           <Link href="/portfolio">
             <a className="mt-4 md:mt-0 text-primary font-inter font-semibold hover:underline">
-              Zobacz wszystkie projekty
+              {t('portfolio.viewAll')}
             </a>
           </Link>
         </div>
