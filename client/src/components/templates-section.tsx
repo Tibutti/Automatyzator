@@ -6,8 +6,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Star, StarHalf } from "lucide-react";
 import { formatPrice, generateStarRating } from "@/lib/utils";
 import type { Template } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function TemplatesSection() {
+  const { t } = useTranslation('common');
   const { data: templates, isLoading } = useQuery<Template[]>({
     queryKey: ["/api/templates/featured"],
   });
@@ -16,10 +18,10 @@ export default function TemplatesSection() {
     <section id="shop" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-          <h2 className="text-3xl font-montserrat font-bold text-foreground">Szablony</h2>
+          <h2 className="text-3xl font-montserrat font-bold text-foreground">{t('templates.title')}</h2>
           <Link href="/shop">
             <a className="mt-4 md:mt-0 text-primary font-inter font-semibold hover:underline">
-              Zobacz wszystkie szablony
+              {t('templates.viewAll')}
             </a>
           </Link>
         </div>
@@ -56,7 +58,7 @@ export default function TemplatesSection() {
                     )}
                     {template.isBestseller && (
                       <div className="absolute top-4 left-4 bg-accent text-black px-3 py-1 rounded-full text-sm font-semibold">
-                        Bestseller
+                        {t('templates.bestseller')}
                       </div>
                     )}
                   </div>
@@ -86,7 +88,7 @@ export default function TemplatesSection() {
                     </div>
                     <Link href={`/shop/${template.slug}`}>
                       <Button className="w-full cta-button">
-                        Kup teraz
+                        {t('templates.buyNow')}
                       </Button>
                     </Link>
                   </CardContent>

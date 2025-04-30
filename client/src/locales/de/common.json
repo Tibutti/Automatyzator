@@ -78,7 +78,8 @@
     "title": "Blog",
     "subtitle": "Neueste Artikel",
     "readMore": "Mehr lesen",
-    "viewAll": "Alle anzeigen"
+    "viewAll": "Alle anzeigen",
+    "minRead": "min Lesezeit"
   },
   "templates": {
     "title": "Automatisierungsvorlagen",

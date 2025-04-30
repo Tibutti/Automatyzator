@@ -78,13 +78,15 @@
     "title": "Blog",
     "subtitle": "Latest articles",
     "readMore": "Read more",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "minRead": "min read"
   },
   "templates": {
     "title": "Automation Templates",
     "subtitle": "Ready-made solutions",
     "viewAll": "View all",
-    "buyNow": "Buy now"
+    "buyNow": "Buy now",
+    "bestseller": "Bestseller"
   },
   "contact": {
     "title": "Contact",
