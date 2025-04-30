@@ -1,19 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLocation } from 'wouter';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [_, setLocation] = useLocation();
+  const { login, isAuthenticated, isLoading } = useAuth();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      setLocation('/admin');
+    }
+  }, [isAuthenticated, setLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,32 +34,20 @@ export default function AdminLogin() {
       return;
     }
     
-    setLoading(true);
+    const success = await login(username, password);
     
-    try {
-      const response = await apiRequest('POST', '/api/admin/login', { username, password });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Błąd logowania');
-      }
-      
-      const userData = await response.json();
+    if (success) {
       toast({
         title: "Sukces",
-        description: `Zalogowano jako ${userData.username}`,
+        description: `Zalogowano jako ${username}`,
       });
-      
-      // Redirect to admin dashboard
-      setLocation('/admin');
-    } catch (error) {
+      // useEffect will handle redirect when isAuthenticated changes
+    } else {
       toast({
         title: "Błąd logowania",
-        description: error instanceof Error ? error.message : 'Nieprawidłowa nazwa użytkownika lub hasło',
+        description: "Nieprawidłowa nazwa użytkownika lub hasło",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -86,8 +81,8 @@ export default function AdminLogin() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" type="submit" disabled={loading}>
-              {loading ? (
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Logowanie...

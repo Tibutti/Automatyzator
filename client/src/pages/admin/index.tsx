@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
@@ -17,29 +17,14 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { pl } from "date-fns/locale";
-
-// Interface for the admin user
-interface AdminUser {
-  id: number;
-  username: string;
-}
+import { useAuth } from "@/lib/auth-context";
+import AdminLayout from "@/components/admin/admin-layout";
+import ProtectedRoute from "@/components/admin/protected-route";
 
 export default function AdminDashboard() {
   const { toast } = useToast();
-  const [_, navigate] = useNavigate();
   const [activeTab, setActiveTab] = useState("blog");
-
-  // Check if admin is logged in
-  const { data: admin, isLoading: isAdminLoading, error: adminError } = useQuery<AdminUser>({
-    queryKey: ["/api/admin/me"],
-    queryFn: async () => {
-      const res = await apiRequest("GET", "/api/admin/me");
-      if (!res.ok) {
-        throw new Error("Not authenticated");
-      }
-      return res.json();
-    },
-  });
+  const { user, logout } = useAuth();
 
   // Fetch blog posts
   const { data: blogPosts, isLoading: isBlogPostsLoading } = useQuery({
@@ -100,29 +85,6 @@ export default function AdminDashboard() {
       return res.json();
     },
   });
-
-  // Handle logout
-  const handleLogout = async () => {
-    try {
-      const res = await apiRequest("POST", "/api/admin/logout");
-      if (!res.ok) {
-        throw new Error("Failed to logout");
-      }
-      
-      queryClient.removeQueries({ queryKey: ["/api/admin/me"] });
-      toast({
-        title: "Wylogowano",
-        description: "Zostałeś wylogowany z panelu administratora.",
-      });
-      navigate("/admin/login");
-    } catch (error) {
-      toast({
-        title: "Błąd",
-        description: error instanceof Error ? error.message : "Wystąpił błąd podczas wylogowywania",
-        variant: "destructive",
-      });
-    }
-  };
 
   // Delete blog post handler
   const handleDeleteBlogPost = async (id: number) => {
@@ -254,324 +216,293 @@ export default function AdminDashboard() {
     }
   };
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (adminError) {
-      navigate("/admin/login");
-    }
-  }, [adminError, navigate]);
-
-  // Loading state
-  if (isAdminLoading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 shadow">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Panel Administracyjny</h1>
+    <ProtectedRoute>
+      <AdminLayout>
+        <div className="space-y-6">
+          <h1 className="text-3xl font-bold">Panel administracyjny</h1>
           
-          <div className="flex items-center gap-4">
-            {admin && (
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Zalogowany jako: <strong>{admin.username}</strong>
-              </span>
-            )}
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-8">
+              <TabsTrigger value="blog">Blog</TabsTrigger>
+              <TabsTrigger value="templates">Szablony</TabsTrigger>
+              <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
+              <TabsTrigger value="messages">Wiadomości</TabsTrigger>
+              <TabsTrigger value="subscribers">Subskrybenci</TabsTrigger>
+            </TabsList>
             
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Wyloguj
-            </Button>
-          </div>
+            {/* Blog Posts Tab */}
+            <TabsContent value="blog">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>Posty na blogu</CardTitle>
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Dodaj post
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {isBlogPostsLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Tytuł</TableHead>
+                          <TableHead>Kategoria</TableHead>
+                          <TableHead>Autor</TableHead>
+                          <TableHead>Data publikacji</TableHead>
+                          <TableHead>Wyróżniony</TableHead>
+                          <TableHead>Akcje</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {blogPosts?.map((post: any) => (
+                          <TableRow key={post.id}>
+                            <TableCell className="font-medium">{post.title}</TableCell>
+                            <TableCell>{post.category}</TableCell>
+                            <TableCell>{post.author}</TableCell>
+                            <TableCell>
+                              {post.publishedAt ? format(new Date(post.publishedAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
+                            </TableCell>
+                            <TableCell>{post.featured ? "Tak" : "Nie"}</TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <Button variant="outline" size="sm">
+                                  Edytuj
+                                </Button>
+                                <Button 
+                                  variant="destructive" 
+                                  size="sm" 
+                                  onClick={() => handleDeleteBlogPost(post.id)}
+                                >
+                                  <Trash className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Templates Tab */}
+            <TabsContent value="templates">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>Szablony</CardTitle>
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Dodaj szablon
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {isTemplatesLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Tytuł</TableHead>
+                          <TableHead>Cena</TableHead>
+                          <TableHead>Ocena</TableHead>
+                          <TableHead>Recenzje</TableHead>
+                          <TableHead>Bestseller</TableHead>
+                          <TableHead>Akcje</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {templates?.map((template: any) => (
+                          <TableRow key={template.id}>
+                            <TableCell className="font-medium">{template.title}</TableCell>
+                            <TableCell>{(template.price / 100).toFixed(2)} zł</TableCell>
+                            <TableCell>{template.rating}/50</TableCell>
+                            <TableCell>{template.reviewCount}</TableCell>
+                            <TableCell>{template.isBestseller ? "Tak" : "Nie"}</TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <Button variant="outline" size="sm">
+                                  Edytuj
+                                </Button>
+                                <Button 
+                                  variant="destructive" 
+                                  size="sm"
+                                  onClick={() => handleDeleteTemplate(template.id)}
+                                >
+                                  <Trash className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Case Studies Tab */}
+            <TabsContent value="case-studies">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>Case Studies</CardTitle>
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Dodaj case study
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {isCaseStudiesLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Tytuł</TableHead>
+                          <TableHead>Narzędzia</TableHead>
+                          <TableHead>Tagi</TableHead>
+                          <TableHead>Wyróżniony</TableHead>
+                          <TableHead>Akcje</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {caseStudies?.map((study: any) => (
+                          <TableRow key={study.id}>
+                            <TableCell className="font-medium">{study.title}</TableCell>
+                            <TableCell>{study.tools?.join(", ") || "Brak"}</TableCell>
+                            <TableCell>{study.tags?.join(", ") || "Brak"}</TableCell>
+                            <TableCell>{study.featured ? "Tak" : "Nie"}</TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <Button variant="outline" size="sm">
+                                  Edytuj
+                                </Button>
+                                <Button 
+                                  variant="destructive" 
+                                  size="sm"
+                                  onClick={() => handleDeleteCaseStudy(study.id)}
+                                >
+                                  <Trash className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Messages Tab */}
+            <TabsContent value="messages">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Wiadomości kontaktowe</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {isMessagesLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Imię i nazwisko</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Firma</TableHead>
+                          <TableHead>Data</TableHead>
+                          <TableHead>Wiadomość</TableHead>
+                          <TableHead>Akcje</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {messages?.map((message: any) => (
+                          <TableRow key={message.id}>
+                            <TableCell className="font-medium">{message.name}</TableCell>
+                            <TableCell>{message.email}</TableCell>
+                            <TableCell>{message.company || "Brak"}</TableCell>
+                            <TableCell>
+                              {message.createdAt ? format(new Date(message.createdAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
+                            </TableCell>
+                            <TableCell className="max-w-xs truncate">{message.message}</TableCell>
+                            <TableCell>
+                              <Button 
+                                variant="destructive" 
+                                size="sm"
+                                onClick={() => handleDeleteMessage(message.id)}
+                              >
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Subscribers Tab */}
+            <TabsContent value="subscribers">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Subskrybenci newslettera</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {isSubscribersLoading ? (
+                    <div className="flex justify-center p-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Data zapisu</TableHead>
+                          <TableHead>Akcje</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {subscribers?.map((subscriber: any) => (
+                          <TableRow key={subscriber.id}>
+                            <TableCell className="font-medium">{subscriber.email}</TableCell>
+                            <TableCell>
+                              {subscriber.subscribedAt ? format(new Date(subscriber.subscribedAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
+                            </TableCell>
+                            <TableCell>
+                              <Button 
+                                variant="destructive" 
+                                size="sm"
+                                onClick={() => handleDeleteSubscriber(subscriber.id)}
+                              >
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
-      </header>
-      
-      <main className="container mx-auto px-4 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-8">
-            <TabsTrigger value="blog">Blog</TabsTrigger>
-            <TabsTrigger value="templates">Szablony</TabsTrigger>
-            <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
-            <TabsTrigger value="messages">Wiadomości</TabsTrigger>
-            <TabsTrigger value="subscribers">Subskrybenci</TabsTrigger>
-          </TabsList>
-          
-          {/* Blog Posts Tab */}
-          <TabsContent value="blog">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Posty na blogu</CardTitle>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Dodaj post
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {isBlogPostsLoading ? (
-                  <div className="flex justify-center p-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  </div>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Tytuł</TableHead>
-                        <TableHead>Kategoria</TableHead>
-                        <TableHead>Autor</TableHead>
-                        <TableHead>Data publikacji</TableHead>
-                        <TableHead>Wyróżniony</TableHead>
-                        <TableHead>Akcje</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {blogPosts?.map((post: any) => (
-                        <TableRow key={post.id}>
-                          <TableCell className="font-medium">{post.title}</TableCell>
-                          <TableCell>{post.category}</TableCell>
-                          <TableCell>{post.author}</TableCell>
-                          <TableCell>
-                            {post.publishedAt ? format(new Date(post.publishedAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
-                          </TableCell>
-                          <TableCell>{post.featured ? "Tak" : "Nie"}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Button variant="outline" size="sm">
-                                Edytuj
-                              </Button>
-                              <Button 
-                                variant="destructive" 
-                                size="sm" 
-                                onClick={() => handleDeleteBlogPost(post.id)}
-                              >
-                                <Trash className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Templates Tab */}
-          <TabsContent value="templates">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Szablony</CardTitle>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Dodaj szablon
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {isTemplatesLoading ? (
-                  <div className="flex justify-center p-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  </div>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Tytuł</TableHead>
-                        <TableHead>Cena</TableHead>
-                        <TableHead>Ocena</TableHead>
-                        <TableHead>Recenzje</TableHead>
-                        <TableHead>Bestseller</TableHead>
-                        <TableHead>Akcje</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {templates?.map((template: any) => (
-                        <TableRow key={template.id}>
-                          <TableCell className="font-medium">{template.title}</TableCell>
-                          <TableCell>{(template.price / 100).toFixed(2)} zł</TableCell>
-                          <TableCell>{template.rating}/50</TableCell>
-                          <TableCell>{template.reviewCount}</TableCell>
-                          <TableCell>{template.isBestseller ? "Tak" : "Nie"}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Button variant="outline" size="sm">
-                                Edytuj
-                              </Button>
-                              <Button 
-                                variant="destructive" 
-                                size="sm"
-                                onClick={() => handleDeleteTemplate(template.id)}
-                              >
-                                <Trash className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Case Studies Tab */}
-          <TabsContent value="case-studies">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Case Studies</CardTitle>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Dodaj case study
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {isCaseStudiesLoading ? (
-                  <div className="flex justify-center p-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  </div>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Tytuł</TableHead>
-                        <TableHead>Narzędzia</TableHead>
-                        <TableHead>Tagi</TableHead>
-                        <TableHead>Wyróżniony</TableHead>
-                        <TableHead>Akcje</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {caseStudies?.map((study: any) => (
-                        <TableRow key={study.id}>
-                          <TableCell className="font-medium">{study.title}</TableCell>
-                          <TableCell>{study.tools?.join(", ") || "Brak"}</TableCell>
-                          <TableCell>{study.tags?.join(", ") || "Brak"}</TableCell>
-                          <TableCell>{study.featured ? "Tak" : "Nie"}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Button variant="outline" size="sm">
-                                Edytuj
-                              </Button>
-                              <Button 
-                                variant="destructive" 
-                                size="sm"
-                                onClick={() => handleDeleteCaseStudy(study.id)}
-                              >
-                                <Trash className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Messages Tab */}
-          <TabsContent value="messages">
-            <Card>
-              <CardHeader>
-                <CardTitle>Wiadomości kontaktowe</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {isMessagesLoading ? (
-                  <div className="flex justify-center p-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  </div>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Imię i nazwisko</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Firma</TableHead>
-                        <TableHead>Data</TableHead>
-                        <TableHead>Wiadomość</TableHead>
-                        <TableHead>Akcje</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {messages?.map((message: any) => (
-                        <TableRow key={message.id}>
-                          <TableCell className="font-medium">{message.name}</TableCell>
-                          <TableCell>{message.email}</TableCell>
-                          <TableCell>{message.company || "Brak"}</TableCell>
-                          <TableCell>
-                            {message.createdAt ? format(new Date(message.createdAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
-                          </TableCell>
-                          <TableCell className="max-w-xs truncate">{message.message}</TableCell>
-                          <TableCell>
-                            <Button 
-                              variant="destructive" 
-                              size="sm"
-                              onClick={() => handleDeleteMessage(message.id)}
-                            >
-                              <Trash className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Subscribers Tab */}
-          <TabsContent value="subscribers">
-            <Card>
-              <CardHeader>
-                <CardTitle>Subskrybenci newslettera</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {isSubscribersLoading ? (
-                  <div className="flex justify-center p-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  </div>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Data zapisu</TableHead>
-                        <TableHead>Akcje</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {subscribers?.map((subscriber: any) => (
-                        <TableRow key={subscriber.id}>
-                          <TableCell className="font-medium">{subscriber.email}</TableCell>
-                          <TableCell>
-                            {subscriber.subscribedAt ? format(new Date(subscriber.subscribedAt), "dd MMM yyyy", { locale: pl }) : "Brak daty"}
-                          </TableCell>
-                          <TableCell>
-                            <Button 
-                              variant="destructive" 
-                              size="sm"
-                              onClick={() => handleDeleteSubscriber(subscriber.id)}
-                            >
-                              <Trash className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </main>
-    </div>
+      </AdminLayout>
+    </ProtectedRoute>
   );
 }
