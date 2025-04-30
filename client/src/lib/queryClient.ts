@@ -55,3 +55,10 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+// Funkcja do odświeżania danych przy zmianie języka
+export function invalidateQueriesOnLanguageChange() {
+  queryClient.invalidateQueries({ queryKey: ["/api/blog-posts/featured"] });
+  queryClient.invalidateQueries({ queryKey: ["/api/templates/featured"] });
+  queryClient.invalidateQueries({ queryKey: ["/api/case-studies/featured"] });
+}

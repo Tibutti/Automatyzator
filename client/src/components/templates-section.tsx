@@ -14,7 +14,8 @@ export default function TemplatesSection() {
     queryKey: ["/api/templates/featured", i18n.language],
     queryFn: async ({ queryKey }) => {
       const [endpoint, language] = queryKey;
-      const response = await fetch(`${endpoint}?lang=${language}`);
+      const currentLanguage = typeof language === 'string' ? language.substring(0, 2) : "pl";
+      const response = await fetch(`${endpoint}?lang=${currentLanguage}`);
       if (!response.ok) {
         throw new Error("Failed to fetch templates");
       }

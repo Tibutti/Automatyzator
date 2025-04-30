@@ -13,8 +13,14 @@ export default function LanguageSwitcher() {
   const { t, i18n } = useTranslation('common');
   const [open, setOpen] = useState(false);
   
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
+  const changeLanguage = async (lng: string) => {
+    await i18n.changeLanguage(lng);
+    
+    // Odśwież wszystkie zapytania API, aby uwzględnić nowy język
+    import("@/lib/queryClient").then(module => {
+      module.invalidateQueriesOnLanguageChange();
+    });
+    
     setOpen(false);
   };
 
