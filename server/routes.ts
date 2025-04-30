@@ -140,8 +140,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/blog-posts/featured", async (req: Request, res: Response) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const lang = req.query.lang as string || 'pl'; // Domyślnie polski, ale obsługujemy także inne języki
       const posts = await storage.getFeaturedBlogPosts(limit);
-      return res.json(posts);
+      
+      // Dostosowujemy dane w zależności od języka
+      const translatedPosts = posts.map(post => {
+        if (lang === 'en') {
+          return {
+            ...post,
+            title: post.title.replace('Jak zacząć z automatyzacją', 'How to start with automation')
+              .replace('Integracja systemów ERP', 'ERP systems integration')
+              .replace('Przewodnik po sztucznej inteligencji', 'Guide to artificial intelligence'),
+            excerpt: post.excerpt
+              .replace('Praktyczne porady', 'Practical tips')
+              .replace('Dowiedz się', 'Learn')
+              .replace('dla firm', 'for businesses')
+              .replace('Poznaj najlepsze praktyki', 'Discover best practices')
+              .replace('Integracja z popularnymi systemami', 'Integration with popular systems')
+          };
+        } else if (lang === 'de') {
+          return {
+            ...post,
+            title: post.title.replace('Jak zacząć z automatyzacją', 'Erste Schritte mit der Automatisierung')
+              .replace('Integracja systemów ERP', 'Integration von ERP-Systemen')
+              .replace('Przewodnik po sztucznej inteligencji', 'Leitfaden für künstliche Intelligenz'),
+            excerpt: post.excerpt
+              .replace('Praktyczne porady', 'Praktische Tipps')
+              .replace('Dowiedz się', 'Erfahren Sie')
+              .replace('dla firm', 'für Unternehmen')
+              .replace('Poznaj najlepsze praktyki', 'Entdecken Sie bewährte Methoden')
+              .replace('Integracja z popularnymi systemami', 'Integration mit gängigen Systemen')
+          };
+        }
+        return post;
+      });
+
+      return res.json(translatedPosts);
     } catch (error) {
       console.error("Error fetching featured blog posts:", error);
       return res.status(500).json({ message: "Failed to fetch featured blog posts" });
@@ -200,8 +234,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/templates/featured", async (req: Request, res: Response) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const lang = req.query.lang as string || 'pl'; // Domyślnie polski
       const templates = await storage.getFeaturedTemplates(limit);
-      return res.json(templates);
+      
+      // Tłumaczenie na podstawie języka
+      const translatedTemplates = templates.map(template => {
+        if (lang === 'en') {
+          return {
+            ...template,
+            title: template.title
+              .replace('Automatyzacja sprzedaży', 'Sales automation')
+              .replace('Integracja systemów', 'Systems integration')
+              .replace('Automatyzacja raportowania', 'Reporting automation'),
+            description: template.description
+              .replace('Zestaw narzędzi', 'Toolkit')
+              .replace('dla działów', 'for departments')
+              .replace('sprzedaży', 'sales')
+              .replace('do automatycznego', 'for automatic')
+              .replace('zbierania danych', 'data collection')
+              .replace('i generowania raportów', 'and report generation')
+              .replace('Narzędzia do integracji', 'Tools for integrating')
+              .replace('popularnych systemów', 'popular systems')
+          };
+        } else if (lang === 'de') {
+          return {
+            ...template,
+            title: template.title
+              .replace('Automatyzacja sprzedaży', 'Vertriebsautomatisierung')
+              .replace('Integracja systemów', 'Systemintegration')
+              .replace('Automatyzacja raportowania', 'Berichtsautomatisierung'),
+            description: template.description
+              .replace('Zestaw narzędzi', 'Toolkit')
+              .replace('dla działów', 'für Abteilungen')
+              .replace('sprzedaży', 'Vertrieb')
+              .replace('do automatycznego', 'für automatische')
+              .replace('zbierania danych', 'Datenerfassung')
+              .replace('i generowania raportów', 'und Berichterstellung')
+              .replace('Narzędzia do integracji', 'Tools zur Integration')
+              .replace('popularnych systemów', 'beliebter Systeme')
+          };
+        }
+        return template;
+      });
+      
+      return res.json(translatedTemplates);
     } catch (error) {
       console.error("Error fetching featured templates:", error);
       return res.status(500).json({ message: "Failed to fetch featured templates" });
