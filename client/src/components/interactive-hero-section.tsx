@@ -370,9 +370,12 @@ export default function InteractiveHeroSection() {
                     {point.icon}
                   </div>
                   <div className={`
-                    absolute left-1/2 -translate-x-1/2 top-16 w-max max-w-[180px]
+                    absolute w-max max-w-[180px]
                     ${activePoint === index ? 'opacity-100' : 'opacity-0'} 
                     transition-opacity duration-300
+                    ${index === 2 ? 'right-full mr-4 top-0' : // Automatyzacja Procesów - po lewej
+                     index === 4 ? 'left-full ml-4 top-0' : // Chmura - po prawej
+                     'left-1/2 -translate-x-1/2 top-16'} // pozostałe - pod elementem
                   `}>
                     <div className="glass-card p-3 text-center shadow-xl">
                       <div className="font-semibold text-sm">{point.label}</div>
