@@ -1,0 +1,141 @@
+{
+  "header": {
+    "home": "Główna",
+    "services": "Usługi",
+    "blog": "Blog",
+    "shop": "Sklep",
+    "caseStudy": "Case Study",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Automatyzuj.",
+    "subtitle": "Integruj. Skaluj.",
+    "description": "Rozwiązania do automatyzacji procesów biznesowych dla nowoczesnych firm",
+    "cta": "Bezpłatna konsultacja"
+  },
+  "features": {
+    "businessData": "Dane biznesowe",
+    "integration": "Integracja",
+    "aiAnalysis": "Analiza AI",
+    "automation": "Automatyzacja procesów",
+    "cloud": "Chmura",
+    "api": "API i integracje"
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "description": "Kompleksowe podejście do automatyzacji procesów biznesowych",
+    "service1": {
+      "title": "Audyt procesów",
+      "description": "Analiza obecnych procesów i identyfikacja obszarów do optymalizacji"
+    },
+    "service2": {
+      "title": "Automatyzacja dokumentów",
+      "description": "Systemy do zarządzania, klasyfikacji i przetwarzania dokumentów"
+    },
+    "service3": {
+      "title": "Boty RPA",
+      "description": "Roboty automatyzujące powtarzalne zadania w systemach biznesowych"
+    },
+    "service4": {
+      "title": "Integracje systemów",
+      "description": "Łączenie różnych aplikacji i systemów w spójny ekosystem"
+    },
+    "service5": {
+      "title": "Aplikacje dedykowane",
+      "description": "Niestandardowe oprogramowanie dostosowane do specyficznych potrzeb"
+    },
+    "service6": {
+      "title": "Analiza danych i AI",
+      "description": "Wykorzystanie sztucznej inteligencji do analizy danych biznesowych"
+    }
+  },
+  "whyUs": {
+    "title": "Dlaczego Automatyzator?",
+    "reason1": {
+      "title": "Doświadczenie",
+      "description": "Ponad 10 lat doświadczenia w automatyzacji procesów biznesowych"
+    },
+    "reason2": {
+      "title": "Kompleksowość",
+      "description": "Od analizy procesów po wdrożenie i wsparcie techniczne"
+    },
+    "reason3": {
+      "title": "Technologia",
+      "description": "Wykorzystanie najnowszych technologii i narzędzi do automatyzacji"
+    }
+  },
+  "cta": {
+    "title": "Gotowy na automatyzację?",
+    "description": "Umów bezpłatną konsultację i dowiedz się, jak możemy pomóc Twojej firmie",
+    "button": "Skontaktuj się z nami"
+  },
+  "portfolio": {
+    "title": "Nasze wdrożenia",
+    "viewAll": "Zobacz wszystkie",
+    "readMore": "Czytaj więcej"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Najnowsze artykuły",
+    "readMore": "Czytaj więcej",
+    "viewAll": "Zobacz wszystkie"
+  },
+  "templates": {
+    "title": "Szablony automatyzacji",
+    "subtitle": "Gotowe rozwiązania",
+    "viewAll": "Zobacz wszystkie",
+    "buyNow": "Kup teraz"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Skontaktuj się z nami w sprawie automatyzacji procesów biznesowych",
+    "form": {
+      "name": "Imię i nazwisko",
+      "email": "Email",
+      "phone": "Telefon",
+      "subject": "Temat",
+      "message": "Wiadomość",
+      "submit": "Wyślij wiadomość"
+    },
+    "address": "Adres",
+    "email": "Email",
+    "phone": "Telefon"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Zapisz się, aby otrzymywać najnowsze informacje o automatyzacji",
+    "placeholder": "Twój adres email",
+    "button": "Zapisz się"
+  },
+  "footer": {
+    "about": "O nas",
+    "services": "Usługi",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "privacy": "Polityka prywatności",
+    "terms": "Warunki korzystania",
+    "copyright": "© 2025 Automatyzator. Wszelkie prawa zastrzeżone."
+  },
+  "notFound": {
+    "title": "Strona nie znaleziona",
+    "description": "Przepraszamy, strona której szukasz nie istnieje.",
+    "button": "Wróć do strony głównej"
+  },
+  "chat": {
+    "title": "Asystent Automatyzatora",
+    "subtitle": "Zadaj pytanie o automatyzację",
+    "placeholder": "Napisz wiadomość...",
+    "typing": "Asystent pisze...",
+    "welcome": "Cześć! Jestem asystentem Automatyzatora. W czym mogę Ci pomóc?"
+  },
+  "consultation": {
+    "title": "Umów konsultację",
+    "description": "Wypełnij formularz poniżej, aby umówić bezpłatną konsultację z naszym ekspertem",
+    "callToAction": "Lub zadzwoń: +48 123 456 789"
+  },
+  "language": {
+    "pl": "Polski",
+    "en": "Angielski",
+    "de": "Niemiecki"
+  }
+}

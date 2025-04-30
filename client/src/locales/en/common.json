@@ -1,0 +1,141 @@
+{
+  "header": {
+    "home": "Home",
+    "services": "Services",
+    "blog": "Blog",
+    "shop": "Shop",
+    "caseStudy": "Case Study",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Automate.",
+    "subtitle": "Integrate. Scale.",
+    "description": "Business process automation solutions for modern companies",
+    "cta": "Free Consultation"
+  },
+  "features": {
+    "businessData": "Business Data",
+    "integration": "Integration",
+    "aiAnalysis": "AI Analysis",
+    "automation": "Process Automation",
+    "cloud": "Cloud",
+    "api": "API & Integrations"
+  },
+  "services": {
+    "title": "Our Services",
+    "description": "Comprehensive approach to business process automation",
+    "service1": {
+      "title": "Process Audit",
+      "description": "Analysis of current processes and identification of areas for optimization"
+    },
+    "service2": {
+      "title": "Document Automation",
+      "description": "Systems for managing, classifying and processing documents"
+    },
+    "service3": {
+      "title": "RPA Bots",
+      "description": "Robots automating repetitive tasks in business systems"
+    },
+    "service4": {
+      "title": "System Integrations",
+      "description": "Connecting different applications and systems into a coherent ecosystem"
+    },
+    "service5": {
+      "title": "Custom Applications",
+      "description": "Custom software tailored to specific needs"
+    },
+    "service6": {
+      "title": "Data Analysis and AI",
+      "description": "Using artificial intelligence for business data analysis"
+    }
+  },
+  "whyUs": {
+    "title": "Why Automatyzator?",
+    "reason1": {
+      "title": "Experience",
+      "description": "Over 10 years of experience in business process automation"
+    },
+    "reason2": {
+      "title": "Comprehensiveness",
+      "description": "From process analysis to implementation and technical support"
+    },
+    "reason3": {
+      "title": "Technology",
+      "description": "Using the latest technologies and tools for automation"
+    }
+  },
+  "cta": {
+    "title": "Ready for automation?",
+    "description": "Schedule a free consultation and find out how we can help your company",
+    "button": "Contact us"
+  },
+  "portfolio": {
+    "title": "Our Implementations",
+    "viewAll": "View all",
+    "readMore": "Read more"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Latest articles",
+    "readMore": "Read more",
+    "viewAll": "View all"
+  },
+  "templates": {
+    "title": "Automation Templates",
+    "subtitle": "Ready-made solutions",
+    "viewAll": "View all",
+    "buyNow": "Buy now"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Contact us about business process automation",
+    "form": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message"
+    },
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Subscribe to receive the latest information about automation",
+    "placeholder": "Your email address",
+    "button": "Subscribe"
+  },
+  "footer": {
+    "about": "About us",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© 2025 Automatyzator. All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "button": "Back to home page"
+  },
+  "chat": {
+    "title": "Automatyzator Assistant",
+    "subtitle": "Ask a question about automation",
+    "placeholder": "Type a message...",
+    "typing": "Assistant is typing...",
+    "welcome": "Hi! I'm the Automatyzator assistant. How can I help you?"
+  },
+  "consultation": {
+    "title": "Schedule a consultation",
+    "description": "Fill out the form below to schedule a free consultation with our expert",
+    "callToAction": "Or call: +48 123 456 789"
+  },
+  "language": {
+    "pl": "Polish",
+    "en": "English",
+    "de": "German"
+  }
+}

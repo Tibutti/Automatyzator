@@ -1,0 +1,141 @@
+{
+  "header": {
+    "home": "Startseite",
+    "services": "Dienstleistungen",
+    "blog": "Blog",
+    "shop": "Shop",
+    "caseStudy": "Fallstudien",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Automatisieren.",
+    "subtitle": "Integrieren. Skalieren.",
+    "description": "Lösungen zur Automatisierung von Geschäftsprozessen für moderne Unternehmen",
+    "cta": "Kostenlose Beratung"
+  },
+  "features": {
+    "businessData": "Geschäftsdaten",
+    "integration": "Integration",
+    "aiAnalysis": "KI-Analyse",
+    "automation": "Prozessautomatisierung",
+    "cloud": "Cloud",
+    "api": "API & Integrationen"
+  },
+  "services": {
+    "title": "Unsere Dienstleistungen",
+    "description": "Umfassender Ansatz zur Automatisierung von Geschäftsprozessen",
+    "service1": {
+      "title": "Prozessaudit",
+      "description": "Analyse der aktuellen Prozesse und Identifizierung von Optimierungsbereichen"
+    },
+    "service2": {
+      "title": "Dokumentenautomatisierung",
+      "description": "Systeme zur Verwaltung, Klassifizierung und Verarbeitung von Dokumenten"
+    },
+    "service3": {
+      "title": "RPA-Bots",
+      "description": "Roboter, die wiederkehrende Aufgaben in Geschäftssystemen automatisieren"
+    },
+    "service4": {
+      "title": "Systemintegrationen",
+      "description": "Verbindung verschiedener Anwendungen und Systeme zu einem kohärenten Ökosystem"
+    },
+    "service5": {
+      "title": "Maßgeschneiderte Anwendungen",
+      "description": "Maßgeschneiderte Software für spezifische Anforderungen"
+    },
+    "service6": {
+      "title": "Datenanalyse und KI",
+      "description": "Nutzung künstlicher Intelligenz für die Analyse von Geschäftsdaten"
+    }
+  },
+  "whyUs": {
+    "title": "Warum Automatyzator?",
+    "reason1": {
+      "title": "Erfahrung",
+      "description": "Über 10 Jahre Erfahrung in der Automatisierung von Geschäftsprozessen"
+    },
+    "reason2": {
+      "title": "Umfassende Lösung",
+      "description": "Von der Prozessanalyse bis zur Implementierung und technischen Unterstützung"
+    },
+    "reason3": {
+      "title": "Technologie",
+      "description": "Verwendung der neuesten Technologien und Werkzeuge für die Automatisierung"
+    }
+  },
+  "cta": {
+    "title": "Bereit für Automatisierung?",
+    "description": "Vereinbaren Sie eine kostenlose Beratung und erfahren Sie, wie wir Ihrem Unternehmen helfen können",
+    "button": "Kontaktieren Sie uns"
+  },
+  "portfolio": {
+    "title": "Unsere Implementierungen",
+    "viewAll": "Alle anzeigen",
+    "readMore": "Mehr lesen"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Neueste Artikel",
+    "readMore": "Mehr lesen",
+    "viewAll": "Alle anzeigen"
+  },
+  "templates": {
+    "title": "Automatisierungsvorlagen",
+    "subtitle": "Fertige Lösungen",
+    "viewAll": "Alle anzeigen",
+    "buyNow": "Jetzt kaufen"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Kontaktieren Sie uns bezüglich der Automatisierung von Geschäftsprozessen",
+    "form": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "subject": "Betreff",
+      "message": "Nachricht",
+      "submit": "Nachricht senden"
+    },
+    "address": "Adresse",
+    "email": "E-Mail",
+    "phone": "Telefon"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Abonnieren Sie, um die neuesten Informationen zur Automatisierung zu erhalten",
+    "placeholder": "Ihre E-Mail-Adresse",
+    "button": "Abonnieren"
+  },
+  "footer": {
+    "about": "Über uns",
+    "services": "Dienstleistungen",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "copyright": "© 2025 Automatyzator. Alle Rechte vorbehalten."
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Entschuldigung, die gesuchte Seite existiert nicht.",
+    "button": "Zurück zur Startseite"
+  },
+  "chat": {
+    "title": "Automatyzator Assistent",
+    "subtitle": "Stellen Sie eine Frage zur Automatisierung",
+    "placeholder": "Nachricht eingeben...",
+    "typing": "Assistent schreibt...",
+    "welcome": "Hallo! Ich bin der Automatyzator-Assistent. Wie kann ich Ihnen helfen?"
+  },
+  "consultation": {
+    "title": "Beratung vereinbaren",
+    "description": "Füllen Sie das untenstehende Formular aus, um eine kostenlose Beratung mit unserem Experten zu vereinbaren",
+    "callToAction": "Oder rufen Sie an: +48 123 456 789"
+  },
+  "language": {
+    "pl": "Polnisch",
+    "en": "Englisch",
+    "de": "Deutsch"
+  }
+}
