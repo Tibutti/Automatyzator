@@ -2,9 +2,20 @@ import { Link } from "wouter";
 import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
 import Logo from "@/components/logo";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import LegalPopup from "@/components/legal-popup";
+import PrivacyPolicy from "@/components/legal/privacy-policy";
+import TermsOfService from "@/components/legal/terms-of-service";
+import CookiesPolicy from "@/components/legal/cookies-policy";
 
 export default function Footer() {
   const { t } = useTranslation('common');
+  const [activePopup, setActivePopup] = useState<'privacy' | 'terms' | 'cookies' | null>(null);
+  
+  const openPrivacyPopup = () => setActivePopup('privacy');
+  const openTermsPopup = () => setActivePopup('terms');
+  const openCookiesPopup = () => setActivePopup('cookies');
+  const closePopup = () => setActivePopup(null);
   
   return (
     <footer className="bg-[#1F1F1F] text-white py-12">
@@ -77,13 +88,38 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">{t('footer.copyright')}</p>
           <div className="flex space-x-6">
-            <Link href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</Link>
-            <Link href="/terms-of-service" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</Link>
-            <Link href="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</Link>
+            <button onClick={openPrivacyPopup} className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</button>
+            <button onClick={openTermsPopup} className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</button>
+            <button onClick={openCookiesPopup} className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</button>
             <span id="cookie-settings-btn-container"></span>
           </div>
         </div>
       </div>
+      
+      {/* Legal Popups */}
+      <LegalPopup 
+        isOpen={activePopup === 'privacy'} 
+        onClose={closePopup} 
+        title={t('privacy.title')}
+      >
+        <PrivacyPolicy />
+      </LegalPopup>
+      
+      <LegalPopup 
+        isOpen={activePopup === 'terms'} 
+        onClose={closePopup} 
+        title={t('terms.title')}
+      >
+        <TermsOfService />
+      </LegalPopup>
+      
+      <LegalPopup 
+        isOpen={activePopup === 'cookies'} 
+        onClose={closePopup} 
+        title={t('cookies.title')}
+      >
+        <CookiesPolicy />
+      </LegalPopup>
     </footer>
   );
 }

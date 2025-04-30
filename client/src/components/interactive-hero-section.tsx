@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Cpu, Database, Cloud, Zap, Layers, Code } from "lucide-react";
+import { ArrowRight, Cpu, Database, Search, Zap, Layers, Code } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // Typ pojedynczej cząstki w animacji
@@ -98,7 +98,7 @@ export default function InteractiveHeroSection() {
       x: 0.6,
       y: 0.5,
       label: t('features.cloud'),
-      icon: <Cloud className="h-6 w-6 text-sky-500" />,
+      icon: <Search className="h-6 w-6 text-sky-500" />,
       connections: [0, 1, 2, 3, 5],
       pulse: true,
       active: true,
