@@ -70,7 +70,7 @@ export default function InteractiveHeroSection() {
       x: 0.7,
       y: 0.8,
       label: "Integracja",
-      icon: <Layers className="h-6 w-6 text-blue-700" />,
+      icon: <Layers className="h-6 w-6 text-yellow-500" />,
       connections: [0, 1, 2, 4, 5],
       pulse: true,
       active: true,
@@ -123,7 +123,7 @@ export default function InteractiveHeroSection() {
       const colors = [
         'rgba(14, 165, 233, 0.3)',  // sky-500 (Chmura)
         'rgba(220, 38, 38, 0.3)',   // red-600 (Analiza AI)
-        'rgba(29, 78, 216, 0.3)',   // blue-700 (Integracja) - zmieniony z emerald-600 na blue-700
+        'rgba(234, 179, 8, 0.3)',   // yellow-500 (Integracja) - zmieniony na jasny żółty
         'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
         'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
         'rgba(217, 70, 239, 0.3)',  // fuchsia-500 (API i Integracje)
@@ -199,8 +199,8 @@ export default function InteractiveHeroSection() {
               case 2: // Automatyzacja Procesów - amber
                 ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
                 break;
-              case 3: // Integracja - blue-700
-                ctx.strokeStyle = 'rgba(29, 78, 216, 0.5)'; 
+              case 3: // Integracja - yellow-500
+                ctx.strokeStyle = 'rgba(234, 179, 8, 0.5)'; 
                 break;
               case 4: // Chmura - sky-500
                 ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
