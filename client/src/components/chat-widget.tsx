@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, X, Send } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { apiRequest } from "@/lib/queryClient";
 
 type Message = {
   id: string;
@@ -19,14 +21,23 @@ export default function ChatWidget() {
     }
   ]);
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { theme } = useTheme();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Automatyczne przewijanie na dół po nowej wiadomości
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
 
     // Add user message
     const newUserMessage: Message = {
@@ -35,18 +46,42 @@ export default function ChatWidget() {
       sender: "user"
     };
     
-    setMessages([...messages, newUserMessage]);
+    setMessages(prev => [...prev, newUserMessage]);
+    
+    // Zapisz inputValue przed wyczyszczeniem
+    const messageToSend = inputValue;
     setInputValue("");
-
-    // Simulate bot response
-    setTimeout(() => {
+    
+    // Pokaż wskaźnik ładowania
+    setIsLoading(true);
+    
+    try {
+      // Wyślij zapytanie do API OpenAI
+      const response = await apiRequest("POST", "/api/chat", { message: messageToSend });
+      const data = await response.json();
+      
+      // Dodaj odpowiedź bota
       const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "Dziękuję za wiadomość! W tej chwili jestem prostym demo, ale prawdziwy asystent odpowiedziałby na Twoje pytanie o automatyzację.",
+        id: Date.now().toString(),
+        text: data.response,
         sender: "bot"
       };
+      
       setMessages(prev => [...prev, botResponse]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      
+      // Dodaj komunikat o błędzie
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        text: "Przepraszam, wystąpił błąd podczas generowania odpowiedzi. Proszę spróbować ponownie później.",
+        sender: "bot"
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -119,6 +154,18 @@ export default function ChatWidget() {
                 )}
               </div>
             ))}
+            {isLoading && (
+              <div className="flex items-start">
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mr-2 flex-shrink-0">
+                  <MessageSquare className="h-4 w-4" />
+                </div>
+                <div className={`p-3 rounded-lg ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-100 text-gray-800"} flex items-center space-x-2`}>
+                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  <p>Asystent pisze...</p>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className="p-4 border-t border-gray-200 dark:border-gray-700">
@@ -130,12 +177,14 @@ export default function ChatWidget() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyPress}
+                disabled={isLoading}
               />
               <Button
                 className="px-4 rounded-r-lg"
                 onClick={handleSendMessage}
+                disabled={isLoading || !inputValue.trim()}
               >
-                <Send className="h-4 w-4" />
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               </Button>
             </div>
           </div>

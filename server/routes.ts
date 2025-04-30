@@ -11,6 +11,7 @@ import {
 import { z } from "zod";
 import session from "express-session";
 import { randomBytes } from "crypto";
+import { generateChatResponse } from "./openai";
 
 // Interface for a user from the session
 interface SessionUser {
@@ -288,6 +289,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Error subscribing to newsletter:", error);
       return res.status(500).json({ message: "Failed to subscribe to newsletter" });
+    }
+  });
+  
+  // Chat with OpenAI endpoint
+  app.post("/api/chat", async (req: Request, res: Response) => {
+    try {
+      const { message } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ message: "Message is required and must be a string" });
+      }
+      
+      const response = await generateChatResponse(message);
+      return res.json({ response });
+    } catch (error) {
+      console.error("Error generating chat response:", error);
+      return res.status(500).json({ 
+        message: "Failed to generate response", 
+        error: error instanceof Error ? error.message : "Unknown error" 
+      });
     }
   });
 
