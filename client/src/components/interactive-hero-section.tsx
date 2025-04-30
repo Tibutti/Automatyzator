@@ -70,7 +70,7 @@ export default function InteractiveHeroSection() {
       x: 0.7,
       y: 0.8,
       label: "Integracja",
-      icon: <Layers className="h-6 w-6 text-emerald-600" />,
+      icon: <Layers className="h-6 w-6 text-blue-700" />,
       connections: [0, 1, 2, 4, 5],
       pulse: true,
       active: true,
@@ -80,7 +80,7 @@ export default function InteractiveHeroSection() {
       x: 0.6,
       y: 0.5,
       label: "Chmura",
-      icon: <Cloud className="h-6 w-6 text-pink-600" />,
+      icon: <Cloud className="h-6 w-6 text-sky-500" />,
       connections: [0, 1, 2, 3, 5],
       pulse: true,
       active: true,
@@ -121,9 +121,9 @@ export default function InteractiveHeroSection() {
       const size = Math.random() * 3.5 + 1;
       // Dostosowano kolory do naszej zaktualizowanej palety
       const colors = [
-        'rgba(219, 39, 119, 0.3)',  // pink-600 (Chmura) - zmieniony z sky-500 na pink-600
-        'rgba(220, 38, 38, 0.3)',   // red-600 (Analiza AI) - zmieniony z indigo-500 na red-600
-        'rgba(16, 185, 129, 0.3)',  // emerald-600 (Integracja)
+        'rgba(14, 165, 233, 0.3)',  // sky-500 (Chmura)
+        'rgba(220, 38, 38, 0.3)',   // red-600 (Analiza AI)
+        'rgba(29, 78, 216, 0.3)',   // blue-700 (Integracja) - zmieniony z emerald-600 na blue-700
         'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
         'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
         'rgba(217, 70, 239, 0.3)',  // fuchsia-500 (API i Integracje)
@@ -199,11 +199,11 @@ export default function InteractiveHeroSection() {
               case 2: // Automatyzacja Procesów - amber
                 ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
                 break;
-              case 3: // Integracja - emerald
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)'; 
+              case 3: // Integracja - blue-700
+                ctx.strokeStyle = 'rgba(29, 78, 216, 0.5)'; 
                 break;
-              case 4: // Chmura - pink-600
-                ctx.strokeStyle = 'rgba(219, 39, 119, 0.5)'; 
+              case 4: // Chmura - sky-500
+                ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
                 break;
               case 5: // API i Integracje - fuchsia
                 ctx.strokeStyle = 'rgba(217, 70, 239, 0.5)';
