@@ -57,7 +57,7 @@ export default function InteractiveHeroSection() {
       description: "Zaawansowane uczenie maszynowe i predykcja trendów biznesowych"
     },
     {
-      x: 0.5,
+      x: 0.4,
       y: 0.5,
       label: "Automatyzacja Procesów",
       icon: <Zap className="h-6 w-6 text-amber-500" />,
@@ -77,8 +77,8 @@ export default function InteractiveHeroSection() {
       description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
     },
     {
-      x: 0.6,
-      y: 0.45,
+      x: 0.65,
+      y: 0.5,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-sky-500" />,
       connections: [0, 1, 2, 3],
