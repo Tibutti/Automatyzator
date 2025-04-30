@@ -95,15 +95,21 @@
     "form": {
       "name": "Full name",
       "email": "Email",
+      "company": "Company",
+      "companyPlaceholder": "Company name",
       "phone": "Phone",
       "subject": "Subject",
       "message": "Message",
+      "messagePlaceholder": "Describe your needs...",
       "submit": "Send message",
       "sending": "Sending...",
       "successTitle": "Message sent!",
       "successDescription": "Thank you for contacting us. We will get back to you as soon as possible.",
       "errorTitle": "An error occurred",
-      "errorDescription": "Failed to send message. Please try again."
+      "errorDescription": "Failed to send message. Please try again.",
+      "nameError": "Full name must contain at least 2 characters",
+      "emailError": "Please enter a valid email address",
+      "messageError": "Message must contain at least 10 characters"
     },
     "address": "Address",
     "email": "Email",
