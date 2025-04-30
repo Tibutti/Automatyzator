@@ -444,7 +444,9 @@ export default function InteractiveHeroSection() {
                       : 'bg-card shadow-md'}
                     transition-all duration-300
                   `}>
-                    {point.icon}
+                    <div className={`transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''}`}>
+                      {point.icon}
+                    </div>
                   </div>
                   <div className={`
                     absolute w-max max-w-[180px]
@@ -486,7 +488,7 @@ export default function InteractiveHeroSection() {
                     transition-all duration-300
                   `}>
                     {/* Zmniejszamy odrobinę ikonki na mobile dla lepszej czytelności */}
-                    <div className="h-4 w-4">
+                    <div className={`h-4 w-4 transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''}`}>
                       {point.icon}
                     </div>
                   </div>
