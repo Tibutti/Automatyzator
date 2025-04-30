@@ -1,39 +1,43 @@
 import { Cog, Network, Zap, Bot, Brain } from "lucide-react";
-
-const services = [
-  {
-    title: "Make.com",
-    description: "Integracje i automatyzacje na platformie Make",
-    icon: Cog,
-  },
-  {
-    title: "n8n",
-    description: "Automatyzacje procesów z open source n8n",
-    icon: Network,
-  },
-  {
-    title: "Zapier",
-    description: "Szybkie integracje przez Zapier",
-    icon: Zap,
-  },
-  {
-    title: "Boty",
-    description: "Boty konwersacyjne i procesowe",
-    icon: Bot,
-  },
-  {
-    title: "Agenty LLM",
-    description: "Inteligentne asystenty oparte o LLM",
-    icon: Brain,
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function ServicesSection() {
+  const { t } = useTranslation('common');
+  
+  // Teraz mamy usługi z kluczami tłumaczeń
+  const services = [
+    {
+      title: "Make.com",
+      description: t('services.service1.description'),
+      icon: Cog,
+    },
+    {
+      title: "n8n",
+      description: t('services.service2.description'),
+      icon: Network,
+    },
+    {
+      title: "Zapier",
+      description: t('services.service3.description'),
+      icon: Zap,
+    },
+    {
+      title: t('services.service4.title'),
+      description: t('services.service4.description'),
+      icon: Bot,
+    },
+    {
+      title: t('services.service5.title'),
+      description: t('services.service5.description'),
+      icon: Brain,
+    },
+  ];
+
   return (
     <section id="services" className="py-16 bg-gray-50 dark:bg-gray-900/30">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-montserrat font-bold text-center mb-12 text-foreground">
-          Nasze usługi
+          {t('services.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {services.map((service, index) => (
