@@ -50,7 +50,7 @@ export default function InteractiveHeroSection() {
       x: 0.5,
       y: 0.15,
       label: "Analiza AI",
-      icon: <Cpu className="h-6 w-6 text-indigo-500" />,
+      icon: <Cpu className="h-6 w-6 text-red-600" />,
       connections: [0, 2, 3, 4, 5],
       pulse: true,
       active: true,
@@ -80,7 +80,7 @@ export default function InteractiveHeroSection() {
       x: 0.6,
       y: 0.5,
       label: "Chmura",
-      icon: <Cloud className="h-6 w-6 text-sky-500" />,
+      icon: <Cloud className="h-6 w-6 text-pink-600" />,
       connections: [0, 1, 2, 3, 5],
       pulse: true,
       active: true,
@@ -121,8 +121,8 @@ export default function InteractiveHeroSection() {
       const size = Math.random() * 3.5 + 1;
       // Dostosowano kolory do naszej zaktualizowanej palety
       const colors = [
-        'rgba(14, 165, 233, 0.3)',  // sky-500 (Chmura)
-        'rgba(79, 70, 229, 0.3)',   // indigo-500 (Analiza AI) - zmieniony z violet na indigo
+        'rgba(219, 39, 119, 0.3)',  // pink-600 (Chmura) - zmieniony z sky-500 na pink-600
+        'rgba(220, 38, 38, 0.3)',   // red-600 (Analiza AI) - zmieniony z indigo-500 na red-600
         'rgba(16, 185, 129, 0.3)',  // emerald-600 (Integracja)
         'rgba(245, 158, 11, 0.3)',  // amber-500 (Automatyzacja Procesów)
         'rgba(6, 182, 212, 0.3)',   // cyan-500 (Dane Biznesowe)
@@ -193,8 +193,8 @@ export default function InteractiveHeroSection() {
               case 0: // Dane Biznesowe - cyan
                 ctx.strokeStyle = 'rgba(6, 182, 212, 0.5)'; 
                 break;
-              case 1: // Analiza AI - indigo
-                ctx.strokeStyle = 'rgba(79, 70, 229, 0.5)'; 
+              case 1: // Analiza AI - red-600
+                ctx.strokeStyle = 'rgba(220, 38, 38, 0.5)'; 
                 break;
               case 2: // Automatyzacja Procesów - amber
                 ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
@@ -202,8 +202,8 @@ export default function InteractiveHeroSection() {
               case 3: // Integracja - emerald
                 ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)'; 
                 break;
-              case 4: // Chmura - sky
-                ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
+              case 4: // Chmura - pink-600
+                ctx.strokeStyle = 'rgba(219, 39, 119, 0.5)'; 
                 break;
               case 5: // API i Integracje - fuchsia
                 ctx.strokeStyle = 'rgba(217, 70, 239, 0.5)';
