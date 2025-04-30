@@ -34,24 +34,24 @@ export default function InteractiveHeroSection() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Punkty połączeń w animacji - bardziej rozproszone po całym obszarze
+  // Punkty połączeń w animacji - ustawione w kształt litery "A"
   const connectionPoints: ConnectionPoint[] = [
     {
-      x: 0.15,
+      x: 0.3,
       y: 0.8,
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-cyan-500" />,
-      connections: [1, 2, 3],
+      connections: [1, 2, 3, 4],
       pulse: true,
       active: true,
       description: "Jednolita baza danych z różnych źródeł i systemów biznesowych"
     },
     {
-      x: 0.35,
+      x: 0.5,
       y: 0.15,
       label: "Analiza AI",
       icon: <Cpu className="h-6 w-6 text-indigo-500" />,
-      connections: [0, 2, 4],
+      connections: [0, 2, 3, 4],
       pulse: true,
       active: true,
       description: "Zaawansowane uczenie maszynowe i predykcja trendów biznesowych"
@@ -67,21 +67,21 @@ export default function InteractiveHeroSection() {
       description: "Eliminacja powtarzalnych zadań i błyskawiczna optymalizacja procesów"
     },
     {
-      x: 0.75,
-      y: 0.7,
+      x: 0.7,
+      y: 0.8,
       label: "Integracja",
       icon: <Layers className="h-6 w-6 text-emerald-600" />,
-      connections: [0, 2, 4],
+      connections: [0, 1, 2, 4],
       pulse: true,
       active: true,
       description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
     },
     {
-      x: 0.8,
-      y: 0.25,
+      x: 0.6,
+      y: 0.45,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-sky-500" />,
-      connections: [1, 2, 3],
+      connections: [0, 1, 2, 3],
       pulse: true,
       active: true,
       description: "Natychmiastowy dostęp do danych i procesów z dowolnego miejsca"
