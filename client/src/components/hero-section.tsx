@@ -9,8 +9,10 @@ export default function HeroSection() {
           <div className="md:w-1/2 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-4 leading-tight">
               <span className="text-primary">Automatyzuj.</span>{" "}
-              <span className="text-foreground">Integruj.</span>{" "}
-              <span className="text-accent">Skaluj.</span>
+              <div className="mt-2">
+                <span className="text-foreground">Integruj.</span>{" "}
+                <span className="text-accent">Skaluj.</span>
+              </div>
             </h1>
             <p className="text-lg md:text-xl mb-8 font-inter text-gray-700 dark:text-gray-300 max-w-xl">
               Zbuduj przewagę rynkową dzięki botom i zautomatyzowanym przepływom pracy.
