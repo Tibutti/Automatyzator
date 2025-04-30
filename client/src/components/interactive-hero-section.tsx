@@ -14,6 +14,20 @@ interface Particle {
   maxLifetime: number;
 }
 
+interface FlowParticle {
+  x: number;
+  y: number;
+  progress: number;   // Postęp od 0 do 1 na linii
+  speed: number;      // Prędkość poruszania się po linii
+  line: {             // Linia po której porusza się cząstka
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+    color: string;    // Kolor linii/cząstki
+  };
+}
+
 // Typ punktu w sieci połączeń
 interface ConnectionPoint {
   x: number;
@@ -30,6 +44,7 @@ export default function InteractiveHeroSection() {
   const [activePoint, setActivePoint] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
+  const flowParticlesRef = useRef<FlowParticle[]>([]);
   const animationRef = useRef<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -114,7 +129,26 @@ export default function InteractiveHeroSection() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Funkcja do tworzenia nowych cząstek
+    // Funckja tworząca cząstkę płynącą po linii
+    function createFlowParticle(x1: number, y1: number, x2: number, y2: number, color: string) {
+      // Tworzymy cząstkę na początku linii
+      const flowParticle: FlowParticle = {
+        x: x1,
+        y: y1,
+        progress: 0,
+        speed: 0.005 + Math.random() * 0.015, // Różne prędkości dla lepszego efektu
+        line: {
+          x1,
+          y1,
+          x2,
+          y2,
+          color
+        }
+      };
+      flowParticlesRef.current.push(flowParticle);
+    }
+
+    // Funkcja do tworzenia nowych cząstek tła
     function createParticle() {
       if (!canvas) return;
       
@@ -186,32 +220,46 @@ export default function InteractiveHeroSection() {
           const x2 = connPoint.x * (canvas?.width || 0);
           const y2 = connPoint.y * (canvas?.height || 0);
 
+          let currentLineColor = 'rgba(148, 163, 184, 0.15)';
+
           // Aktywne połączenie jest jaśniejsze i w kolorze odpowiadającym ikonie
           if (activePoint === index || activePoint === connIndex) {
             // Wybieramy kolor linii na podstawie aktywnego punktu
             switch (activePoint) {
               case 0: // Dane Biznesowe - cyan
-                ctx.strokeStyle = 'rgba(6, 182, 212, 0.5)'; 
+                currentLineColor = 'rgba(6, 182, 212, 0.5)'; 
                 break;
               case 1: // Analiza AI - red-600
-                ctx.strokeStyle = 'rgba(220, 38, 38, 0.5)'; 
+                currentLineColor = 'rgba(220, 38, 38, 0.5)'; 
                 break;
               case 2: // Automatyzacja Procesów - amber
-                ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; 
+                currentLineColor = 'rgba(245, 158, 11, 0.5)'; 
                 break;
               case 3: // Integracja - yellow-500
-                ctx.strokeStyle = 'rgba(234, 179, 8, 0.5)'; 
+                currentLineColor = 'rgba(234, 179, 8, 0.5)'; 
                 break;
               case 4: // Chmura - sky-500
-                ctx.strokeStyle = 'rgba(14, 165, 233, 0.5)'; 
+                currentLineColor = 'rgba(14, 165, 233, 0.5)'; 
                 break;
               case 5: // API i Integracje - fuchsia
-                ctx.strokeStyle = 'rgba(217, 70, 239, 0.5)';
+                currentLineColor = 'rgba(217, 70, 239, 0.5)';
                 break;
               default:
-                ctx.strokeStyle = 'rgba(147, 51, 234, 0.5)'; // Domyślny kolor
+                currentLineColor = 'rgba(147, 51, 234, 0.5)'; // Domyślny kolor
             }
+            ctx.strokeStyle = currentLineColor;
             ctx.lineWidth = 2;
+            
+            // Tworzymy cząstki płynące po linii, jeśli punkt jest aktywny i jest mało cząstek
+            if (Math.random() < 0.1 && flowParticlesRef.current.length < 50) {
+              // Losowo określamy kierunek przepływu (od punktu aktywnego do połączonego lub odwrotnie)
+              const fromX = activePoint === index ? x1 : x2;
+              const fromY = activePoint === index ? y1 : y2;
+              const toX = activePoint === index ? x2 : x1;
+              const toY = activePoint === index ? y2 : y1;
+              
+              createFlowParticle(fromX, fromY, toX, toY, currentLineColor);
+            }
           } else {
             ctx.strokeStyle = 'rgba(148, 163, 184, 0.15)';
             ctx.lineWidth = 1;
@@ -224,7 +272,36 @@ export default function InteractiveHeroSection() {
         });
       });
 
-      // Aktualizacja i renderowanie cząstek
+      // Aktualizacja i renderowanie cząstek płynących po liniach
+      for (let i = 0; i < flowParticlesRef.current.length; i++) {
+        const p = flowParticlesRef.current[i];
+        p.progress += p.speed;
+        
+        // Obliczanie pozycji cząstki na linii na podstawie postępu
+        p.x = p.line.x1 + (p.line.x2 - p.line.x1) * p.progress;
+        p.y = p.line.y1 + (p.line.y2 - p.line.y1) * p.progress;
+        
+        // Usunięcie cząstki, gdy dotrze do końca linii
+        if (p.progress >= 1) {
+          flowParticlesRef.current.splice(i, 1);
+          i--;
+          continue;
+        }
+        
+        // Renderowanie cząstki płynącej po linii (jako jaśniejszy, mniejszy punkt)
+        ctx.fillStyle = p.line.color.replace('0.5', '0.8'); // Zwiększamy jasność
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Dodajemy "ogon" cząstki dla lepszego efektu płynięcia
+        ctx.fillStyle = p.line.color.replace('0.5', '0.4');
+        ctx.beginPath();
+        ctx.arc(p.x - (p.line.x2 - p.line.x1) * 0.01, p.y - (p.line.y2 - p.line.y1) * 0.01, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Aktualizacja i renderowanie zwykłych cząstek tła
       for (let i = 0; i < particlesRef.current.length; i++) {
         const p = particlesRef.current[i];
         p.lifetime += 1;
