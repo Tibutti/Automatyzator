@@ -122,12 +122,21 @@
     "button": "Abonnieren"
   },
   "footer": {
-    "about": "Über uns",
+    "description": "Wir helfen Unternehmen, Prozesse zu automatisieren, Systeme zu integrieren und Wettbewerbsvorteile aufzubauen.",
     "services": "Dienstleistungen",
+    "resources": "Ressourcen",
+    "company": "Unternehmen",
+    "about": "Über uns",
+    "team": "Team",
+    "careers": "Karriere",
     "blog": "Blog",
     "contact": "Kontakt",
     "privacy": "Datenschutzrichtlinie",
     "terms": "Nutzungsbedingungen",
+    "cookies": "Cookies",
+    "templates": "Vorlagen",
+    "documentation": "Dokumentation",
+    "caseStudies": "Fallstudien",
     "copyright": "© 2025 Automatyzator. Alle Rechte vorbehalten."
   },
   "notFound": {

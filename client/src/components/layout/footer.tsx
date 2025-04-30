@@ -49,14 +49,14 @@ export default function Footer() {
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.resources')}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">{t('footer.blog')}</Link>
               </li>
               <li>
                 <Link href="/shop" className="text-gray-400 hover:text-white transition-colors">{t('footer.templates')}</Link>
               </li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Dokumentacja</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.documentation')}</a></li>
               <li>
-                <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Case Studies</Link>
+                <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">{t('footer.caseStudies')}</Link>
               </li>
             </ul>
           </div>
@@ -75,11 +75,11 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">© {new Date().getFullYear()} Automatyzator. Wszelkie prawa zastrzeżone.</p>
+          <p className="text-gray-400 text-sm mb-4 md:mb-0">{t('footer.copyright')}</p>
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Polityka prywatności</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Warunki korzystania</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Cookies</a>
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</a>
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</a>
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</a>
           </div>
         </div>
       </div>

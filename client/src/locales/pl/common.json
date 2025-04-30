@@ -122,12 +122,21 @@
     "button": "Zapisz się"
   },
   "footer": {
-    "about": "O nas",
+    "description": "Pomagamy firmom automatyzować procesy, integrować systemy i budować przewagę konkurencyjną.",
     "services": "Usługi",
+    "resources": "Zasoby",
+    "company": "Firma",
+    "about": "O nas",
+    "team": "Zespół",
+    "careers": "Kariera",
     "blog": "Blog",
     "contact": "Kontakt",
     "privacy": "Polityka prywatności",
     "terms": "Warunki korzystania",
+    "cookies": "Cookies",
+    "templates": "Szablony",
+    "documentation": "Dokumentacja",
+    "caseStudies": "Case Studies", 
     "copyright": "© 2025 Automatyzator. Wszelkie prawa zastrzeżone."
   },
   "notFound": {

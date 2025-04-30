@@ -122,12 +122,21 @@
     "button": "Subscribe"
   },
   "footer": {
-    "about": "About us",
+    "description": "We help companies automate processes, integrate systems, and build competitive advantage.",
     "services": "Services",
+    "resources": "Resources",
+    "company": "Company",
+    "about": "About us",
+    "team": "Team",
+    "careers": "Careers",
     "blog": "Blog",
     "contact": "Contact",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
+    "cookies": "Cookies",
+    "templates": "Templates",
+    "documentation": "Documentation",
+    "caseStudies": "Case Studies",
     "copyright": "© 2025 Automatyzator. All rights reserved."
   },
   "notFound": {
