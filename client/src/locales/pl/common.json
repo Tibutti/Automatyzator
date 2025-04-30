@@ -14,11 +14,11 @@
     "cta": "Bezpłatna konsultacja"
   },
   "features": {
-    "businessData": "Dane biznesowe",
-    "integration": "Integracja",
+    "businessData": "Analiza danych",
+    "integration": "Integracje systemów",
     "aiAnalysis": "Analiza AI",
     "automation": "Automatyzacja procesów",
-    "cloud": "Chmura",
+    "cloud": "Agenty AI",
     "api": "API i integracje"
   },
   "services": {
