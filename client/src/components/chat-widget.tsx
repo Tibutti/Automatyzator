@@ -4,6 +4,7 @@ import { MessageSquare, X, Send } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { apiRequest } from "@/lib/queryClient";
+import { useTranslation } from "react-i18next";
 
 type Message = {
   id: string;
@@ -12,11 +13,12 @@ type Message = {
 };
 
 export default function ChatWidget() {
+  const { t, i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Cześć! Jestem asystentem Automatyzatora. W czym mogę Ci pomóc?",
+      text: t('chat.welcome'),
       sender: "bot"
     }
   ]);
