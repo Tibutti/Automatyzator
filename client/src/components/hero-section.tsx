@@ -9,7 +9,7 @@ export default function HeroSection() {
           <div className="md:w-1/2 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-4 leading-tight">
               <span className="text-primary">Automatyzuj.</span>{" "}
-              <div className="mt-2">
+              <div className="mt-4">
                 <span className="text-foreground">Integruj.</span>{" "}
                 <span className="text-accent">Skaluj.</span>
               </div>
