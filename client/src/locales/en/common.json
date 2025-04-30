@@ -98,7 +98,12 @@
       "phone": "Phone",
       "subject": "Subject",
       "message": "Message",
-      "submit": "Send message"
+      "submit": "Send message",
+      "sending": "Sending...",
+      "successTitle": "Message sent!",
+      "successDescription": "Thank you for contacting us. We will get back to you as soon as possible.",
+      "errorTitle": "An error occurred",
+      "errorDescription": "Failed to send message. Please try again."
     },
     "address": "Address",
     "email": "Email",

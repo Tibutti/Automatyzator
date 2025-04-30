@@ -95,15 +95,21 @@
     "form": {
       "name": "Imię i nazwisko",
       "email": "Email",
+      "company": "Firma",
+      "companyPlaceholder": "Nazwa firmy",
       "phone": "Telefon",
       "subject": "Temat",
       "message": "Wiadomość",
+      "messagePlaceholder": "Opisz swoje potrzeby...",
       "submit": "Wyślij wiadomość",
       "sending": "Wysyłanie...",
       "successTitle": "Wiadomość wysłana!",
       "successDescription": "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
       "errorTitle": "Wystąpił błąd",
-      "errorDescription": "Nie udało się wysłać wiadomości. Spróbuj ponownie."
+      "errorDescription": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+      "nameError": "Imię i nazwisko musi zawierać co najmniej 2 znaki",
+      "emailError": "Wprowadź poprawny adres e-mail",
+      "messageError": "Wiadomość musi zawierać co najmniej 10 znaków"
     },
     "address": "Adres",
     "email": "Email",
