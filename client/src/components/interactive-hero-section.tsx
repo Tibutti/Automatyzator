@@ -463,94 +463,49 @@ export default function InteractiveHeroSection() {
               ))}
             </div>
             
-            {/* Responsywna wersja dla urządzeń mobilnych - uporządkowany układ w formie siatki */}
+            {/* Responsywna wersja dla urządzeń mobilnych - dokładnie ten sam układ w kształt litery "A" */}
             <div className="md:hidden absolute inset-0 z-10">
-              <div className="absolute inset-0 grid grid-cols-3 grid-rows-2 gap-2 p-4">
-                <div className="col-start-2 row-start-1 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 1 
+              {connectionPoints.map((point, index) => (
+                <div 
+                  key={index}
+                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 ${
+                    activePoint === index ? 'scale-110' : ''
+                  } z-20`}
+                  style={{ 
+                    left: `${point.x * 100}%`, 
+                    top: `${point.y * 100}%`,
+                    transition: 'all 0.3s ease-out'
+                  }}
+                  onClick={() => setActivePoint(activePoint === index ? null : index)}
+                >
+                  <div className={`
+                    rounded-full p-1.5 mb-1
+                    ${activePoint === index 
                       ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 1 ? null : 1)}
-                  >
-                    {connectionPoints[1].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[1].label}</div>
-                </div>
-                
-                <div className="col-start-1 row-start-1 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 0 
-                      ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 0 ? null : 0)}
-                  >
-                    {connectionPoints[0].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[0].label}</div>
-                </div>
-                
-                <div className="col-start-3 row-start-1 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 4 
-                      ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 4 ? null : 4)}
-                  >
-                    {connectionPoints[4].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[4].label}</div>
-                </div>
-                
-                <div className="col-start-1 row-start-2 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 2 
-                      ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 2 ? null : 2)}
-                  >
-                    {connectionPoints[2].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[2].label}</div>
-                </div>
-                
-                <div className="col-start-2 row-start-2 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 5 
-                      ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 5 ? null : 5)}
-                  >
-                    {connectionPoints[5].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[5].label}</div>
-                </div>
-                
-                <div className="col-start-3 row-start-2 flex flex-col items-center justify-center">
-                  <div 
-                    className={`rounded-full p-2 mb-1 ${activePoint === 3 
-                      ? 'bg-primary shadow-lg shadow-primary/20' 
-                      : 'bg-card shadow-md'} transition-all duration-300`}
-                    onClick={() => setActivePoint(activePoint === 3 ? null : 3)}
-                  >
-                    {connectionPoints[3].icon}
-                  </div>
-                  <div className="text-xs font-medium text-center">{connectionPoints[3].label}</div>
-                </div>
-                
-                {/* Modal z pełnym opisem po kliknięciu */}
-                {activePoint !== null && (
-                  <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" 
-                       onClick={() => setActivePoint(null)}>
-                    <div className="glass-card p-4 rounded-lg shadow-2xl max-w-[90vw] text-center"
-                         onClick={(e) => e.stopPropagation()}>
-                      <div className="font-semibold mb-2">{connectionPoints[activePoint].label}</div>
-                      <div className="text-sm text-muted-foreground">{connectionPoints[activePoint].description}</div>
-                      <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>Zamknij</Button>
+                      : 'bg-card shadow-md'}
+                    transition-all duration-300
+                  `}>
+                    {/* Zmniejszamy odrobinę ikonki na mobile dla lepszej czytelności */}
+                    <div className="h-4 w-4">
+                      {point.icon}
                     </div>
                   </div>
-                )}
-              </div>
+                  <div className="text-[10px] font-medium w-16 text-center -ml-[12px]">{point.label}</div>
+                </div>
+              ))}
+              
+              {/* Modal z pełnym opisem po kliknięciu */}
+              {activePoint !== null && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" 
+                     onClick={() => setActivePoint(null)}>
+                  <div className="glass-card p-4 rounded-lg shadow-2xl max-w-[90vw] text-center"
+                       onClick={(e) => e.stopPropagation()}>
+                    <div className="font-semibold mb-2">{connectionPoints[activePoint].label}</div>
+                    <div className="text-sm text-muted-foreground">{connectionPoints[activePoint].description}</div>
+                    <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>Zamknij</Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
