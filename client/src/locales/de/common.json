@@ -91,6 +91,7 @@
   "contact": {
     "title": "Kontakt",
     "description": "Kontaktieren Sie uns bezüglich der Automatisierung von Geschäftsprozessen",
+    "contactInfo": "Kontaktinformation",
     "form": {
       "name": "Vollständiger Name",
       "email": "E-Mail",

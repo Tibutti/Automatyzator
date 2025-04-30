@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Imię i nazwisko musi zawierać co najmniej 2 znaki"),
@@ -28,6 +29,7 @@ const contactFormSchema = z.object({
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export default function ContactForm() {
+  const { t } = useTranslation('common');
   const { toast } = useToast();
   
   const form = useForm<ContactFormValues>({
@@ -46,15 +48,15 @@ export default function ContactForm() {
     },
     onSuccess: () => {
       toast({
-        title: "Wiadomość wysłana!",
-        description: "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
+        title: t('contact.form.successTitle'),
+        description: t('contact.form.successDescription'),
       });
       form.reset();
     },
     onError: () => {
       toast({
-        title: "Wystąpił błąd",
-        description: "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+        title: t('contact.form.errorTitle'),
+        description: t('contact.form.errorDescription'),
         variant: "destructive",
       });
     },

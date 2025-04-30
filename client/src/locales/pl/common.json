@@ -91,6 +91,7 @@
   "contact": {
     "title": "Kontakt",
     "description": "Skontaktuj się z nami w sprawie automatyzacji procesów biznesowych",
+    "contactInfo": "Dane kontaktowe",
     "form": {
       "name": "Imię i nazwisko",
       "email": "Email",

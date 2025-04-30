@@ -91,6 +91,7 @@
   "contact": {
     "title": "Contact",
     "description": "Contact us about business process automation",
+    "contactInfo": "Contact Information",
     "form": {
       "name": "Full name",
       "email": "Email",
