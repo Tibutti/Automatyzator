@@ -144,6 +144,12 @@
     "description": "Entschuldigung, die gesuchte Seite existiert nicht.",
     "button": "Zurück zur Startseite"
   },
+  "cta": {
+    "title": "Bereit für Prozessautomatisierung?",
+    "description": "Kontaktieren Sie uns, um Ihre Bedürfnisse zu besprechen und ein individuelles Angebot zu erhalten.",
+    "startProject": "Projekt starten",
+    "consultation": "Beratung planen"
+  },
   "chat": {
     "title": "Automatyzator Assistent",
     "subtitle": "Stellen Sie eine Frage zur Automatisierung",

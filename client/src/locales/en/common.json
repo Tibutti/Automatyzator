@@ -144,6 +144,12 @@
     "description": "Sorry, the page you are looking for does not exist.",
     "button": "Back to home page"
   },
+  "cta": {
+    "title": "Ready for process automation?",
+    "description": "Contact us to discuss your needs and get a personalized offer.",
+    "startProject": "Start a project",
+    "consultation": "Schedule a consultation"
+  },
   "chat": {
     "title": "Automatyzator Assistant",
     "subtitle": "Ask a question about automation",
