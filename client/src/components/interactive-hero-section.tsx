@@ -438,7 +438,7 @@ export default function InteractiveHeroSection() {
                   onMouseLeave={() => setActivePoint(null)}
                 >
                   <div className={`
-                    rounded-full p-3 mb-2
+                    rounded-full p-3 mb-2 border border-slate-300 dark:border-slate-700
                     ${activePoint === index 
                       ? 'bg-primary shadow-lg shadow-primary/20' 
                       : 'bg-card shadow-md'}
@@ -481,7 +481,7 @@ export default function InteractiveHeroSection() {
                   onClick={() => setActivePoint(activePoint === index ? null : index)}
                 >
                   <div className={`
-                    rounded-full p-1.5 mb-1
+                    rounded-full p-1.5 mb-1 border border-slate-300 dark:border-slate-700
                     ${activePoint === index 
                       ? 'bg-primary shadow-lg shadow-primary/20' 
                       : 'bg-card shadow-md'}
