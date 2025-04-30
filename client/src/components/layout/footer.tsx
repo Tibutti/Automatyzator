@@ -77,9 +77,9 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">{t('footer.copyright')}</p>
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</a>
+            <Link href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</Link>
+            <Link href="/terms-of-service" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</Link>
+            <Link href="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</Link>
           </div>
         </div>
       </div>

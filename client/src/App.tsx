@@ -19,6 +19,9 @@ import Shop from "@/pages/shop";
 import Portfolio from "@/pages/portfolio";
 import Contact from "@/pages/contact";
 import Consultation from "@/pages/consultation";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import TermsOfService from "@/pages/terms-of-service";
+import Cookies from "@/pages/cookies";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/login";
@@ -87,6 +90,21 @@ function Router() {
       <Route path="/consultation">
         <Layout>
           <Consultation />
+        </Layout>
+      </Route>
+      <Route path="/privacy-policy">
+        <Layout>
+          <PrivacyPolicy />
+        </Layout>
+      </Route>
+      <Route path="/terms-of-service">
+        <Layout>
+          <TermsOfService />
+        </Layout>
+      </Route>
+      <Route path="/cookies">
+        <Layout>
+          <Cookies />
         </Layout>
       </Route>
       <Route>
