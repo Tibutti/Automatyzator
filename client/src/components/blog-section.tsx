@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function BlogSection() {
+  const { t } = useTranslation('common');
   const { data: posts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog-posts/featured"],
   });
@@ -14,10 +16,10 @@ export default function BlogSection() {
     <section id="blog" className="py-16 bg-gray-50 dark:bg-gray-900/30">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-          <h2 className="text-3xl font-montserrat font-bold text-foreground">Blog</h2>
+          <h2 className="text-3xl font-montserrat font-bold text-foreground">{t('blog.title')}</h2>
           <Link href="/blog">
             <a className="mt-4 md:mt-0 text-primary font-inter font-semibold hover:underline">
-              Zobacz wszystkie wpisy
+              {t('blog.viewAll')}
             </a>
           </Link>
         </div>
@@ -61,7 +63,7 @@ export default function BlogSection() {
                       {post.category}
                     </span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.readTime} min czytania
+                      {post.readTime} {t('blog.minRead')}
                     </span>
                   </div>
                   <h3 className="text-xl font-montserrat font-bold mb-2 text-foreground">

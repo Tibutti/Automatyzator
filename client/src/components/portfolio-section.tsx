@@ -107,7 +107,7 @@ export default function PortfolioSection() {
                       </div>
                       <Link href={`/portfolio/${study.slug}`}>
                         <Button variant="link" className="p-0 text-primary">
-                          Czytaj więcej
+                          {t('portfolio.readMore')}
                         </Button>
                       </Link>
                     </CardContent>

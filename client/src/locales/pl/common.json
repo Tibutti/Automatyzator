@@ -78,7 +78,8 @@
     "title": "Blog",
     "subtitle": "Najnowsze artykuły",
     "readMore": "Czytaj więcej",
-    "viewAll": "Zobacz wszystkie"
+    "viewAll": "Zobacz wszystkie",
+    "minRead": "min czytania"
   },
   "templates": {
     "title": "Szablony automatyzacji",
