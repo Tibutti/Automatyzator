@@ -1,13 +1,15 @@
 import ContactForm from "@/components/contact-form";
 import NewsletterForm from "@/components/newsletter-form";
 import { Mail, Phone, Linkedin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function ContactSection() {
+  const { t } = useTranslation('common');
   return (
     <section id="contact" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-montserrat font-bold text-center mb-12 text-foreground">
-          Kontakt
+          {t('contact.title')}
         </h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -18,7 +20,7 @@ export default function ContactSection() {
           <div className="flex flex-col justify-between">
             <div>
               <h3 className="text-2xl font-montserrat font-bold mb-6 text-foreground">
-                Dane kontaktowe
+                {t('contact.contactInfo')}
               </h3>
               
               <div className="space-y-4 mb-12">
@@ -27,7 +29,7 @@ export default function ContactSection() {
                     <Mail className="text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-montserrat font-bold text-foreground">Email</h4>
+                    <h4 className="font-montserrat font-bold text-foreground">{t('contact.email')}</h4>
                     <p className="text-gray-600 dark:text-gray-300">kontakt@automatyzator.com</p>
                   </div>
                 </div>
@@ -37,7 +39,7 @@ export default function ContactSection() {
                     <Phone className="text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-montserrat font-bold text-foreground">Telefon</h4>
+                    <h4 className="font-montserrat font-bold text-foreground">{t('contact.phone')}</h4>
                     <p className="text-gray-600 dark:text-gray-300">+48 123 456 789</p>
                   </div>
                 </div>
@@ -56,10 +58,10 @@ export default function ContactSection() {
             
             <div className="bg-background dark:bg-gray-800 p-6 rounded-xl shadow-md">
               <h3 className="text-xl font-montserrat font-bold mb-4 text-foreground">
-                Newsletter
+                {t('newsletter.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Zapisz się, aby otrzymywać najnowsze artykuły i porady dotyczące automatyzacji.
+                {t('newsletter.description')}
               </p>
               <NewsletterForm />
             </div>
