@@ -8,9 +8,10 @@ import Logo from "@/components/logo";
 
 const navLinks = [
   { title: "Home", href: "/" },
+  { title: "Usługi", href: "/services" },
   { title: "Blog", href: "/blog" },
   { title: "Sklep", href: "/shop" },
-  { title: "Portfolio", href: "/portfolio" },
+  { title: "Case Study", href: "/portfolio" },
   { title: "Kontakt", href: "/contact" },
 ];
 

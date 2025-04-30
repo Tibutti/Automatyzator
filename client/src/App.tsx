@@ -13,6 +13,7 @@ import ProtectedRoute from "@/components/admin/protected-route";
 
 // Pages
 import Home from "@/pages/home";
+import Services from "@/pages/services";
 import Blog from "@/pages/blog";
 import Shop from "@/pages/shop";
 import Portfolio from "@/pages/portfolio";
@@ -55,6 +56,11 @@ function Router() {
       <Route path="/">
         <Layout>
           <Home />
+        </Layout>
+      </Route>
+      <Route path="/services">
+        <Layout>
+          <Services />
         </Layout>
       </Route>
       <Route path="/blog">
