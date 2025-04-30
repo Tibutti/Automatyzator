@@ -1,38 +1,41 @@
 import { Rocket, Headphones, Package, Code } from "lucide-react";
-
-const features = [
-  {
-    title: "Szybkie wdrożenia",
-    description: "Nawet w 48h uruchamiamy pierwszy automatyczny przepływ pracy",
-    icon: Rocket,
-    accentColor: "accent",
-  },
-  {
-    title: "Wsparcie 24/7",
-    description: "Całodobowa pomoc techniczna i wsparcie przy problemach",
-    icon: Headphones,
-    accentColor: "primary",
-  },
-  {
-    title: "Gotowe szablony",
-    description: "Biblioteka gotowych rozwiązań dla popularnych przypadków",
-    icon: Package,
-    accentColor: "accent",
-  },
-  {
-    title: "Bez kodu",
-    description: "Większość rozwiązań implementujemy bez potrzeby pisania kodu",
-    icon: Code,
-    accentColor: "primary",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function WhyUsSection() {
+  const { t } = useTranslation('common');
+  
+  const features = [
+    {
+      title: t('whyUs.reason1.title'),
+      description: t('whyUs.reason1.description'),
+      icon: Rocket,
+      accentColor: "accent",
+    },
+    {
+      title: t('whyUs.reason2.title'),
+      description: t('whyUs.reason2.description'),
+      icon: Headphones,
+      accentColor: "primary",
+    },
+    {
+      title: t('whyUs.reason3.title'),
+      description: t('whyUs.reason3.description'),
+      icon: Package,
+      accentColor: "accent",
+    },
+    {
+      title: t('whyUs.title'),
+      description: t('cta.description'),
+      icon: Code,
+      accentColor: "primary",
+    },
+  ];
+
   return (
     <section id="why-us" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-montserrat font-bold text-center mb-12 text-foreground">
-          Dlaczego my?
+          {t('whyUs.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (

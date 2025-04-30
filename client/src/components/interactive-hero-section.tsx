@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Cpu, Database, Cloud, Zap, Layers, Code } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // Typ pojedynczej cząstki w animacji
 interface Particle {
