@@ -88,7 +88,7 @@ export default function InteractiveHeroSection() {
     },
     {
       x: 0.5,
-      y: 0.35,
+      y: 0.65,
       label: "API i Integracje",
       icon: <Code className="h-6 w-6 text-fuchsia-500" />,
       connections: [0, 1, 2, 3, 4],
