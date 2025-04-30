@@ -37,8 +37,8 @@ export default function InteractiveHeroSection() {
   // Punkty połączeń w animacji - bardziej rozproszone po całym obszarze
   const connectionPoints: ConnectionPoint[] = [
     {
-      x: 0.2,
-      y: 0.35,
+      x: 0.15,
+      y: 0.8,
       label: "Dane Biznesowe",
       icon: <Database className="h-6 w-6 text-cyan-500" />,
       connections: [1, 2, 3],
