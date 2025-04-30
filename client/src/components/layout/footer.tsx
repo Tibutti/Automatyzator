@@ -1,8 +1,11 @@
 import { Link } from "wouter";
 import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
 import Logo from "@/components/logo";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation('common');
+  
   return (
     <footer className="bg-[#1F1F1F] text-white py-12">
       <div className="container mx-auto px-4">
@@ -13,7 +16,7 @@ export default function Footer() {
               <span className="ml-2 text-xl font-montserrat font-bold text-white">Automatyzator</span>
             </div>
             <p className="text-gray-400 mb-4">
-              Pomagamy firmom automatyzować procesy, integrować systemy i budować przewagę konkurencyjną.
+              {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -32,7 +35,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">Usługi</h3>
+            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.services')}</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Make.com</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">n8n</a></li>
@@ -43,13 +46,13 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">Zasoby</h3>
+            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.resources')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
               </li>
               <li>
-                <Link href="/shop" className="text-gray-400 hover:text-white transition-colors">Szablony</Link>
+                <Link href="/shop" className="text-gray-400 hover:text-white transition-colors">{t('footer.templates')}</Link>
               </li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Dokumentacja</a></li>
               <li>
@@ -59,13 +62,13 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">Firma</h3>
+            <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.company')}</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">O nas</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Zespół</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Kariera</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.team')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.careers')}</a></li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">Kontakt</Link>
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">{t('footer.contact')}</Link>
               </li>
             </ul>
           </div>
