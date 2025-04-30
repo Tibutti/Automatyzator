@@ -9,9 +9,17 @@ import type { Template } from "@shared/schema";
 import { useTranslation } from "react-i18next";
 
 export default function TemplatesSection() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const { data: templates, isLoading } = useQuery<Template[]>({
-    queryKey: ["/api/templates/featured"],
+    queryKey: ["/api/templates/featured", i18n.language],
+    queryFn: async ({ queryKey }) => {
+      const [endpoint, language] = queryKey;
+      const response = await fetch(`${endpoint}?lang=${language}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch templates");
+      }
+      return response.json();
+    },
   });
   
   return (

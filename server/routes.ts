@@ -311,8 +311,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/case-studies/featured", async (req: Request, res: Response) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const lang = req.query.lang as string || 'pl'; // Domyślnie polski
       const caseStudies = await storage.getFeaturedCaseStudies(limit);
-      return res.json(caseStudies);
+      
+      // Tłumaczenie na podstawie języka
+      const translatedCaseStudies = caseStudies.map(study => {
+        if (lang === 'en') {
+          return {
+            ...study,
+            title: study.title
+              .replace('Automatyzacja ekspedycji zamówień', 'Order fulfillment automation')
+              .replace('Integracja systemów produkcyjnych', 'Production systems integration')
+              .replace('Wdrożenie rozwiązań AI', 'AI solutions implementation'),
+            description: study.description
+              .replace('Usprawnienie procesu', 'Process improvement')
+              .replace('ekspedycji zamówień', 'order fulfillment')
+              .replace('dla firmy logistycznej', 'for a logistics company')
+              .replace('Połączenie różnych systemów', 'Integration of different systems')
+              .replace('w jeden ekosystem', 'into one ecosystem')
+              .replace('dla dużego producenta', 'for a large manufacturer')
+              .replace('Wdrożenie sztucznej inteligencji', 'Implementation of artificial intelligence')
+              .replace('w dziale obsługi klienta', 'in customer service')
+              .replace('znacznie obniżyło koszty', 'significantly lowered costs'),
+            tools: study.tools?.map(tool => 
+              tool === 'Automatyzacja procesów' ? 'Process automation' :
+              tool === 'Integracja systemów' ? 'Systems integration' :
+              tool === 'Sztuczna inteligencja' ? 'Artificial intelligence' :
+              tool === 'RPA' ? 'RPA' :
+              tool === 'Make.com' ? 'Make.com' :
+              tool === 'Zapier' ? 'Zapier' :
+              tool === 'Własne API' ? 'Custom API' :
+              tool === 'Analiza danych' ? 'Data analysis' :
+              tool
+            )
+          };
+        } else if (lang === 'de') {
+          return {
+            ...study,
+            title: study.title
+              .replace('Automatyzacja ekspedycji zamówień', 'Auftragsabwicklungsautomatisierung')
+              .replace('Integracja systemów produkcyjnych', 'Integration von Produktionssystemen')
+              .replace('Wdrożenie rozwiązań AI', 'Implementierung von KI-Lösungen'),
+            description: study.description
+              .replace('Usprawnienie procesu', 'Prozessverbesserung')
+              .replace('ekspedycji zamówień', 'der Auftragsabwicklung')
+              .replace('dla firmy logistycznej', 'für ein Logistikunternehmen')
+              .replace('Połączenie różnych systemów', 'Integration verschiedener Systeme')
+              .replace('w jeden ekosystem', 'in ein Ökosystem')
+              .replace('dla dużego producenta', 'für einen großen Hersteller')
+              .replace('Wdrożenie sztucznej inteligencji', 'Implementierung von künstlicher Intelligenz')
+              .replace('w dziale obsługi klienta', 'im Kundenservice')
+              .replace('znacznie obniżyło koszty', 'senkte die Kosten erheblich'),
+            tools: study.tools?.map(tool => 
+              tool === 'Automatyzacja procesów' ? 'Prozessautomatisierung' :
+              tool === 'Integracja systemów' ? 'Systemintegration' :
+              tool === 'Sztuczna inteligencja' ? 'Künstliche Intelligenz' :
+              tool === 'RPA' ? 'RPA' :
+              tool === 'Make.com' ? 'Make.com' :
+              tool === 'Zapier' ? 'Zapier' :
+              tool === 'Własne API' ? 'Eigene API' :
+              tool === 'Analiza danych' ? 'Datenanalyse' :
+              tool
+            )
+          };
+        }
+        return study;
+      });
+      
+      return res.json(translatedCaseStudies);
     } catch (error) {
       console.error("Error fetching featured case studies:", error);
       return res.status(500).json({ message: "Failed to fetch featured case studies" });

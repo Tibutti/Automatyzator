@@ -10,12 +10,20 @@ import type { CaseStudy } from "@shared/schema";
 import { useTranslation } from "react-i18next";
 
 export default function PortfolioSection() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const carouselRef = useRef<HTMLDivElement>(null);
   const [showControls, setShowControls] = useState(false);
   
   const { data: caseStudies, isLoading } = useQuery<CaseStudy[]>({
-    queryKey: ["/api/case-studies/featured"],
+    queryKey: ["/api/case-studies/featured", i18n.language],
+    queryFn: async ({ queryKey }) => {
+      const [endpoint, language] = queryKey;
+      const response = await fetch(`${endpoint}?lang=${language}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch case studies");
+      }
+      return response.json();
+    },
   });
   
   useEffect(() => {
