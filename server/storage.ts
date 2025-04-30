@@ -160,6 +160,11 @@ export class DatabaseStorage implements IStorage {
     return db.select().from(caseStudies);
   }
   
+  async getCaseStudy(id: number): Promise<CaseStudy | undefined> {
+    const [study] = await db.select().from(caseStudies).where(eq(caseStudies.id, id));
+    return study;
+  }
+  
   async getCaseStudyBySlug(slug: string): Promise<CaseStudy | undefined> {
     const [study] = await db.select().from(caseStudies).where(eq(caseStudies.slug, slug));
     return study;
@@ -177,7 +182,33 @@ export class DatabaseStorage implements IStorage {
     return newCaseStudy;
   }
   
+  async updateCaseStudy(id: number, caseStudy: Partial<InsertCaseStudy>): Promise<CaseStudy> {
+    const [updatedCaseStudy] = await db
+      .update(caseStudies)
+      .set(caseStudy)
+      .where(eq(caseStudies.id, id))
+      .returning();
+    return updatedCaseStudy;
+  }
+  
+  async deleteCaseStudy(id: number): Promise<void> {
+    await db.delete(caseStudies).where(eq(caseStudies.id, id));
+  }
+  
   // Contact form methods
+  async getContactSubmissions(): Promise<ContactSubmission[]> {
+    return db.select()
+      .from(contactSubmissions)
+      .orderBy(desc(contactSubmissions.createdAt));
+  }
+  
+  async getContactSubmission(id: number): Promise<ContactSubmission | undefined> {
+    const [submission] = await db.select()
+      .from(contactSubmissions)
+      .where(eq(contactSubmissions.id, id));
+    return submission;
+  }
+  
   async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
     const [contactSubmission] = await db.insert(contactSubmissions)
       .values({
@@ -188,7 +219,24 @@ export class DatabaseStorage implements IStorage {
     return contactSubmission;
   }
   
+  async deleteContactSubmission(id: number): Promise<void> {
+    await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
+  }
+  
   // Newsletter methods
+  async getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+    return db.select()
+      .from(newsletterSubscribers)
+      .orderBy(desc(newsletterSubscribers.subscribedAt));
+  }
+  
+  async getNewsletterSubscriber(id: number): Promise<NewsletterSubscriber | undefined> {
+    const [subscriber] = await db.select()
+      .from(newsletterSubscribers)
+      .where(eq(newsletterSubscribers.id, id));
+    return subscriber;
+  }
+  
   async createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
     // Check if email already exists
     const [existingSubscriber] = await db.select()
@@ -206,6 +254,10 @@ export class DatabaseStorage implements IStorage {
       })
       .returning();
     return newSubscriber;
+  }
+  
+  async deleteNewsletterSubscriber(id: number): Promise<void> {
+    await db.delete(newsletterSubscribers).where(eq(newsletterSubscribers.id, id));
   }
   
   // Initialize sample data if database is empty
@@ -386,6 +438,10 @@ export class MemStorage implements IStorage {
     );
   }
   
+  async getBlogPost(id: number): Promise<BlogPost | undefined> {
+    return this.blogPosts.get(id);
+  }
+  
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
     return Array.from(this.blogPosts.values()).find(post => post.slug === slug);
   }
@@ -403,9 +459,28 @@ export class MemStorage implements IStorage {
     return blogPost;
   }
   
+  async updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const existingPost = this.blogPosts.get(id);
+    if (!existingPost) {
+      throw new Error(`Blog post with id ${id} not found`);
+    }
+    
+    const updatedPost = { ...existingPost, ...post };
+    this.blogPosts.set(id, updatedPost);
+    return updatedPost;
+  }
+  
+  async deleteBlogPost(id: number): Promise<void> {
+    this.blogPosts.delete(id);
+  }
+  
   // Template methods
   async getTemplates(): Promise<Template[]> {
     return Array.from(this.templates.values());
+  }
+  
+  async getTemplate(id: number): Promise<Template | undefined> {
+    return this.templates.get(id);
   }
   
   async getTemplateBySlug(slug: string): Promise<Template | undefined> {
@@ -425,9 +500,28 @@ export class MemStorage implements IStorage {
     return newTemplate;
   }
   
+  async updateTemplate(id: number, template: Partial<InsertTemplate>): Promise<Template> {
+    const existingTemplate = this.templates.get(id);
+    if (!existingTemplate) {
+      throw new Error(`Template with id ${id} not found`);
+    }
+    
+    const updatedTemplate = { ...existingTemplate, ...template };
+    this.templates.set(id, updatedTemplate);
+    return updatedTemplate;
+  }
+  
+  async deleteTemplate(id: number): Promise<void> {
+    this.templates.delete(id);
+  }
+  
   // Case Study methods
   async getCaseStudies(): Promise<CaseStudy[]> {
     return Array.from(this.caseStudies.values());
+  }
+  
+  async getCaseStudy(id: number): Promise<CaseStudy | undefined> {
+    return this.caseStudies.get(id);
   }
   
   async getCaseStudyBySlug(slug: string): Promise<CaseStudy | undefined> {
@@ -447,7 +541,31 @@ export class MemStorage implements IStorage {
     return newCaseStudy;
   }
   
+  async updateCaseStudy(id: number, caseStudy: Partial<InsertCaseStudy>): Promise<CaseStudy> {
+    const existingStudy = this.caseStudies.get(id);
+    if (!existingStudy) {
+      throw new Error(`Case study with id ${id} not found`);
+    }
+    
+    const updatedStudy = { ...existingStudy, ...caseStudy };
+    this.caseStudies.set(id, updatedStudy);
+    return updatedStudy;
+  }
+  
+  async deleteCaseStudy(id: number): Promise<void> {
+    this.caseStudies.delete(id);
+  }
+  
   // Contact form methods
+  async getContactSubmissions(): Promise<ContactSubmission[]> {
+    return Array.from(this.contactSubmissions.values())
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+  
+  async getContactSubmission(id: number): Promise<ContactSubmission | undefined> {
+    return this.contactSubmissions.get(id);
+  }
+  
   async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
     const id = this.contactSubmissionCount++;
     const contactSubmission: ContactSubmission = { 
@@ -459,7 +577,20 @@ export class MemStorage implements IStorage {
     return contactSubmission;
   }
   
+  async deleteContactSubmission(id: number): Promise<void> {
+    this.contactSubmissions.delete(id);
+  }
+  
   // Newsletter methods
+  async getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+    return Array.from(this.newsletterSubscribers.values())
+      .sort((a, b) => new Date(b.subscribedAt).getTime() - new Date(a.subscribedAt).getTime());
+  }
+  
+  async getNewsletterSubscriber(id: number): Promise<NewsletterSubscriber | undefined> {
+    return this.newsletterSubscribers.get(id);
+  }
+  
   async createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
     // Check if email already exists
     const existingSubscriber = Array.from(this.newsletterSubscribers.values())
@@ -477,6 +608,10 @@ export class MemStorage implements IStorage {
     };
     this.newsletterSubscribers.set(id, newSubscriber);
     return newSubscriber;
+  }
+  
+  async deleteNewsletterSubscriber(id: number): Promise<void> {
+    this.newsletterSubscribers.delete(id);
   }
   
   // Initialize with sample data
