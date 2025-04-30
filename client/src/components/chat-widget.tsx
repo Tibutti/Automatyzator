@@ -27,6 +27,15 @@ export default function ChatWidget() {
   const { theme } = useTheme();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Aktualizuj wiadomość powitalną, gdy zmienia się język
+  useEffect(() => {
+    // Zmień tylko wiadomość powitalną (pierwszą)
+    setMessages(prev => [
+      { id: "1", text: t('chat.welcome'), sender: "bot" },
+      ...prev.slice(1)
+    ]);
+  }, [i18n.language, t]);
+
   // Automatyczne przewijanie na dół po nowej wiadomości
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -58,8 +67,12 @@ export default function ChatWidget() {
     setIsLoading(true);
     
     try {
-      // Wyślij zapytanie do API OpenAI
-      const response = await apiRequest("POST", "/api/chat", { message: messageToSend });
+      // Pobierz aktualny język i wyślij zapytanie do API OpenAI
+      const currentLanguage = i18n.language?.substring(0, 2) || 'pl';
+      const response = await apiRequest("POST", "/api/chat", { 
+        message: messageToSend,
+        language: currentLanguage
+      });
       const data = await response.json();
       
       // Dodaj odpowiedź bota
@@ -79,6 +92,8 @@ export default function ChatWidget() {
         text: "Przepraszam, wystąpił błąd podczas generowania odpowiedzi. Proszę spróbować ponownie później.",
         sender: "bot"
       };
+      
+      // Uwaga: To mogłoby być przetłumaczone, ale zachowujemy stały tekst błędu dla prostoty
       
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -109,8 +124,8 @@ export default function ChatWidget() {
       {isOpen && (
         <div className="absolute bottom-20 right-0 w-80 md:w-96 bg-background rounded-xl shadow-2xl overflow-hidden border border-border">
           <div className="bg-primary p-4">
-            <h3 className="text-white font-montserrat font-bold text-lg">Asystent Automatyzatora</h3>
-            <p className="text-white/80 text-sm">Zadaj pytanie o automatyzację</p>
+            <h3 className="text-white font-montserrat font-bold text-lg">{t('chat.title')}</h3>
+            <p className="text-white/80 text-sm">{t('chat.subtitle')}</p>
           </div>
 
           <div className="h-96 overflow-y-auto p-4 space-y-4">
@@ -163,7 +178,7 @@ export default function ChatWidget() {
                 </div>
                 <div className={`p-3 rounded-lg ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-100 text-gray-800"} flex items-center space-x-2`}>
                   <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                  <p>Asystent pisze...</p>
+                  <p>{t('chat.typing')}</p>
                 </div>
               </div>
             )}
@@ -175,7 +190,7 @@ export default function ChatWidget() {
               <input
                 type="text"
                 className="flex-grow p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Napisz wiadomość..."
+                placeholder={t('chat.placeholder')}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyPress}

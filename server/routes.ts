@@ -295,13 +295,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Chat with OpenAI endpoint
   app.post("/api/chat", async (req: Request, res: Response) => {
     try {
-      const { message } = req.body;
+      const { message, language = 'pl' } = req.body;
       
       if (!message || typeof message !== 'string') {
         return res.status(400).json({ message: "Message is required and must be a string" });
       }
       
-      const response = await generateChatResponse(message);
+      // Przekaż język jako parametr do funkcji generateChatResponse
+      const response = await generateChatResponse(message, language);
       return res.json({ response });
     } catch (error) {
       console.error("Error generating chat response:", error);
