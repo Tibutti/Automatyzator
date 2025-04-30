@@ -98,7 +98,12 @@
       "phone": "Telefon",
       "subject": "Temat",
       "message": "Wiadomość",
-      "submit": "Wyślij wiadomość"
+      "submit": "Wyślij wiadomość",
+      "sending": "Wysyłanie...",
+      "successTitle": "Wiadomość wysłana!",
+      "successDescription": "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
+      "errorTitle": "Wystąpił błąd",
+      "errorDescription": "Nie udało się wysłać wiadomości. Spróbuj ponownie."
     },
     "address": "Adres",
     "email": "Email",
