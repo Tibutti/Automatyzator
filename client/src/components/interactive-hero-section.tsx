@@ -77,7 +77,7 @@ export default function InteractiveHeroSection() {
       description: "Bezproblemowe połączenie z dowolnymi systemami i aplikacjami"
     },
     {
-      x: 0.65,
+      x: 0.6,
       y: 0.5,
       label: "Chmura",
       icon: <Cloud className="h-6 w-6 text-sky-500" />,
