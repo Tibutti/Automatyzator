@@ -14,11 +14,11 @@
     "cta": "Kostenlose Beratung"
   },
   "features": {
-    "businessData": "Geschäftsdaten",
-    "integration": "Integration",
+    "businessData": "Datenanalyse",
+    "integration": "Systemintegrationen",
     "aiAnalysis": "KI-Analyse",
     "automation": "Prozessautomatisierung",
-    "cloud": "Cloud",
+    "cloud": "KI-Agenten",
     "api": "API & Integrationen"
   },
   "services": {
