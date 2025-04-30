@@ -238,6 +238,21 @@
     "contactTitle": "Contact Us",
     "contactText": "If you have any questions about these Terms, please contact us at:"
   },
+  "cookieConsent": {
+    "title": "Cookie Settings",
+    "description": "We use cookies to enhance your browsing experience, analyze site traffic and personalize content. Below, you can choose which types of cookies you allow us to use. You can read more about our cookies policy by clicking on the link below.",
+    "alwaysOn": "Always On",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "learnMore": "Learn more about cookies in our",
+    "cookiePolicy": "Cookie Policy",
+    "savePreferences": "Save Preferences",
+    "acceptAll": "Accept All",
+    "bannerTitle": "We use cookies",
+    "bannerText": "We use cookies to improve your experience. Choose which cookies you want to allow.",
+    "essentialOnly": "Essential Only",
+    "settingsButton": "Cookie Settings"
+  },
   "cookies": {
     "title": "Cookie Policy",
     "lastUpdated": "Last updated",

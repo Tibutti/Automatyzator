@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import ChatWidget from "@/components/chat-widget";
+import CookieConsent from "@/components/cookie-consent";
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
       <ChatWidget />
+      <CookieConsent />
     </div>
   );
 }

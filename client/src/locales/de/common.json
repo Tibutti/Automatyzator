@@ -238,6 +238,21 @@
     "contactTitle": "Kontaktieren Sie uns",
     "contactText": "Wenn Sie Fragen zu diesen Bedingungen haben, kontaktieren Sie uns bitte unter:"
   },
+  "cookieConsent": {
+    "title": "Cookie-Einstellungen",
+    "description": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern, den Website-Verkehr zu analysieren und Inhalte zu personalisieren. Unten können Sie auswählen, welche Arten von Cookies wir verwenden dürfen. Mehr über unsere Cookie-Richtlinie erfahren Sie, indem Sie auf den untenstehenden Link klicken.",
+    "alwaysOn": "Immer ein",
+    "enabled": "Aktiviert",
+    "disabled": "Deaktiviert",
+    "learnMore": "Erfahren Sie mehr über Cookies in unserer",
+    "cookiePolicy": "Cookie-Richtlinie",
+    "savePreferences": "Einstellungen speichern",
+    "acceptAll": "Alle akzeptieren",
+    "bannerTitle": "Wir verwenden Cookies",
+    "bannerText": "Wir verwenden Cookies, um Ihr Erlebnis zu verbessern. Wählen Sie, welche Cookies Sie zulassen möchten.",
+    "essentialOnly": "Nur wesentliche",
+    "settingsButton": "Cookie-Einstellungen"
+  },
   "cookies": {
     "title": "Cookie-Richtlinie",
     "lastUpdated": "Zuletzt aktualisiert",

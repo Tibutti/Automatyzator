@@ -238,6 +238,21 @@
     "contactTitle": "Kontakt",
     "contactText": "Jeśli masz jakiekolwiek pytania dotyczące tych Warunków, skontaktuj się z nami pod adresem:"
   },
+  "cookieConsent": {
+    "title": "Ustawienia plików cookie",
+    "description": "Używamy plików cookie, aby ulepszyć twoje doświadczenia przeglądania, analizować ruch na stronie i personalizować treści. Poniżej możesz wybrać, które rodzaje plików cookie możemy używać. Więcej informacji o naszej polityce plików cookie znajdziesz klikając na poniższy link.",
+    "alwaysOn": "Zawsze włączone",
+    "enabled": "Włączone",
+    "disabled": "Wyłączone",
+    "learnMore": "Dowiedz się więcej o plikach cookie w naszej",
+    "cookiePolicy": "Polityce plików cookie",
+    "savePreferences": "Zapisz preferencje",
+    "acceptAll": "Akceptuj wszystkie",
+    "bannerTitle": "Używamy plików cookie",
+    "bannerText": "Używamy plików cookie, aby poprawić Twoje doświadczenia. Wybierz, które pliki cookie chcesz zezwolić.",
+    "essentialOnly": "Tylko niezbędne",
+    "settingsButton": "Ustawienia plików cookie"
+  },
   "cookies": {
     "title": "Polityka dotycząca plików cookie",
     "lastUpdated": "Ostatnia aktualizacja",

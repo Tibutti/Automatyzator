@@ -80,6 +80,7 @@ export default function Footer() {
             <Link href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.privacy')}</Link>
             <Link href="/terms-of-service" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.terms')}</Link>
             <Link href="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">{t('footer.cookies')}</Link>
+            <span id="cookie-settings-btn-container"></span>
           </div>
         </div>
       </div>
