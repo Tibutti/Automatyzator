@@ -219,6 +219,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ message: "Failed to create blog post" });
     }
   });
+  
+  // Update blog post
+  app.put("/api/blog-posts/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingPost = await storage.getBlogPost(id);
+      if (!existingPost) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      // If slug is changing, verify it doesn't conflict
+      if (req.body.slug && req.body.slug !== existingPost.slug) {
+        const postWithSlug = await storage.getBlogPostBySlug(req.body.slug);
+        if (postWithSlug && postWithSlug.id !== id) {
+          return res.status(400).json({ message: "Slug already exists" });
+        }
+      }
+      
+      const updatedPost = await storage.updateBlogPost(id, req.body);
+      return res.json(updatedPost);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid blog post data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating blog post:", error);
+      return res.status(500).json({ message: "Failed to update blog post" });
+    }
+  });
+  
+  // Delete blog post
+  app.delete("/api/blog-posts/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingPost = await storage.getBlogPost(id);
+      if (!existingPost) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      await storage.deleteBlogPost(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      return res.status(500).json({ message: "Failed to delete blog post" });
+    }
+  });
+  
+  // Get single blog post by ID for editing
+  app.get("/api/blog-posts/:id/edit", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const post = await storage.getBlogPost(id);
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      return res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post for editing:", error);
+      return res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
 
   // Templates endpoints
   app.get("/api/templates", async (req: Request, res: Response) => {
@@ -293,6 +369,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.json(template);
     } catch (error) {
       console.error("Error fetching template:", error);
+      return res.status(500).json({ message: "Failed to fetch template" });
+    }
+  });
+  
+  // Admin routes for templates
+  app.post("/api/templates", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const templateData = insertTemplateSchema.parse(req.body);
+      
+      // Check if slug already exists
+      const existingTemplate = await storage.getTemplateBySlug(templateData.slug);
+      if (existingTemplate) {
+        return res.status(400).json({ message: "Slug already exists" });
+      }
+      
+      const template = await storage.createTemplate(templateData);
+      return res.status(201).json(template);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid template data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating template:", error);
+      return res.status(500).json({ message: "Failed to create template" });
+    }
+  });
+  
+  // Update template
+  app.put("/api/templates/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingTemplate = await storage.getTemplate(id);
+      if (!existingTemplate) {
+        return res.status(404).json({ message: "Template not found" });
+      }
+      
+      // If slug is changing, verify it doesn't conflict
+      if (req.body.slug && req.body.slug !== existingTemplate.slug) {
+        const templateWithSlug = await storage.getTemplateBySlug(req.body.slug);
+        if (templateWithSlug && templateWithSlug.id !== id) {
+          return res.status(400).json({ message: "Slug already exists" });
+        }
+      }
+      
+      const updatedTemplate = await storage.updateTemplate(id, req.body);
+      return res.json(updatedTemplate);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid template data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating template:", error);
+      return res.status(500).json({ message: "Failed to update template" });
+    }
+  });
+  
+  // Delete template
+  app.delete("/api/templates/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingTemplate = await storage.getTemplate(id);
+      if (!existingTemplate) {
+        return res.status(404).json({ message: "Template not found" });
+      }
+      
+      await storage.deleteTemplate(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting template:", error);
+      return res.status(500).json({ message: "Failed to delete template" });
+    }
+  });
+  
+  // Get single template by ID for editing
+  app.get("/api/templates/:id/edit", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const template = await storage.getTemplate(id);
+      if (!template) {
+        return res.status(404).json({ message: "Template not found" });
+      }
+      
+      return res.json(template);
+    } catch (error) {
+      console.error("Error fetching template for editing:", error);
       return res.status(500).json({ message: "Failed to fetch template" });
     }
   });
@@ -397,6 +574,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ message: "Failed to fetch case study" });
     }
   });
+  
+  // Admin routes for case studies
+  app.post("/api/case-studies", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const caseStudyData = insertCaseStudySchema.parse(req.body);
+      
+      // Check if slug already exists
+      const existingCaseStudy = await storage.getCaseStudyBySlug(caseStudyData.slug);
+      if (existingCaseStudy) {
+        return res.status(400).json({ message: "Slug already exists" });
+      }
+      
+      const caseStudy = await storage.createCaseStudy(caseStudyData);
+      return res.status(201).json(caseStudy);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid case study data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating case study:", error);
+      return res.status(500).json({ message: "Failed to create case study" });
+    }
+  });
+  
+  // Update case study
+  app.put("/api/case-studies/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingCaseStudy = await storage.getCaseStudy(id);
+      if (!existingCaseStudy) {
+        return res.status(404).json({ message: "Case study not found" });
+      }
+      
+      // If slug is changing, verify it doesn't conflict
+      if (req.body.slug && req.body.slug !== existingCaseStudy.slug) {
+        const caseStudyWithSlug = await storage.getCaseStudyBySlug(req.body.slug);
+        if (caseStudyWithSlug && caseStudyWithSlug.id !== id) {
+          return res.status(400).json({ message: "Slug already exists" });
+        }
+      }
+      
+      const updatedCaseStudy = await storage.updateCaseStudy(id, req.body);
+      return res.json(updatedCaseStudy);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid case study data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating case study:", error);
+      return res.status(500).json({ message: "Failed to update case study" });
+    }
+  });
+  
+  // Delete case study
+  app.delete("/api/case-studies/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingCaseStudy = await storage.getCaseStudy(id);
+      if (!existingCaseStudy) {
+        return res.status(404).json({ message: "Case study not found" });
+      }
+      
+      await storage.deleteCaseStudy(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting case study:", error);
+      return res.status(500).json({ message: "Failed to delete case study" });
+    }
+  });
+  
+  // Get single case study by ID for editing
+  app.get("/api/case-studies/:id/edit", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const caseStudy = await storage.getCaseStudy(id);
+      if (!caseStudy) {
+        return res.status(404).json({ message: "Case study not found" });
+      }
+      
+      return res.json(caseStudy);
+    } catch (error) {
+      console.error("Error fetching case study for editing:", error);
+      return res.status(500).json({ message: "Failed to fetch case study" });
+    }
+  });
 
   // Contact form endpoint
   app.post("/api/contact", async (req: Request, res: Response) => {
@@ -431,6 +709,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Error subscribing to newsletter:", error);
       return res.status(500).json({ message: "Failed to subscribe to newsletter" });
+    }
+  });
+  
+  // Admin routes for contact messages
+  app.get("/api/contact-messages", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const messages = await storage.getContactSubmissions();
+      return res.json(messages);
+    } catch (error) {
+      console.error("Error fetching contact messages:", error);
+      return res.status(500).json({ message: "Failed to fetch contact messages" });
+    }
+  });
+  
+  app.delete("/api/contact-messages/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingMessage = await storage.getContactSubmission(id);
+      if (!existingMessage) {
+        return res.status(404).json({ message: "Contact message not found" });
+      }
+      
+      await storage.deleteContactSubmission(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting contact message:", error);
+      return res.status(500).json({ message: "Failed to delete contact message" });
+    }
+  });
+  
+  // Admin routes for newsletter subscribers
+  app.get("/api/newsletter-subscribers", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const subscribers = await storage.getNewsletterSubscribers();
+      return res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching newsletter subscribers:", error);
+      return res.status(500).json({ message: "Failed to fetch newsletter subscribers" });
+    }
+  });
+  
+  app.delete("/api/newsletter-subscribers/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingSubscriber = await storage.getNewsletterSubscriber(id);
+      if (!existingSubscriber) {
+        return res.status(404).json({ message: "Newsletter subscriber not found" });
+      }
+      
+      await storage.deleteNewsletterSubscriber(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting newsletter subscriber:", error);
+      return res.status(500).json({ message: "Failed to delete newsletter subscriber" });
     }
   });
   

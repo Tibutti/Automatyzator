@@ -18,27 +18,42 @@ export interface IStorage {
   
   // Blog post methods
   getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPost(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   getFeaturedBlogPosts(limit?: number): Promise<BlogPost[]>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost>;
+  deleteBlogPost(id: number): Promise<void>;
   
   // Template methods
   getTemplates(): Promise<Template[]>;
+  getTemplate(id: number): Promise<Template | undefined>;
   getTemplateBySlug(slug: string): Promise<Template | undefined>;
   getFeaturedTemplates(limit?: number): Promise<Template[]>;
   createTemplate(template: InsertTemplate): Promise<Template>;
+  updateTemplate(id: number, template: Partial<InsertTemplate>): Promise<Template>;
+  deleteTemplate(id: number): Promise<void>;
   
   // Case Study methods
   getCaseStudies(): Promise<CaseStudy[]>;
+  getCaseStudy(id: number): Promise<CaseStudy | undefined>;
   getCaseStudyBySlug(slug: string): Promise<CaseStudy | undefined>;
   getFeaturedCaseStudies(limit?: number): Promise<CaseStudy[]>;
   createCaseStudy(caseStudy: InsertCaseStudy): Promise<CaseStudy>;
+  updateCaseStudy(id: number, caseStudy: Partial<InsertCaseStudy>): Promise<CaseStudy>;
+  deleteCaseStudy(id: number): Promise<void>;
   
   // Contact form methods
+  getContactSubmissions(): Promise<ContactSubmission[]>;
+  getContactSubmission(id: number): Promise<ContactSubmission | undefined>;
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
+  deleteContactSubmission(id: number): Promise<void>;
   
   // Newsletter methods
+  getNewsletterSubscribers(): Promise<NewsletterSubscriber[]>;
+  getNewsletterSubscriber(id: number): Promise<NewsletterSubscriber | undefined>;
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
+  deleteNewsletterSubscriber(id: number): Promise<void>;
 }
 
 // Database storage implementation using Drizzle ORM
@@ -64,6 +79,11 @@ export class DatabaseStorage implements IStorage {
     return db.select().from(blogPosts).orderBy(desc(blogPosts.publishedAt));
   }
   
+  async getBlogPost(id: number): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post;
+  }
+  
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
     return post;
@@ -82,9 +102,27 @@ export class DatabaseStorage implements IStorage {
     return blogPost;
   }
   
+  async updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const [blogPost] = await db
+      .update(blogPosts)
+      .set(post)
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return blogPost;
+  }
+  
+  async deleteBlogPost(id: number): Promise<void> {
+    await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  }
+  
   // Template methods
   async getTemplates(): Promise<Template[]> {
     return db.select().from(templates);
+  }
+  
+  async getTemplate(id: number): Promise<Template | undefined> {
+    const [template] = await db.select().from(templates).where(eq(templates.id, id));
+    return template;
   }
   
   async getTemplateBySlug(slug: string): Promise<Template | undefined> {
@@ -102,6 +140,19 @@ export class DatabaseStorage implements IStorage {
   async createTemplate(template: InsertTemplate): Promise<Template> {
     const [newTemplate] = await db.insert(templates).values(template).returning();
     return newTemplate;
+  }
+  
+  async updateTemplate(id: number, template: Partial<InsertTemplate>): Promise<Template> {
+    const [updatedTemplate] = await db
+      .update(templates)
+      .set(template)
+      .where(eq(templates.id, id))
+      .returning();
+    return updatedTemplate;
+  }
+  
+  async deleteTemplate(id: number): Promise<void> {
+    await db.delete(templates).where(eq(templates.id, id));
   }
   
   // Case Study methods
