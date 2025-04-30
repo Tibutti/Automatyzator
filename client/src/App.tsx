@@ -18,6 +18,7 @@ import Blog from "@/pages/blog";
 import Shop from "@/pages/shop";
 import Portfolio from "@/pages/portfolio";
 import Contact from "@/pages/contact";
+import Consultation from "@/pages/consultation";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/login";
@@ -81,6 +82,11 @@ function Router() {
       <Route path="/contact">
         <Layout>
           <Contact />
+        </Layout>
+      </Route>
+      <Route path="/consultation">
+        <Layout>
+          <Consultation />
         </Layout>
       </Route>
       <Route>

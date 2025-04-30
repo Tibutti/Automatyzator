@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Cpu, Database, Cloud, Zap, Layers, Code } from "lucide-react";
 
@@ -405,9 +406,11 @@ export default function InteractiveHeroSection() {
                 <span>Rozpocznij transformację</span>
                 <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
               </Button>
-              <Button size="lg" variant="outline" className="gradient-border text-sm md:text-base">
-                Poznaj nasze szablony
-              </Button>
+              <Link href="/consultation">
+                <Button size="lg" variant="outline" className="gradient-border text-sm md:text-base">
+                  Bezpłatna konsultacja
+                </Button>
+              </Link>
             </div>
           </div>
 
