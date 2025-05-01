@@ -8,16 +8,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const newsletterSchema = z.object({
-  email: z.string().email("Wprowadź poprawny adres e-mail"),
-});
-
-type NewsletterFormValues = z.infer<typeof newsletterSchema>;
+function createNewsletterSchema(t: any) {
+  return z.object({
+    email: z.string().email(t('newsletter.emailError', "Wprowadź poprawny adres e-mail")),
+  });
+}
 
 export default function NewsletterForm() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
+  const { t } = useTranslation();
+  
+  const newsletterSchema = createNewsletterSchema(t);
+  type NewsletterFormValues = z.infer<typeof newsletterSchema>;
   
   const {
     register,
@@ -37,15 +42,15 @@ export default function NewsletterForm() {
     },
     onSuccess: () => {
       toast({
-        title: "Sukces!",
-        description: "Dziękujemy za zapisanie się do newslettera.",
+        title: t('newsletter.successTitle', 'Sukces!'),
+        description: t('newsletter.successDescription', 'Dziękujemy za zapisanie się do newslettera.'),
       });
       reset();
     },
     onError: () => {
       toast({
-        title: "Wystąpił błąd",
-        description: "Nie udało się zapisać do newslettera. Spróbuj ponownie.",
+        title: t('newsletter.errorTitle', 'Wystąpił błąd'),
+        description: t('newsletter.errorDescription', 'Nie udało się zapisać do newslettera. Spróbuj ponownie.'),
         variant: "destructive",
       });
     },
@@ -60,7 +65,7 @@ export default function NewsletterForm() {
       <div className="flex-grow">
         <Input
           type="email"
-          placeholder="Twój email"
+          placeholder={t('newsletter.placeholder')}
           className="rounded-r-none h-12"
           {...register("email")}
           aria-invalid={errors.email ? "true" : "false"}
@@ -74,7 +79,7 @@ export default function NewsletterForm() {
         className="rounded-l-none h-12 cta-button"
         disabled={isPending}
       >
-        {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Zapisz się"}
+        {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('newsletter.button')}
       </Button>
     </form>
   );

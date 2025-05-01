@@ -133,7 +133,12 @@
     "title": "Newsletter",
     "description": "Zapisz się, aby otrzymywać najnowsze informacje o automatyzacji",
     "placeholder": "Twój adres email",
-    "button": "Zapisz się"
+    "button": "Zapisz się",
+    "successTitle": "Sukces!",
+    "successDescription": "Dziękujemy za zapisanie się do newslettera.",
+    "errorTitle": "Wystąpił błąd",
+    "errorDescription": "Nie udało się zapisać do newslettera. Spróbuj ponownie.",
+    "emailError": "Wprowadź poprawny adres e-mail"
   },
   "footer": {
     "description": "Pomagamy firmom automatyzować procesy, integrować systemy i budować przewagę konkurencyjną.",
