@@ -1,40 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
+import { useChat } from "../contexts/chat-context";
 
 export default function HeroSection() {
+  const { t } = useTranslation('common');
+  const { toggleChat } = useChat();
+  
   return (
     <section id="hero" className="relative bg-background py-20 md:py-28 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-4 leading-tight">
-              <span className="text-primary">Automatyzuj.</span>{" "}
+              <span className="text-primary">{t('hero.title')}</span>{" "}
               <div className="mt-4">
-                <span className="text-foreground">Integruj.</span>{" "}
-                <span className="text-accent">Skaluj.</span>
+                <span className="text-foreground">{t('hero.subtitle').split('.')[0]}.</span>{" "}
+                <span className="text-accent">{t('hero.subtitle').split('.')[1]}.</span>
               </div>
             </h1>
             <p className="text-lg md:text-xl mb-8 font-inter text-gray-700 dark:text-gray-300 max-w-xl">
-              Zbuduj przewagę rynkową dzięki botom i zautomatyzowanym przepływom pracy.
+              {t('hero.description')}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/contact">
-                <Button className="px-6 py-3 h-auto cta-button shadow-lg hover:shadow-xl">
-                  Rozpocznij projekt
+                <Button className="px-6 py-3 h-auto cta-button shadow-lg hover:shadow-xl whitespace-nowrap">
+                  {t('cta.button')}
                 </Button>
               </Link>
               <Button
                 variant="outline"
-                className="px-6 py-3 h-auto border-2 border-accent text-foreground hover:bg-accent hover:text-black cta-button"
-                onClick={() => {
-                  // Znajdź i kliknij przycisk chatbota w prawym dolnym rogu
-                  const chatButton = document.querySelector('.fixed.bottom-6.right-6 button');
-                  if (chatButton && chatButton instanceof HTMLElement) {
-                    chatButton.click();
-                  }
-                }}
+                className="px-6 py-3 h-auto border-2 border-accent text-foreground hover:bg-accent hover:text-black cta-button whitespace-nowrap"
+                onClick={toggleChat}
               >
-                Zobacz demo Chatbota
+                {t('hero.chatButtonText') || "Zobacz demo Chatbota"}
               </Button>
             </div>
           </div>
