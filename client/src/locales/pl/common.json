@@ -72,6 +72,7 @@
   },
   "portfolio": {
     "title": "Nasze wdrożenia",
+    "description": "Prezentujemy wybrane projekty automatyzacji, które pomogły naszym klientom zwiększyć wydajność i ograniczyć koszty.",
     "viewAll": "Zobacz wszystkie",
     "readMore": "Czytaj więcej",
     "caseStudy": "Case study",

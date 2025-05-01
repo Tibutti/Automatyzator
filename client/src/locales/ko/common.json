@@ -73,6 +73,7 @@
   },
   "portfolio": {
     "title": "구현 사례",
+    "description": "고객이 효율성을 높이고 비용을 절감하는 데 도움이 된 자동화 프로젝트를 살펴보세요.",
     "viewAll": "모두 보기",
     "readMore": "더 보기",
     "caseStudy": "사례 연구",

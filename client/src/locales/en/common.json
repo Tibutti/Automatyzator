@@ -72,6 +72,7 @@
   },
   "portfolio": {
     "title": "Our Implementations",
+    "description": "Explore selected automation projects that helped our clients increase efficiency and reduce costs.",
     "viewAll": "View all",
     "readMore": "Read more",
     "caseStudy": "Case Study",
