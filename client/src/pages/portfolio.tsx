@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import type { CaseStudy } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function Portfolio() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
   const { toast } = useToast();
+  const { t } = useTranslation('common');
   
   const { data: caseStudies, isLoading } = useQuery<CaseStudy[]>({
     queryKey: ["/api/case-studies"],
@@ -28,9 +30,9 @@ export default function Portfolio() {
   return (
     <div className="container mx-auto px-4 py-16 pt-28 md:py-24">
       <div className="flex flex-col items-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Portfolio</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center whitespace-nowrap">{t('portfolio.title')}</h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl">
-          Poznaj nasze wdrożenia automatyzacji i integracji dla firm.
+          {t('portfolio.description')}
         </p>
       </div>
       
@@ -78,8 +80,8 @@ export default function Portfolio() {
                     </Badge>
                   ))}
                 </div>
-                <Button variant="link" className="p-0 text-primary">
-                  Czytaj więcej
+                <Button variant="link" className="p-0 text-primary whitespace-nowrap">
+                  {t('portfolio.readMore')}
                 </Button>
               </CardContent>
             </Card>
@@ -94,7 +96,7 @@ export default function Portfolio() {
             <DialogHeader>
               <DialogTitle className="text-2xl">{selectedCase.title}</DialogTitle>
               <DialogDescription>
-                Case study
+                {t('portfolio.caseStudy')}
               </DialogDescription>
             </DialogHeader>
             
@@ -108,7 +110,7 @@ export default function Portfolio() {
                   />
                 )}
                 
-                <h3 className="text-xl font-bold mt-6 mb-2">Zastosowane narzędzia</h3>
+                <h3 className="text-xl font-bold mt-6 mb-2 whitespace-nowrap">{t('portfolio.tools')}</h3>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {selectedCase.tools?.map((tool, index) => (
                     <Badge key={index} variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20">
@@ -117,7 +119,7 @@ export default function Portfolio() {
                   ))}
                 </div>
                 
-                <h3 className="text-xl font-bold mt-6 mb-2">Tagi</h3>
+                <h3 className="text-xl font-bold mt-6 mb-2 whitespace-nowrap">{t('portfolio.tags')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedCase.tags?.map((tag, index) => (
                     <Badge key={index} variant="outline">
@@ -128,13 +130,13 @@ export default function Portfolio() {
               </div>
               
               <div>
-                <h3 className="text-xl font-bold mb-2">Opis rozwiązania</h3>
+                <h3 className="text-xl font-bold mb-2 whitespace-nowrap">{t('portfolio.solution')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
                   {selectedCase.description}
                 </p>
                 
                 <div className="mb-6">
-                  <h4 className="font-bold mb-2">Wyzwanie</h4>
+                  <h4 className="font-bold mb-2 whitespace-nowrap">{t('portfolio.challenge')}</h4>
                   <p className="text-gray-600 dark:text-gray-300">
                     Klient potrzebował rozwiązania, które zautomatyzuje proces obsługi zamówień i integracji
                     z dostawcami. Wcześniej wszystko było robione ręcznie, co prowadziło do opóźnień i błędów.
