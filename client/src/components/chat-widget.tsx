@@ -14,7 +14,6 @@ type Message = {
 
 export default function ChatWidget() {
   const { t, i18n } = useTranslation('common');
-  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -26,6 +25,7 @@ export default function ChatWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const { theme } = useTheme();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Aktualizuj wiadomość powitalną, gdy zmienia się język
   useEffect(() => {
@@ -42,10 +42,6 @@ export default function ChatWidget() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -105,6 +101,10 @@ export default function ChatWidget() {
     if (e.key === "Enter") {
       handleSendMessage();
     }
+  };
+  
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
   };
 
   return (

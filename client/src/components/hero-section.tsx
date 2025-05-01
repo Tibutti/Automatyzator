@@ -26,6 +26,13 @@ export default function HeroSection() {
               <Button
                 variant="outline"
                 className="px-6 py-3 h-auto border-2 border-accent text-foreground hover:bg-accent hover:text-black cta-button"
+                onClick={() => {
+                  // Znajdź i kliknij przycisk chatbota w prawym dolnym rogu
+                  const chatButton = document.querySelector('.fixed.bottom-6.right-6 button');
+                  if (chatButton && chatButton instanceof HTMLElement) {
+                    chatButton.click();
+                  }
+                }}
               >
                 Zobacz demo Chatbota
               </Button>
