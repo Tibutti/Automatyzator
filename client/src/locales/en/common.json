@@ -156,7 +156,14 @@
     "templates": "Templates",
     "documentation": "Documentation",
     "caseStudies": "Case Studies",
-    "copyright": "© 2025 Automatyzator. All rights reserved."
+    "copyright": "© 2025 Automatyzator. All rights reserved.",
+    "servicesList": {
+      "makecom": "Make.com",
+      "n8n": "n8n",
+      "zapier": "Zapier",
+      "bots": "Bots",
+      "llmAgents": "LLM Agents"
+    }
   },
   "notFound": {
     "title": "Page not found",

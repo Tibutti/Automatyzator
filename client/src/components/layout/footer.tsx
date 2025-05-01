@@ -48,11 +48,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.services')}</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Make.com</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">n8n</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Zapier</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Boty</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Agenty LLM</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.makecom')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.n8n')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.zapier')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.bots')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.llmAgents')}</a></li>
             </ul>
           </div>
           

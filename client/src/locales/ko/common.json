@@ -170,7 +170,14 @@
     "templates": "템플릿",
     "documentation": "문서",
     "caseStudies": "사례 연구", 
-    "copyright": "© 2025 Automatyzator. 모든 권리 보유."
+    "copyright": "© 2025 Automatyzator. 모든 권리 보유.",
+    "servicesList": {
+      "makecom": "Make.com",
+      "n8n": "n8n",
+      "zapier": "Zapier",
+      "bots": "봇",
+      "llmAgents": "LLM 에이전트"
+    }
   },
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",
