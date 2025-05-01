@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function Blog() {
+  const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   
@@ -31,16 +33,16 @@ export default function Blog() {
   return (
     <div className="container mx-auto px-4 py-16 pt-28 md:py-24">
       <div className="flex flex-col items-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Blog</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center whitespace-nowrap">{t('blog.title')}</h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl">
-          Najnowsze artykuły, poradniki i analizy ze świata automatyzacji, botów i integracji.
+          {t('blog.subtitle')}
         </p>
       </div>
       
       <div className="mb-10">
         <Input
           type="search"
-          placeholder="Szukaj artykułów..."
+          placeholder={t('blog.searchPlaceholder') || "Szukaj artykułów..."}
           className="max-w-md mx-auto"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,7 +97,7 @@ export default function Blog() {
                         {post.category}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {post.readTime} min czytania
+                        {post.readTime} {t('blog.minRead')}
                       </span>
                     </div>
                     <CardTitle className="text-xl mb-2 hover:text-primary transition-colors">{post.title}</CardTitle>
@@ -124,8 +126,8 @@ export default function Blog() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-4">Brak artykułów spełniających kryteria</h3>
-            <p>Spróbuj zmienić kryteria wyszukiwania lub kategorię.</p>
+            <h3 className="text-xl font-semibold mb-4">{t('blog.noResults.title') || "Brak artykułów spełniających kryteria"}</h3>
+            <p>{t('blog.noResults.description') || "Spróbuj zmienić kryteria wyszukiwania lub kategorię."}</p>
           </div>
         )
       )}

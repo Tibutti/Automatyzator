@@ -85,7 +85,12 @@
     "backToBlog": "돌아가기",
     "featured": "추천",
     "views": "조회수",
-    "authorDesc": "비즈니스 프로세스 자동화 전문가"
+    "authorDesc": "비즈니스 프로세스 자동화 전문가",
+    "searchPlaceholder": "게시글 검색...",
+    "noResults": {
+      "title": "조건에 맞는 게시글이 없습니다",
+      "description": "검색 조건이나 카테고리를 변경해 보세요."
+    }
   },
   "templates": {
     "title": "자동화 템플릿",
