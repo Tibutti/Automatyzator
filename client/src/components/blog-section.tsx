@@ -58,48 +58,50 @@ export default function BlogSection() {
             ))
           ) : (
             posts?.map(post => (
-              <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                {post.imageUrl && (
-                  <img 
-                    src={post.imageUrl} 
-                    alt={post.title} 
-                    className="w-full h-48 object-cover" 
-                  />
-                )}
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                      {post.category}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.readTime} {t('blog.minRead')}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-montserrat font-bold mb-2 text-foreground">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      {post.authorImage && (
-                        <img 
-                          src={post.authorImage} 
-                          alt={post.author} 
-                          className="w-8 h-8 rounded-full mr-2" 
-                        />
-                      )}
-                      <span className="text-sm text-gray-600 dark:text-gray-300">
-                        {post.author}
+              <Link key={post.id} href={`/blog/${post.slug}`}>
+                <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  {post.imageUrl && (
+                    <img 
+                      src={post.imageUrl} 
+                      alt={post.title} 
+                      className="w-full h-48 object-cover" 
+                    />
+                  )}
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {post.readTime} {t('blog.minRead')}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {formatDate(post.publishedAt)}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+                    <h3 className="text-xl font-montserrat font-bold mb-2 text-foreground hover:text-primary transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        {post.authorImage && (
+                          <img 
+                            src={post.authorImage} 
+                            alt={post.author} 
+                            className="w-8 h-8 rounded-full mr-2" 
+                          />
+                        )}
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          {post.author}
+                        </span>
+                      </div>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {formatDate(post.publishedAt)}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))
           )}
         </div>
