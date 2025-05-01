@@ -208,6 +208,12 @@
     "dark": "어두운 테마",
     "system": "시스템 설정"
   },
+  "cta": {
+    "title": "자동화를 시작할 준비가 되셨나요?",
+    "description": "비즈니스 프로세스 자동화를 위한 솔루션에 대해 상담하세요",
+    "startProject": "프로젝트 시작",
+    "consultation": "무료 상담"
+  },
   "privacy": {
     "title": "Polityka Prywatności",
     "lastUpdated": "Ostatnia aktualizacja",

@@ -194,6 +194,12 @@
     "dark": "Ciemny",
     "system": "Systemowy"
   },
+  "cta": {
+    "title": "Gotowy, aby rozpocząć automatyzację?",
+    "description": "Skontaktuj się z nami, aby omówić Twoje potrzeby i zobaczyć, jak możemy pomóc w automatyzacji procesów biznesowych",
+    "startProject": "Rozpocznij projekt",
+    "consultation": "Darmowa konsultacja"
+  },
   "privacy": {
     "title": "Polityka Prywatności",
     "lastUpdated": "Ostatnia aktualizacja",

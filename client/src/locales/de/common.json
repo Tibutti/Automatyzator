@@ -200,6 +200,12 @@
     "dark": "Dunkel",
     "system": "System"
   },
+  "cta": {
+    "title": "Bereit für Automatisierung?",
+    "description": "Kontaktieren Sie uns, um Ihre Anforderungen zu besprechen und zu sehen, wie wir Ihre Geschäftsprozesse automatisieren können",
+    "startProject": "Projekt starten",
+    "consultation": "Kostenlose Beratung"
+  },
   "privacy": {
     "title": "Datenschutzrichtlinie",
     "lastUpdated": "Zuletzt aktualisiert",
