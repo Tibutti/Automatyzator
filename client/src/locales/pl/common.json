@@ -73,7 +73,15 @@
   "portfolio": {
     "title": "Nasze wdrożenia",
     "viewAll": "Zobacz wszystkie",
-    "readMore": "Czytaj więcej"
+    "readMore": "Czytaj więcej",
+    "caseStudy": "Case study",
+    "tools": "Zastosowane narzędzia",
+    "tags": "Tagi",
+    "solution": "Opis rozwiązania",
+    "challenge": "Wyzwanie",
+    "approach": "Rozwiązanie",
+    "results": "Rezultaty",
+    "requestOffer": "Poproś o ofertę podobnego rozwiązania"
   },
   "blog": {
     "title": "Blog",
