@@ -184,10 +184,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/blog-posts/:slug", async (req: Request, res: Response) => {
     try {
-      const post = await storage.getBlogPostBySlug(req.params.slug);
+      const slugOrId = req.params.slug;
+      let post;
+      
+      // Sprawdzamy, czy to liczba (ID) czy string (slug)
+      const id = parseInt(slugOrId);
+      if (!isNaN(id)) {
+        post = await storage.getBlogPost(id);
+      } else {
+        post = await storage.getBlogPostBySlug(slugOrId);
+      }
+      
       if (!post) {
         return res.status(404).json({ message: "Blog post not found" });
       }
+      
       return res.json(post);
     } catch (error) {
       console.error("Error fetching blog post:", error);
