@@ -41,7 +41,7 @@ export default function HeroSection() {
             <div className="w-full h-full rounded-xl overflow-hidden relative">
               <img 
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" 
-                alt="Automatyzacja procesów" 
+                alt={t('features.automation')} 
                 className="w-full h-auto object-cover rounded-xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl"></div>
