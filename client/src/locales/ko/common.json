@@ -1,0 +1,289 @@
+{
+  "header": {
+    "home": "Główna",
+    "services": "Usługi",
+    "whyUs": "Dlaczego my",
+    "blog": "Blog",
+    "shop": "Sklep",
+    "caseStudy": "Case Study",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Automatyzuj.",
+    "subtitle": "Integruj. Skaluj.",
+    "description": "Rozwiązania do automatyzacji procesów biznesowych dla nowoczesnych firm",
+    "cta": "Bezpłatna konsultacja"
+  },
+  "features": {
+    "businessData": "Analiza danych",
+    "integration": "Integracje systemów",
+    "aiAnalysis": "Analiza AI",
+    "automation": "Automatyzacja procesów",
+    "cloud": "Agenty AI",
+    "api": "API i integracje"
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "description": "Kompleksowe podejście do automatyzacji procesów biznesowych",
+    "service1": {
+      "title": "Audyt procesów",
+      "description": "Analiza obecnych procesów i identyfikacja obszarów do optymalizacji"
+    },
+    "service2": {
+      "title": "Automatyzacja dokumentów",
+      "description": "Systemy do zarządzania, klasyfikacji i przetwarzania dokumentów"
+    },
+    "service3": {
+      "title": "Boty RPA",
+      "description": "Roboty automatyzujące powtarzalne zadania w systemach biznesowych"
+    },
+    "service4": {
+      "title": "Integracje systemów",
+      "description": "Łączenie różnych aplikacji i systemów w spójny ekosystem"
+    },
+    "service5": {
+      "title": "Aplikacje dedykowane",
+      "description": "Niestandardowe oprogramowanie dostosowane do specyficznych potrzeb"
+    },
+    "service6": {
+      "title": "Analiza danych i AI",
+      "description": "Wykorzystanie sztucznej inteligencji do analizy danych biznesowych"
+    }
+  },
+  "whyUs": {
+    "title": "Dlaczego Automatyzator?",
+    "reason1": {
+      "title": "Doświadczenie",
+      "description": "Ponad 10 lat doświadczenia w automatyzacji procesów biznesowych"
+    },
+    "reason2": {
+      "title": "Kompleksowość",
+      "description": "Od analizy procesów po wdrożenie i wsparcie techniczne"
+    },
+    "reason3": {
+      "title": "Technologia",
+      "description": "Wykorzystanie najnowszych technologii i narzędzi do automatyzacji"
+    }
+  },
+  "cta": {
+    "title": "Gotowy na automatyzację?",
+    "description": "Umów bezpłatną konsultację i dowiedz się, jak możemy pomóc Twojej firmie",
+    "button": "Skontaktuj się z nami"
+  },
+  "portfolio": {
+    "title": "Nasze wdrożenia",
+    "viewAll": "Zobacz wszystkie",
+    "readMore": "Czytaj więcej"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Najnowsze artykuły",
+    "readMore": "Czytaj więcej",
+    "viewAll": "Zobacz wszystkie",
+    "minRead": "min czytania",
+    "backToBlog": "Powrót",
+    "featured": "Wyróżniony",
+    "views": "wyświetleń",
+    "authorDesc": "Ekspert automatyzacji procesów biznesowych"
+  },
+  "templates": {
+    "title": "Szablony automatyzacji",
+    "subtitle": "Gotowe rozwiązania",
+    "viewAll": "Zobacz wszystkie",
+    "buyNow": "Kup teraz",
+    "bestseller": "Bestseller"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Skontaktuj się z nami w sprawie automatyzacji procesów biznesowych",
+    "contactInfo": "Dane kontaktowe",
+    "form": {
+      "name": "Imię i nazwisko",
+      "email": "Email",
+      "company": "Firma",
+      "companyPlaceholder": "Nazwa firmy",
+      "phone": "Telefon",
+      "subject": "Temat",
+      "message": "Wiadomość",
+      "messagePlaceholder": "Opisz swoje potrzeby...",
+      "submit": "Wyślij wiadomość",
+      "sending": "Wysyłanie...",
+      "successTitle": "Wiadomość wysłana!",
+      "successDescription": "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
+      "errorTitle": "Wystąpił błąd",
+      "errorDescription": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+      "nameError": "Imię i nazwisko musi zawierać co najmniej 2 znaki",
+      "emailError": "Wprowadź poprawny adres e-mail",
+      "messageError": "Wiadomość musi zawierać co najmniej 10 znaków"
+    },
+    "address": "Adres",
+    "email": "Email",
+    "phone": "Telefon"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Zapisz się, aby otrzymywać najnowsze informacje o automatyzacji",
+    "placeholder": "Twój adres email",
+    "button": "Zapisz się"
+  },
+  "footer": {
+    "description": "Pomagamy firmom automatyzować procesy, integrować systemy i budować przewagę konkurencyjną.",
+    "services": "Usługi",
+    "resources": "Zasoby",
+    "company": "Firma",
+    "about": "O nas",
+    "team": "Zespół",
+    "careers": "Kariera",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "privacy": "Polityka prywatności",
+    "terms": "Warunki korzystania",
+    "cookies": "Cookies",
+    "templates": "Szablony",
+    "documentation": "Dokumentacja",
+    "caseStudies": "Case Studies", 
+    "copyright": "© 2025 Automatyzator. Wszelkie prawa zastrzeżone."
+  },
+  "notFound": {
+    "title": "Strona nie znaleziona",
+    "description": "Przepraszamy, strona której szukasz nie istnieje.",
+    "button": "Wróć do strony głównej"
+  },
+  "chat": {
+    "title": "Asystent Automatyzatora",
+    "subtitle": "Zadaj pytanie o automatyzację",
+    "placeholder": "Napisz wiadomość...",
+    "typing": "Asystent pisze...",
+    "welcome": "Cześć! Jestem asystentem Automatyzatora. W czym mogę Ci pomóc?"
+  },
+  "consultation": {
+    "title": "Umów konsultację",
+    "description": "Wypełnij formularz poniżej, aby umówić bezpłatną konsultację z naszym ekspertem",
+    "callToAction": "Lub zadzwoń: +48 123 456 789"
+  },
+  "language": {
+    "pl": "Polski",
+    "en": "Angielski",
+    "de": "Niemiecki"
+  },
+  "privacy": {
+    "title": "Polityka Prywatności",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "introTitle": "Wprowadzenie",
+    "introText": "W Automatyzator szanujemy Twoją prywatność i zobowiązujemy się do ochrony Twoich danych osobowych. Ta polityka prywatności poinformuje Cię o tym, jak dbamy o Twoje dane osobowe, gdy odwiedzasz naszą stronę internetową i poinformuje Cię o Twoich prawach do prywatności oraz o tym, jak prawo Cię chroni.",
+    "dataCollectionTitle": "Zbieranie danych",
+    "dataCollectionText": "Zbieramy kilka różnych rodzajów informacji do różnych celów, aby zapewnić i ulepszyć naszą usługę dla Ciebie.",
+    "personalDataTitle": "Dane osobowe",
+    "personalDataText": "Korzystając z naszej usługi, możemy poprosić Cię o podanie pewnych danych osobowych, które mogą być wykorzystane do kontaktu lub identyfikacji. Dane osobowe mogą obejmować, ale nie są ograniczone do:",
+    "personalData": {
+      "name": "Imię i nazwisko",
+      "email": "Adres e-mail",
+      "phone": "Numer telefonu",
+      "company": "Nazwa firmy"
+    },
+    "usageDataTitle": "Dane o użytkowaniu",
+    "usageDataText": "Możemy również zbierać informacje o tym, jak usługa jest dostępna i używana. Te dane o użytkowaniu mogą obejmować informacje takie jak adres protokołu internetowego komputera (np. adres IP), typ przeglądarki, wersja przeglądarki, strony naszej usługi, które odwiedzasz, czas i datę wizyty, czas spędzony na tych stronach, unikalne identyfikatory urządzeń i inne dane diagnostyczne.",
+    "cookiesTitle": "Ciasteczka",
+    "cookiesText": "Używamy plików cookie i podobnych technologii śledzenia do śledzenia aktywności w naszej usłudze i przechowywania określonych informacji. Pliki cookie to pliki z małą ilością danych, które mogą zawierać anonimowy unikalny identyfikator. Możesz poinstruować swoją przeglądarkę, aby odrzucała wszystkie pliki cookie lub wskazywała, kiedy plik cookie jest wysyłany. Jednak jeśli nie akceptujesz plików cookie, możesz nie być w stanie korzystać z niektórych części naszej usługi.",
+    "dataUseTitle": "Wykorzystanie danych",
+    "dataUseText": "Automatyzator wykorzystuje zebrane dane do różnych celów:",
+    "dataUse": {
+      "provide": "Aby zapewnić i utrzymać naszą usługę",
+      "improve": "Aby ulepszyć naszą usługę",
+      "communicate": "Aby komunikować się z Tobą",
+      "legal": "Aby spełnić zobowiązania prawne"
+    },
+    "dataSharingTitle": "Udostępnianie danych",
+    "dataSharingText": "Możemy udostępniać Twoje dane osobowe w następujących sytuacjach: dostawcom usług w celu monitorowania i analizowania korzystania z naszej usługi, w celu realizacji transakcji biznesowych, gdy jest to wymagane przez prawo, w celu ochrony żywotnych interesów oraz za Twoją zgodą.",
+    "dataSecurityTitle": "Bezpieczeństwo danych",
+    "dataSecurityText": "Bezpieczeństwo Twoich danych jest dla nas ważne, ale pamiętaj, że żadna metoda transmisji przez Internet lub metoda elektronicznego przechowywania nie jest w 100% bezpieczna. Chociaż staramy się używać komercyjnie akceptowalnych środków do ochrony Twoich danych osobowych, nie możemy zagwarantować ich absolutnego bezpieczeństwa.",
+    "userRightsTitle": "Twoje prawa do ochrony danych",
+    "userRightsText": "W określonych okolicznościach masz prawa na mocy przepisów o ochronie danych w odniesieniu do swoich danych osobowych, w tym prawo do dostępu, poprawiania, usuwania, ograniczania, przenoszenia lub sprzeciwu wobec przetwarzania Twoich danych osobowych.",
+    "contactTitle": "Kontakt",
+    "contactText": "Jeśli masz jakiekolwiek pytania dotyczące tej polityki prywatności lub naszych praktyk dotyczących prywatności, skontaktuj się z nami pod adresem:"
+  },
+  "terms": {
+    "title": "Warunki korzystania z usług",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "introTitle": "Wprowadzenie",
+    "introText": "Niniejsze Warunki korzystania z usług regulują korzystanie ze strony internetowej i usług obsługiwanych przez Automatyzator. Korzystając z naszej strony internetowej lub usług, zgadzasz się na przestrzeganie niniejszych Warunków.",
+    "definitionsTitle": "Definicje",
+    "definitionsText": "Do celów niniejszych Warunków korzystania z usług:",
+    "definitions": {
+      "company": "Firma",
+      "companyDef": "odnosi się do Automatyzator",
+      "service": "Usługa",
+      "serviceDef": "odnosi się do strony internetowej i usług świadczonych przez Automatyzator",
+      "user": "Użytkownik",
+      "userDef": "odnosi się do osoby korzystającej z Usługi",
+      "content": "Treść",
+      "contentDef": "odnosi się do wszelkich widocznych komponentów, takich jak tekst, obrazy lub inne informacje, które są publikowane, przesyłane lub w inny sposób udostępniane"
+    },
+    "accountTitle": "Konta użytkowników",
+    "accountText": "Podczas tworzenia konta u nas, musisz podać informacje, które są dokładne, kompletne i aktualne przez cały czas. Niedopełnienie tego obowiązku stanowi naruszenie Warunków, co może skutkować natychmiastowym zamknięciem Twojego konta w naszej Usłudze.",
+    "intellectualPropertyTitle": "Własność intelektualna",
+    "intellectualPropertyText": "Usługa i jej oryginalna zawartość, funkcje i funkcjonalność są i pozostaną wyłączną własnością Automatyzator i jego licencjodawców. Usługa jest chroniona prawami autorskimi, znakami towarowymi i innymi prawami. Nasze znaki towarowe i wygląd handlowy nie mogą być używane w związku z żadnym produktem lub usługą bez uprzedniej pisemnej zgody Automatyzator.",
+    "userContentTitle": "Treści użytkownika",
+    "userContentText": "Publikując treści w naszej Usłudze, udzielasz nam prawa do używania, modyfikowania, publicznego wykonywania, publicznego wyświetlania, reprodukowania i dystrybucji takich treści w ramach naszej Usługi. Zachowujesz wszelkie swoje prawa do wszelkich treści, które przesyłasz, publikujesz lub wyświetlasz w ramach naszej Usługi i jesteś odpowiedzialny za ochronę tych praw.",
+    "prohibitedTitle": "Zabronione użycie",
+    "prohibitedText": "Zgadzasz się nie korzystać z Usługi w sposób, który:",
+    "prohibited": {
+      "illegal": "Narusza jakiekolwiek obowiązujące prawo lub przepisy",
+      "harm": "Szkodzi, grozi lub nęka jakąkolwiek osobę lub organizację",
+      "impersonate": "Podszywa się pod jakąkolwiek osobę lub podmiot lub fałszywie oświadcza lub przedstawia Twoją przynależność do osoby lub podmiotu",
+      "unauthorized": "Próbuje uzyskać nieautoryzowany dostęp do jakiejkolwiek części Usługi lub jakichkolwiek innych systemów lub sieci połączonych z Usługą",
+      "interfere": "Zakłóca lub przerywa Usługę lub serwery lub sieci połączone z Usługą"
+    },
+    "terminationTitle": "Zakończenie",
+    "terminationText": "Możemy natychmiast wypowiedzieć lub zawiesić Twoje konto bez uprzedniego powiadomienia lub odpowiedzialności, z jakiegokolwiek powodu, w tym bez ograniczeń, jeśli naruszysz Warunki. Po zakończeniu, Twoje prawo do korzystania z Usługi natychmiast ustanie.",
+    "disclaimerTitle": "Zrzeczenie się odpowiedzialności",
+    "disclaimerText": "Korzystasz z Usługi na własne ryzyko. Usługa jest dostarczana na zasadzie 'TAK JAK JEST' i 'JAK DOSTĘPNA'. Usługa jest dostarczana bez gwarancji jakiegokolwiek rodzaju, czy to wyraźnych, czy dorozumianych.",
+    "limitationTitle": "Ograniczenie odpowiedzialności",
+    "limitationText": "W żadnym wypadku Automatyzator, ani jego dyrektorzy, pracownicy, partnerzy, agenci, dostawcy lub podmioty stowarzyszone nie ponoszą odpowiedzialności za jakiekolwiek pośrednie, przypadkowe, szczególne, wynikowe lub karne szkody, w tym bez ograniczeń, utratę zysków, danych, użytkowania, wartości firmy lub inne straty niematerialne, wynikające z korzystania lub niemożności korzystania z Usługi.",
+    "contactTitle": "Kontakt",
+    "contactText": "Jeśli masz jakiekolwiek pytania dotyczące tych Warunków, skontaktuj się z nami pod adresem:"
+  },
+  "cookieConsent": {
+    "title": "Ustawienia plików cookie",
+    "description": "Używamy plików cookie, aby ulepszyć twoje doświadczenia przeglądania, analizować ruch na stronie i personalizować treści. Poniżej możesz wybrać, które rodzaje plików cookie możemy używać. Więcej informacji o naszej polityce plików cookie znajdziesz klikając na poniższy link.",
+    "alwaysOn": "Zawsze włączone",
+    "enabled": "Włączone",
+    "disabled": "Wyłączone",
+    "learnMore": "Dowiedz się więcej o plikach cookie w naszej",
+    "cookiePolicy": "Polityce plików cookie",
+    "savePreferences": "Zapisz preferencje",
+    "acceptAll": "Akceptuj wszystkie",
+    "bannerTitle": "Używamy plików cookie",
+    "bannerText": "Używamy plików cookie, aby poprawić Twoje doświadczenia. Wybierz, które pliki cookie chcesz zezwolić.",
+    "essentialOnly": "Tylko niezbędne",
+    "settingsButton": "Ustawienia plików cookie"
+  },
+  "cookies": {
+    "title": "Polityka dotycząca plików cookie",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "introTitle": "Wprowadzenie",
+    "introText": "Ta Polityka dotycząca plików cookie wyjaśnia, w jaki sposób Automatyzator używa plików cookie i podobnych technologii, aby rozpoznać Cię, gdy odwiedzasz naszą stronę internetową. Wyjaśnia, czym są te technologie i dlaczego ich używamy, a także Twoje prawa do kontrolowania naszego użycia ich.",
+    "whatTitle": "Czym są pliki cookie?",
+    "whatText": "Pliki cookie to małe pliki danych, które są umieszczane na Twoim komputerze lub urządzeniu mobilnym, gdy odwiedzasz stronę internetową. Pliki cookie są szeroko używane przez właścicieli stron internetowych, aby ich strony działały lub działały bardziej efektywnie, a także aby dostarczać informacje raportowe.",
+    "typeTitle": "Typy plików cookie, których używamy",
+    "typeText": "Używamy różnych typów plików cookie z różnych powodów:",
+    "essentialTitle": "Niezbędne pliki cookie",
+    "essentialText": "Te pliki cookie są niezbędne do prawidłowego funkcjonowania strony internetowej. Umożliwiają podstawowe funkcje, takie jak nawigacja po stronie i dostęp do zabezpieczonych obszarów strony. Strona internetowa nie może funkcjonować prawidłowo bez tych plików cookie.",
+    "preferencesTitle": "Preferencyjne pliki cookie",
+    "preferencesText": "Te pliki cookie pozwalają stronie zapamiętać informacje, które zmieniają sposób zachowania lub wyglądu strony, takie jak Twój preferowany język lub region, w którym się znajdujesz.",
+    "statisticsTitle": "Statystyczne pliki cookie",
+    "statisticsText": "Te pliki cookie pomagają nam zrozumieć, w jaki sposób odwiedzający wchodzą w interakcję ze stroną, zbierając i raportując informacje anonimowo. Pozwala to nam ulepszać stronę na podstawie zachowania odwiedzających.",
+    "marketingTitle": "Marketingowe pliki cookie",
+    "marketingText": "Te pliki cookie są używane do śledzenia odwiedzających na stronach internetowych. Celem jest wyświetlanie reklam, które są istotne i angażujące dla indywidualnego użytkownika, a przez to bardziej wartościowe dla wydawców i reklamodawców zewnętrznych.",
+    "controlTitle": "Jak kontrolować pliki cookie",
+    "controlText": "Możesz kontrolować i/lub usuwać pliki cookie według własnego uznania. Możesz usunąć wszystkie pliki cookie, które są już na Twoim komputerze, a także możesz ustawić większość przeglądarek tak, aby zapobiegać ich umieszczaniu.",
+    "browserTitle": "Ustawienia przeglądarki",
+    "browserText": "Większość przeglądarek pozwala odmówić akceptacji plików cookie i usunąć pliki cookie. Metody do tego różnią się w zależności od przeglądarki i od wersji.",
+    "settingsTitle": "Ustawienia plików cookie",
+    "settingsText": "Możesz również zmienić swoje preferencje dotyczące plików cookie w dowolnym momencie, klikając przycisk 'Ustawienia plików cookie' w stopce naszej strony internetowej.",
+    "thirdPartyTitle": "Pliki cookie stron trzecich",
+    "thirdPartyText": "Oprócz naszych własnych plików cookie, możemy również używać różnych plików cookie stron trzecich do raportowania statystyk użytkowania usługi, dostarczania reklam i tak dalej.",
+    "moreInfoTitle": "Więcej informacji",
+    "moreInfoText": "Jeśli masz jakiekolwiek pytania dotyczące naszego użycia plików cookie lub innych technologii, skontaktuj się z nami pod adresem:"
+  }
+}
