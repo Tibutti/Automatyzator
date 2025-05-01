@@ -6,11 +6,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import pl from './locales/pl/common.json';
 import en from './locales/en/common.json';
 import de from './locales/de/common.json';
+import ko from './locales/ko/common.json';
 
 const resources = {
   pl: { common: pl },
   en: { common: en },
   de: { common: de },
+  ko: { common: ko },
 };
 
 i18n
