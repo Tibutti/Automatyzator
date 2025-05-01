@@ -390,7 +390,11 @@ export default function InteractiveHeroSection() {
           <div className="w-full md:w-1/2 space-y-6 mb-16 md:mb-0 stagger-children">
             <div className={`opacity-0 ${isVisible ? 'animate-fade-in' : ''}`}>
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                <span className="gradient-text translate-y-6 inline-block">{t('hero.title')}</span> <span className="block mt-1 translate-y-5 inline-block">{t('hero.subtitle')}</span>
+                <span className="gradient-text translate-y-6 inline-block">{t('hero.title')}</span> 
+                <span className="block mt-1 translate-y-5 inline-block">
+                  {t('hero.subtitle').split('.')[0]}.{' '}
+                  <span className="text-accent">{t('hero.subtitle').split('.')[1]}.</span>
+                </span>
               </h1>
             </div>
             <div className={`max-w-xl opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.2s'}}>
