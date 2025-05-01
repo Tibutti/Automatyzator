@@ -133,7 +133,12 @@
     "title": "Newsletter",
     "description": "Abonnieren Sie, um die neuesten Informationen zur Automatisierung zu erhalten",
     "placeholder": "Ihre E-Mail-Adresse",
-    "button": "Abonnieren"
+    "button": "Abonnieren",
+    "successTitle": "Erfolg!",
+    "successDescription": "Vielen Dank für Ihr Abonnement unseres Newsletters.",
+    "errorTitle": "Ein Fehler ist aufgetreten",
+    "errorDescription": "Newsletter-Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "emailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
   },
   "footer": {
     "description": "Wir helfen Unternehmen, Prozesse zu automatisieren, Systeme zu integrieren und Wettbewerbsvorteile aufzubauen.",

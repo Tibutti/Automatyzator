@@ -133,7 +133,12 @@
     "title": "Newsletter",
     "description": "Subscribe to receive the latest information about automation",
     "placeholder": "Your email address",
-    "button": "Subscribe"
+    "button": "Subscribe",
+    "successTitle": "Success!",
+    "successDescription": "Thank you for subscribing to our newsletter.",
+    "errorTitle": "An error occurred",
+    "errorDescription": "Failed to subscribe to the newsletter. Please try again.",
+    "emailError": "Please enter a valid email address"
   },
   "footer": {
     "description": "We help companies automate processes, integrate systems, and build competitive advantage.",
