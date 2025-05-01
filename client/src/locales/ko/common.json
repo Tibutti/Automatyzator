@@ -74,7 +74,15 @@
   "portfolio": {
     "title": "구현 사례",
     "viewAll": "모두 보기",
-    "readMore": "더 보기"
+    "readMore": "더 보기",
+    "caseStudy": "사례 연구",
+    "tools": "사용된 도구",
+    "tags": "태그",
+    "solution": "솔루션 설명",
+    "challenge": "도전 과제",
+    "approach": "접근 방법",
+    "results": "결과",
+    "requestOffer": "유사한 솔루션 견적 요청"
   },
   "blog": {
     "title": "블로그",

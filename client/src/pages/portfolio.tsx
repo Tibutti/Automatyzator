@@ -144,7 +144,7 @@ export default function Portfolio() {
                 </div>
                 
                 <div className="mb-6">
-                  <h4 className="font-bold mb-2">Rozwiązanie</h4>
+                  <h4 className="font-bold mb-2 whitespace-nowrap">{t('portfolio.approach')}</h4>
                   <p className="text-gray-600 dark:text-gray-300">
                     Wdrożyliśmy zautomatyzowany przepływ pracy, który integruje system e-commerce z systemem zarządzania
                     magazynem i dostawcami. Teraz cały proces działa automatycznie, bez potrzeby ręcznej interwencji.
@@ -152,7 +152,7 @@ export default function Portfolio() {
                 </div>
                 
                 <div className="mb-6">
-                  <h4 className="font-bold mb-2">Rezultaty</h4>
+                  <h4 className="font-bold mb-2 whitespace-nowrap">{t('portfolio.results')}</h4>
                   <ul className="list-disc pl-5 text-gray-600 dark:text-gray-300">
                     <li>Redukcja czasu obsługi zamówienia o 75%</li>
                     <li>Eliminacja błędów przy wprowadzaniu danych</li>
@@ -162,10 +162,10 @@ export default function Portfolio() {
                 </div>
                 
                 <Button 
-                  className="w-full py-6 text-lg cta-button"
+                  className="w-full py-6 text-lg cta-button whitespace-nowrap"
                   onClick={handleRequestOffer}
                 >
-                  Poproś o ofertę podobnego rozwiązania
+                  {t('portfolio.requestOffer')}
                 </Button>
               </div>
             </div>
