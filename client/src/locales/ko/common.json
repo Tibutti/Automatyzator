@@ -23,143 +23,143 @@
     "api": "API 및 통합"
   },
   "services": {
-    "title": "Nasze usługi",
-    "description": "Kompleksowe podejście do automatyzacji procesów biznesowych",
+    "title": "서비스",
+    "description": "비즈니스 프로세스 자동화에 대한 종합적인 접근",
     "service1": {
-      "title": "Audyt procesów",
-      "description": "Analiza obecnych procesów i identyfikacja obszarów do optymalizacji"
+      "title": "프로세스 감사",
+      "description": "현재 프로세스 분석 및 최적화 영역 식별"
     },
     "service2": {
-      "title": "Automatyzacja dokumentów",
-      "description": "Systemy do zarządzania, klasyfikacji i przetwarzania dokumentów"
+      "title": "문서 자동화",
+      "description": "문서 관리, 분류 및 처리 시스템"
     },
     "service3": {
-      "title": "Boty RPA",
-      "description": "Roboty automatyzujące powtarzalne zadania w systemach biznesowych"
+      "title": "RPA 봇",
+      "description": "비즈니스 시스템에서 반복적인 작업을 자동화하는 로봇"
     },
     "service4": {
-      "title": "Integracje systemów",
-      "description": "Łączenie różnych aplikacji i systemów w spójny ekosystem"
+      "title": "시스템 통합",
+      "description": "다양한 애플리케이션과 시스템을 일관된 생태계로 연결"
     },
     "service5": {
-      "title": "Aplikacje dedykowane",
-      "description": "Niestandardowe oprogramowanie dostosowane do specyficznych potrzeb"
+      "title": "맞춤형 애플리케이션",
+      "description": "특정 요구에 맞게 조정된 맞춤형 소프트웨어"
     },
     "service6": {
-      "title": "Analiza danych i AI",
-      "description": "Wykorzystanie sztucznej inteligencji do analizy danych biznesowych"
+      "title": "데이터 분석 및 AI",
+      "description": "비즈니스 데이터 분석을 위한 인공지능 활용"
     }
   },
   "whyUs": {
-    "title": "Dlaczego Automatyzator?",
+    "title": "왜 Automatyzator인가?",
     "reason1": {
-      "title": "Doświadczenie",
-      "description": "Ponad 10 lat doświadczenia w automatyzacji procesów biznesowych"
+      "title": "경험",
+      "description": "비즈니스 프로세스 자동화 분야에서 10년 이상의 경험"
     },
     "reason2": {
-      "title": "Kompleksowość",
-      "description": "Od analizy procesów po wdrożenie i wsparcie techniczne"
+      "title": "종합적 접근",
+      "description": "프로세스 분석부터 구현 및 기술 지원까지"
     },
     "reason3": {
-      "title": "Technologia",
-      "description": "Wykorzystanie najnowszych technologii i narzędzi do automatyzacji"
+      "title": "기술",
+      "description": "자동화를 위한 최신 기술 및 도구 활용"
     }
   },
   "cta": {
-    "title": "Gotowy na automatyzację?",
-    "description": "Umów bezpłatną konsultację i dowiedz się, jak możemy pomóc Twojej firmie",
-    "button": "Skontaktuj się z nami"
+    "title": "자동화 준비가 되셨나요?",
+    "description": "무료 상담을 예약하고 귀사를 어떻게 도울 수 있는지 알아보세요",
+    "button": "문의하기"
   },
   "portfolio": {
-    "title": "Nasze wdrożenia",
-    "viewAll": "Zobacz wszystkie",
-    "readMore": "Czytaj więcej"
+    "title": "구현 사례",
+    "viewAll": "모두 보기",
+    "readMore": "더 보기"
   },
   "blog": {
-    "title": "Blog",
-    "subtitle": "Najnowsze artykuły",
-    "readMore": "Czytaj więcej",
-    "viewAll": "Zobacz wszystkie",
-    "minRead": "min czytania",
-    "backToBlog": "Powrót",
-    "featured": "Wyróżniony",
-    "views": "wyświetleń",
-    "authorDesc": "Ekspert automatyzacji procesów biznesowych"
+    "title": "블로그",
+    "subtitle": "최신 게시글",
+    "readMore": "더 읽기",
+    "viewAll": "모두 보기",
+    "minRead": "분 읽기",
+    "backToBlog": "돌아가기",
+    "featured": "추천",
+    "views": "조회수",
+    "authorDesc": "비즈니스 프로세스 자동화 전문가"
   },
   "templates": {
-    "title": "Szablony automatyzacji",
-    "subtitle": "Gotowe rozwiązania",
-    "viewAll": "Zobacz wszystkie",
-    "buyNow": "Kup teraz",
-    "bestseller": "Bestseller"
+    "title": "자동화 템플릿",
+    "subtitle": "바로 사용 가능한 솔루션",
+    "viewAll": "모두 보기",
+    "buyNow": "지금 구매",
+    "bestseller": "베스트셀러"
   },
   "contact": {
-    "title": "Kontakt",
-    "description": "Skontaktuj się z nami w sprawie automatyzacji procesów biznesowych",
-    "contactInfo": "Dane kontaktowe",
+    "title": "연락처",
+    "description": "비즈니스 프로세스 자동화에 대해 문의하세요",
+    "contactInfo": "연락처 정보",
     "form": {
-      "name": "Imię i nazwisko",
-      "email": "Email",
-      "company": "Firma",
-      "companyPlaceholder": "Nazwa firmy",
-      "phone": "Telefon",
-      "subject": "Temat",
-      "message": "Wiadomość",
-      "messagePlaceholder": "Opisz swoje potrzeby...",
-      "submit": "Wyślij wiadomość",
-      "sending": "Wysyłanie...",
-      "successTitle": "Wiadomość wysłana!",
-      "successDescription": "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
-      "errorTitle": "Wystąpił błąd",
-      "errorDescription": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
-      "nameError": "Imię i nazwisko musi zawierać co najmniej 2 znaki",
-      "emailError": "Wprowadź poprawny adres e-mail",
-      "messageError": "Wiadomość musi zawierać co najmniej 10 znaków"
+      "name": "이름",
+      "email": "이메일",
+      "company": "회사",
+      "companyPlaceholder": "회사명",
+      "phone": "전화번호",
+      "subject": "제목",
+      "message": "메시지",
+      "messagePlaceholder": "필요한 내용을 설명해주세요...",
+      "submit": "메시지 보내기",
+      "sending": "전송 중...",
+      "successTitle": "메시지가 전송되었습니다!",
+      "successDescription": "문의해 주셔서 감사합니다. 최대한 빨리 연락 드리겠습니다.",
+      "errorTitle": "오류가 발생했습니다",
+      "errorDescription": "메시지를 보낼 수 없습니다. 다시 시도해 주세요.",
+      "nameError": "이름은 최소 2자 이상이어야 합니다",
+      "emailError": "유효한 이메일 주소를 입력하세요",
+      "messageError": "메시지는 최소 10자 이상이어야 합니다"
     },
-    "address": "Adres",
-    "email": "Email",
-    "phone": "Telefon"
+    "address": "주소",
+    "email": "이메일",
+    "phone": "전화번호"
   },
   "newsletter": {
-    "title": "Newsletter",
-    "description": "Zapisz się, aby otrzymywać najnowsze informacje o automatyzacji",
-    "placeholder": "Twój adres email",
-    "button": "Zapisz się"
+    "title": "뉴스레터",
+    "description": "자동화에 대한 최신 정보를 받아보세요",
+    "placeholder": "이메일 주소",
+    "button": "구독하기"
   },
   "footer": {
-    "description": "Pomagamy firmom automatyzować procesy, integrować systemy i budować przewagę konkurencyjną.",
-    "services": "Usługi",
-    "resources": "Zasoby",
-    "company": "Firma",
-    "about": "O nas",
-    "team": "Zespół",
-    "careers": "Kariera",
-    "blog": "Blog",
-    "contact": "Kontakt",
-    "privacy": "Polityka prywatności",
-    "terms": "Warunki korzystania",
-    "cookies": "Cookies",
-    "templates": "Szablony",
-    "documentation": "Dokumentacja",
-    "caseStudies": "Case Studies", 
-    "copyright": "© 2025 Automatyzator. Wszelkie prawa zastrzeżone."
+    "description": "기업이 프로세스를 자동화하고, 시스템을 통합하고, 경쟁 우위를 구축하도록 돕습니다.",
+    "services": "서비스",
+    "resources": "리소스",
+    "company": "회사",
+    "about": "회사 소개",
+    "team": "팀",
+    "careers": "채용",
+    "blog": "블로그",
+    "contact": "연락처",
+    "privacy": "개인정보 처리방침",
+    "terms": "이용약관",
+    "cookies": "쿠키",
+    "templates": "템플릿",
+    "documentation": "문서",
+    "caseStudies": "사례 연구", 
+    "copyright": "© 2025 Automatyzator. 모든 권리 보유."
   },
   "notFound": {
-    "title": "Strona nie znaleziona",
-    "description": "Przepraszamy, strona której szukasz nie istnieje.",
-    "button": "Wróć do strony głównej"
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "죄송합니다. 찾으시는 페이지가 존재하지 않습니다.",
+    "button": "홈으로 돌아가기"
   },
   "chat": {
-    "title": "Asystent Automatyzatora",
-    "subtitle": "Zadaj pytanie o automatyzację",
-    "placeholder": "Napisz wiadomość...",
-    "typing": "Asystent pisze...",
-    "welcome": "Cześć! Jestem asystentem Automatyzatora. W czym mogę Ci pomóc?"
+    "title": "Automatyzator 어시스턴트",
+    "subtitle": "자동화에 관한 질문을 해보세요",
+    "placeholder": "메시지 입력...",
+    "typing": "어시스턴트가 입력 중...",
+    "welcome": "안녕하세요! Automatyzator 어시스턴트입니다. 어떻게 도와드릴까요?"
   },
   "consultation": {
-    "title": "Umów konsultację",
-    "description": "Wypełnij formularz poniżej, aby umówić bezpłatną konsultację z naszym ekspertem",
-    "callToAction": "Lub zadzwoń: +48 123 456 789"
+    "title": "상담 예약",
+    "description": "전문가와의 무료 상담을 예약하기 위해 아래 양식을 작성해주세요",
+    "callToAction": "또는 전화 주세요: +48 123 456 789"
   },
   "language": {
     "pl": "폴란드어",
