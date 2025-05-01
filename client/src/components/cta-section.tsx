@@ -25,7 +25,7 @@ export default function CtaSection() {
             <Link href="/consultation">
               <Button
                 variant="outline"
-                className="px-8 py-4 h-auto border-2 border-white text-white hover:bg-white/10 cta-button"
+                className="px-8 py-4 h-auto border-2 border-white bg-primary/40 text-white hover:bg-white/10 cta-button font-medium"
               >
                 {t('cta.consultation')}
               </Button>
