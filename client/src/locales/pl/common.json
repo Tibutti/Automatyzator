@@ -188,6 +188,12 @@
     "de": "Niemiecki",
     "ko": "Koreański"
   },
+  "theme": {
+    "toggle": "Przełącz motyw",
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "system": "Systemowy"
+  },
   "privacy": {
     "title": "Polityka Prywatności",
     "lastUpdated": "Ostatnia aktualizacja",

@@ -194,6 +194,12 @@
     "de": "Deutsch",
     "ko": "Koreanisch"
   },
+  "theme": {
+    "toggle": "Thema umschalten",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  },
   "privacy": {
     "title": "Datenschutzrichtlinie",
     "lastUpdated": "Zuletzt aktualisiert",

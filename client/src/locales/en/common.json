@@ -194,6 +194,12 @@
     "de": "German",
     "ko": "Korean"
   },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
   "privacy": {
     "title": "Privacy Policy",
     "lastUpdated": "Last updated",
