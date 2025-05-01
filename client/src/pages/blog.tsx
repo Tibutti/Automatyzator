@@ -26,7 +26,7 @@ export default function Blog() {
   });
   
   // Extract unique categories
-  const categories = posts ? ["all", ...new Set(posts.map(post => post.category))] : ["all"];
+  const categories = posts ? ["all", ...(new Set(posts.map(post => post.category)) as any)] : ["all"];
   
   return (
     <div className="container mx-auto px-4 py-16 pt-28 md:py-24">
@@ -78,46 +78,48 @@ export default function Blog() {
         filteredPosts && filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map(post => (
-              <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                {post.imageUrl && (
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img 
-                      src={post.imageUrl} 
-                      alt={post.title} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                      {post.category}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.readTime} min czytania
-                    </span>
-                  </div>
-                  <CardTitle className="text-xl mb-2">{post.title}</CardTitle>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      {post.authorImage && (
-                        <img 
-                          src={post.authorImage} 
-                          alt={post.author} 
-                          className="w-8 h-8 rounded-full mr-2"
-                        />
-                      )}
-                      <span className="text-sm text-gray-600 dark:text-gray-300">{post.author}</span>
+              <Link key={post.id} href={`/blog/${post.slug}`}>
+                <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  {post.imageUrl && (
+                    <div className="relative h-48 w-full overflow-hidden">
+                      <img 
+                        src={post.imageUrl} 
+                        alt={post.title} 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {formatDate(post.publishedAt)}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+                  )}
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {post.readTime} min czytania
+                      </span>
+                    </div>
+                    <CardTitle className="text-xl mb-2 hover:text-primary transition-colors">{post.title}</CardTitle>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        {post.authorImage && (
+                          <img 
+                            src={post.authorImage} 
+                            alt={post.author} 
+                            className="w-8 h-8 rounded-full mr-2"
+                          />
+                        )}
+                        <span className="text-sm text-gray-600 dark:text-gray-300">{post.author}</span>
+                      </div>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {formatDate(post.publishedAt)}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         ) : (
