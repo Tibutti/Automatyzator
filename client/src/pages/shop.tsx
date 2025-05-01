@@ -7,8 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Star, StarHalf } from "lucide-react";
 import { formatPrice, generateStarRating } from "@/lib/utils";
 import type { Template } from "@shared/schema";
+import { useTranslation } from "react-i18next";
 
 export default function Shop() {
+  const { t } = useTranslation('common');
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   
   const { data: templates, isLoading } = useQuery<Template[]>({
@@ -18,9 +20,9 @@ export default function Shop() {
   return (
     <div className="container mx-auto px-4 py-16 pt-28 md:py-24">
       <div className="flex flex-col items-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Szablony</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center whitespace-nowrap">{t('templates.title')}</h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl">
-          Gotowe rozwiązania do automatyzacji procesów, które można wdrożyć od razu.
+          {t('templates.subtitle')}
         </p>
       </div>
       
@@ -54,8 +56,8 @@ export default function Shop() {
                     />
                   )}
                   {template.isBestseller && (
-                    <div className="absolute top-4 left-4 bg-accent text-dark px-3 py-1 rounded-full text-sm font-semibold">
-                      Bestseller
+                    <div className="absolute top-4 left-4 bg-accent text-dark px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
+                      {t('templates.bestseller')}
                     </div>
                   )}
                 </div>
@@ -82,10 +84,10 @@ export default function Shop() {
                     </div>
                   </div>
                   <Button 
-                    className="w-full cta-button" 
+                    className="w-full cta-button whitespace-nowrap" 
                     onClick={() => setSelectedTemplate(template)}
                   >
-                    Kup teraz
+                    {t('templates.buyNow')}
                   </Button>
                 </CardContent>
               </Card>
@@ -101,7 +103,7 @@ export default function Shop() {
             <DialogHeader>
               <DialogTitle className="text-2xl">{selectedTemplate.title}</DialogTitle>
               <DialogDescription>
-                Szczegóły szablonu
+                {t('templates.details') || "Szczegóły szablonu"}
               </DialogDescription>
             </DialogHeader>
             
@@ -116,18 +118,18 @@ export default function Shop() {
                 )}
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Opis</h3>
+                <h3 className="text-xl font-bold mb-2">{t('templates.description')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   {selectedTemplate.description}
                 </p>
                 
                 <div className="mb-4">
-                  <h4 className="font-bold mb-1">Co zawiera?</h4>
+                  <h4 className="font-bold mb-1">{t('templates.includes')}</h4>
                   <ul className="list-disc pl-5 text-gray-600 dark:text-gray-300">
-                    <li>Gotowy schemat workflow</li>
-                    <li>Dokumentacja wdrożeniowa</li>
-                    <li>30-dniowe wsparcie</li>
-                    <li>Aktualizacje przez 1 rok</li>
+                    <li>{t('templates.includeWorkflow')}</li>
+                    <li>{t('templates.includeDocumentation')}</li>
+                    <li>{t('templates.includeSupport')}</li>
+                    <li>{t('templates.includeUpdates')}</li>
                   </ul>
                 </div>
                 
@@ -148,7 +150,7 @@ export default function Shop() {
                     }
                   </div>
                   <span className="text-sm text-gray-600 dark:text-gray-300">
-                    {selectedTemplate.reviewCount} recenzji
+                    {selectedTemplate.reviewCount} {t('templates.reviews')}
                   </span>
                 </div>
                 
