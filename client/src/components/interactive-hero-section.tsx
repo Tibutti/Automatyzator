@@ -399,15 +399,17 @@ export default function InteractiveHeroSection() {
               </p>
             </div>
             <div className={`flex flex-wrap gap-3 md:gap-4 opacity-0 ${isVisible ? 'animate-slide-up' : ''}`} style={{animationDelay: '0.4s'}}>
-              <Button 
-                size="lg" 
-                className="button-3d group text-sm md:text-base"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <span>{t('whyUs.title')}</span>
-                <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
-              </Button>
+              <Link href="/why-us">
+                <Button 
+                  size="lg" 
+                  className="button-3d group text-sm md:text-base"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <span>{t('whyUs.title')}</span>
+                  <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                </Button>
+              </Link>
               <Link href="/consultation">
                 <Button size="lg" variant="outline" className="gradient-border text-sm md:text-base">
                   {t('hero.cta')}
@@ -509,9 +511,11 @@ export default function InteractiveHeroSection() {
                        onClick={(e) => e.stopPropagation()}>
                     <div className="font-semibold mb-2">{connectionPoints[activePoint].label}</div>
                     <div className="text-sm text-muted-foreground">{connectionPoints[activePoint].description}</div>
-                    <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>
-                      {t('blog.readMore')}
-                    </Button>
+                    <Link href="/why-us">
+                      <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>
+                        {t('blog.readMore')}
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               )}
