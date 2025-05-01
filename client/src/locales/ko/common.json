@@ -162,9 +162,10 @@
     "callToAction": "Lub zadzwoń: +48 123 456 789"
   },
   "language": {
-    "pl": "Polski",
-    "en": "Angielski",
-    "de": "Niemiecki"
+    "pl": "폴란드어",
+    "en": "영어",
+    "de": "독일어",
+    "ko": "한국어"
   },
   "privacy": {
     "title": "Polityka Prywatności",

@@ -32,6 +32,7 @@ export default function LanguageSwitcher() {
     pl: t('language.pl'),
     en: t('language.en'),
     de: t('language.de'),
+    ko: t('language.ko'),
   };
 
   return (
@@ -60,6 +61,12 @@ export default function LanguageSwitcher() {
           className={currentLanguage === "de" ? "bg-accent" : ""}
         >
           🇩🇪 {languageNames.de}
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => changeLanguage("ko")}
+          className={currentLanguage === "ko" ? "bg-accent" : ""}
+        >
+          🇰🇷 {languageNames.ko || "한국어"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
