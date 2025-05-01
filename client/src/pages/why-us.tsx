@@ -8,7 +8,7 @@ export default function WhyUs() {
   return (
     <div className="pt-24 md:pt-32">
       <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center whitespace-nowrap">
           {t('whyUs.title')}
         </h1>
         <p className="text-xl text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12">

@@ -406,11 +406,11 @@ export default function InteractiveHeroSection() {
               <Link href="/why-us">
                 <Button 
                   size="lg" 
-                  className="button-3d group text-sm md:text-base"
+                  className="button-3d group text-sm md:text-base whitespace-nowrap"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
-                  <span>{t('whyUs.title')}</span>
+                  <span className="whitespace-nowrap">{t('whyUs.title')}</span>
                   <ArrowRight className={`ml-1 md:ml-2 h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
                 </Button>
               </Link>
@@ -516,8 +516,8 @@ export default function InteractiveHeroSection() {
                     <div className="font-semibold mb-2">{connectionPoints[activePoint].label}</div>
                     <div className="text-sm text-muted-foreground">{connectionPoints[activePoint].description}</div>
                     <Link href="/why-us">
-                      <Button className="mt-4" size="sm" onClick={() => setActivePoint(null)}>
-                        {t('blog.readMore')}
+                      <Button className="mt-4 whitespace-nowrap" size="sm" onClick={() => setActivePoint(null)}>
+                        <span className="whitespace-nowrap">{t('blog.readMore')}</span>
                       </Button>
                     </Link>
                   </div>
