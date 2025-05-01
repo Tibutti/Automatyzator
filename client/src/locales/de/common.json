@@ -79,7 +79,11 @@
     "subtitle": "Neueste Artikel",
     "readMore": "Mehr lesen",
     "viewAll": "Alle anzeigen",
-    "minRead": "min Lesezeit"
+    "minRead": "min Lesezeit",
+    "backToBlog": "Zurück",
+    "featured": "Empfohlen",
+    "views": "Aufrufe",
+    "authorDesc": "Experte für Geschäftsprozessautomatisierung"
   },
   "templates": {
     "title": "Automatisierungsvorlagen",

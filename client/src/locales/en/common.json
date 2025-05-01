@@ -79,7 +79,11 @@
     "subtitle": "Latest articles",
     "readMore": "Read more",
     "viewAll": "View all",
-    "minRead": "min read"
+    "minRead": "min read",
+    "backToBlog": "Back",
+    "featured": "Featured",
+    "views": "views",
+    "authorDesc": "Business process automation expert"
   },
   "templates": {
     "title": "Automation Templates",

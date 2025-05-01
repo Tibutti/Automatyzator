@@ -79,7 +79,11 @@
     "subtitle": "Najnowsze artykuły",
     "readMore": "Czytaj więcej",
     "viewAll": "Zobacz wszystkie",
-    "minRead": "min czytania"
+    "minRead": "min czytania",
+    "backToBlog": "Powrót",
+    "featured": "Wyróżniony",
+    "views": "wyświetleń",
+    "authorDesc": "Ekspert automatyzacji procesów biznesowych"
   },
   "templates": {
     "title": "Szablony automatyzacji",
