@@ -159,14 +159,14 @@ export default function Shop() {
                     {formatPrice(selectedTemplate.price)}
                   </span>
                   {selectedTemplate.isBestseller && (
-                    <span className="bg-accent text-dark px-3 py-1 rounded-full text-sm font-semibold">
-                      Bestseller
+                    <span className="bg-accent text-dark px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
+                      {t('templates.bestseller')}
                     </span>
                   )}
                 </div>
                 
-                <Button className="w-full py-6 text-lg cta-button">
-                  Kup teraz
+                <Button className="w-full py-6 text-lg cta-button whitespace-nowrap">
+                  {t('templates.buyNow')}
                 </Button>
               </div>
             </div>

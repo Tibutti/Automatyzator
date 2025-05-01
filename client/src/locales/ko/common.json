@@ -97,7 +97,15 @@
     "subtitle": "바로 사용 가능한 솔루션",
     "viewAll": "모두 보기",
     "buyNow": "지금 구매",
-    "bestseller": "베스트셀러"
+    "bestseller": "베스트셀러",
+    "details": "템플릿 세부정보",
+    "description": "설명",
+    "includes": "포함 내용",
+    "includeWorkflow": "워크플로 템플릿",
+    "includeDocumentation": "구현 문서",
+    "includeSupport": "30일 지원",
+    "includeUpdates": "1년 업데이트",
+    "reviews": "리뷰"
   },
   "contact": {
     "title": "연락처",
