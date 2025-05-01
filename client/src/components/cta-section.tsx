@@ -22,12 +22,14 @@ export default function CtaSection() {
                 {t('cta.startProject')}
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              className="px-8 py-4 h-auto border-2 border-white text-white hover:bg-white/10 cta-button"
-            >
-              {t('cta.consultation')}
-            </Button>
+            <Link href="/consultation">
+              <Button
+                variant="outline"
+                className="px-8 py-4 h-auto border-2 border-white text-white hover:bg-white/10 cta-button"
+              >
+                {t('cta.consultation')}
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
