@@ -18,6 +18,7 @@ interface NavLink {
 const getNavLinks = (t: (key: string) => string): NavLink[] => [
   { title: t('header.home'), href: "/" },
   { title: t('header.services'), href: "/services" },
+  { title: t('header.whyUs'), href: "/why-us" },
   { title: t('header.blog'), href: "/blog" },
   { title: t('header.shop'), href: "/shop" },
   { title: t('header.caseStudy'), href: "/portfolio" },
