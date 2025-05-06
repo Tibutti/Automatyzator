@@ -14,7 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { insertServiceSchema, type Service } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import Spinner from "@/components/ui/spinner";
+import { Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Rozszerzamy schemat o walidację
@@ -282,7 +282,7 @@ export default function AdminServicesPage() {
                 className={editingId === null ? "ml-auto" : ""}
               >
                 {isSubmitting ? (
-                  <Spinner className="mr-2" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : editingId !== null ? (
                   <Save className="mr-2 h-4 w-4" />
                 ) : (
@@ -298,7 +298,7 @@ export default function AdminServicesPage() {
       <h2 className="text-xl font-bold mb-4">Istniejące usługi</h2>
       {isLoading ? (
         <div className="flex justify-center py-8">
-          <Spinner size="lg" />
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
       ) : services && services.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
