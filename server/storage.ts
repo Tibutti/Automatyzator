@@ -4,10 +4,12 @@ import {
   templates, type Template, type InsertTemplate,
   caseStudies, type CaseStudy, type InsertCaseStudy,
   contactSubmissions, type ContactSubmission, type InsertContactSubmission,
-  newsletterSubscribers, type NewsletterSubscriber, type InsertNewsletterSubscriber
+  newsletterSubscribers, type NewsletterSubscriber, type InsertNewsletterSubscriber,
+  whyUsItems, type WhyUsItem, type InsertWhyUsItem,
+  services, type Service, type InsertService
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, asc } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
@@ -54,6 +56,20 @@ export interface IStorage {
   getNewsletterSubscriber(id: number): Promise<NewsletterSubscriber | undefined>;
   createNewsletterSubscriber(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
   deleteNewsletterSubscriber(id: number): Promise<void>;
+
+  // "Dlaczego Automatyzator?" (Why Us) methods
+  getWhyUsItems(language?: string): Promise<WhyUsItem[]>;
+  getWhyUsItem(id: number): Promise<WhyUsItem | undefined>;
+  createWhyUsItem(item: InsertWhyUsItem): Promise<WhyUsItem>;
+  updateWhyUsItem(id: number, item: Partial<InsertWhyUsItem>): Promise<WhyUsItem>;
+  deleteWhyUsItem(id: number): Promise<void>;
+  
+  // "Nasze usługi" (Services) methods
+  getServices(language?: string): Promise<Service[]>;
+  getService(id: number): Promise<Service | undefined>;
+  createService(service: InsertService): Promise<Service>;
+  updateService(id: number, service: Partial<InsertService>): Promise<Service>;
+  deleteService(id: number): Promise<void>;
 }
 
 // Database storage implementation using Drizzle ORM
@@ -258,6 +274,88 @@ export class DatabaseStorage implements IStorage {
   
   async deleteNewsletterSubscriber(id: number): Promise<void> {
     await db.delete(newsletterSubscribers).where(eq(newsletterSubscribers.id, id));
+  }
+  
+  // "Dlaczego Automatyzator?" (Why Us) methods
+  async getWhyUsItems(language = "pl"): Promise<WhyUsItem[]> {
+    return db.select()
+      .from(whyUsItems)
+      .where(eq(whyUsItems.language, language))
+      .orderBy(asc(whyUsItems.order));
+  }
+  
+  async getWhyUsItem(id: number): Promise<WhyUsItem | undefined> {
+    const [item] = await db.select()
+      .from(whyUsItems)
+      .where(eq(whyUsItems.id, id));
+    return item;
+  }
+  
+  async createWhyUsItem(item: InsertWhyUsItem): Promise<WhyUsItem> {
+    const [whyUsItem] = await db.insert(whyUsItems)
+      .values({
+        ...item,
+        updatedAt: new Date()
+      })
+      .returning();
+    return whyUsItem;
+  }
+  
+  async updateWhyUsItem(id: number, item: Partial<InsertWhyUsItem>): Promise<WhyUsItem> {
+    const [updatedItem] = await db
+      .update(whyUsItems)
+      .set({
+        ...item,
+        updatedAt: new Date()
+      })
+      .where(eq(whyUsItems.id, id))
+      .returning();
+    return updatedItem;
+  }
+  
+  async deleteWhyUsItem(id: number): Promise<void> {
+    await db.delete(whyUsItems).where(eq(whyUsItems.id, id));
+  }
+  
+  // "Nasze usługi" (Services) methods
+  async getServices(language = "pl"): Promise<Service[]> {
+    return db.select()
+      .from(services)
+      .where(eq(services.language, language))
+      .orderBy(asc(services.order));
+  }
+  
+  async getService(id: number): Promise<Service | undefined> {
+    const [service] = await db.select()
+      .from(services)
+      .where(eq(services.id, id));
+    return service;
+  }
+  
+  async createService(service: InsertService): Promise<Service> {
+    const [newService] = await db.insert(services)
+      .values({
+        ...service,
+        updatedAt: new Date()
+      })
+      .returning();
+    return newService;
+  }
+  
+  async updateService(id: number, service: Partial<InsertService>): Promise<Service> {
+    const [updatedService] = await db
+      .update(services)
+      .set({
+        ...service,
+        updatedAt: new Date()
+      })
+      .where(eq(services.id, id))
+      .returning();
+    return updatedService;
+  }
+  
+  async deleteService(id: number): Promise<void> {
+    await db.delete(services).where(eq(services.id, id));
   }
   
   // Initialize sample data if database is empty

@@ -95,6 +95,38 @@ export const insertNewsletterSubscriberSchema = createInsertSchema(newsletterSub
   subscribedAt: true,
 });
 
+// Dlaczego Automatyzator? (Why Us) schema
+export const whyUsItems = pgTable("why_us_items", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  icon: text("icon").notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  language: text("language").notNull().default("pl"),
+});
+
+export const insertWhyUsItemSchema = createInsertSchema(whyUsItems).omit({
+  id: true,
+  updatedAt: true,
+});
+
+// Nasze usługi (Our Services) schema
+export const services = pgTable("services", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  icon: text("icon").notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  language: text("language").notNull().default("pl"),
+});
+
+export const insertServiceSchema = createInsertSchema(services).omit({
+  id: true,
+  updatedAt: true,
+});
+
 // Type exports for all schemas
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -113,3 +145,9 @@ export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSche
 
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
+
+export type WhyUsItem = typeof whyUsItems.$inferSelect;
+export type InsertWhyUsItem = z.infer<typeof insertWhyUsItemSchema>;
+
+export type Service = typeof services.$inferSelect;
+export type InsertService = z.infer<typeof insertServiceSchema>;
