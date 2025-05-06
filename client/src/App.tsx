@@ -28,6 +28,8 @@ import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import AdminBlog from "@/pages/admin/blog";
 import AdminSettings from "@/pages/admin/settings";
+import AdminWhyUs from "@/pages/admin/why-us";
+import AdminServices from "@/pages/admin/services";
 import PlaceholderPage from "@/pages/admin/placeholder";
 
 function Router() {
@@ -55,6 +57,8 @@ function Router() {
         <PlaceholderPage title="Zarządzanie newsletterem" />
       </Route>
       <Route path="/admin/settings" component={AdminSettings} />
+      <Route path="/admin/why-us" component={AdminWhyUs} />
+      <Route path="/admin/services" component={AdminServices} />
       
       {/* Public Routes */}
       <Route path="/">

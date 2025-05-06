@@ -24,6 +24,7 @@ import ProtectedRoute from "@/components/admin/protected-route";
 export default function AdminDashboard() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("blog");
+  const [location, setLocation] = useLocation();
   const { user, logout } = useAuth();
 
   // Fetch blog posts
@@ -229,6 +230,8 @@ export default function AdminDashboard() {
               <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
               <TabsTrigger value="messages">Wiadomości</TabsTrigger>
               <TabsTrigger value="subscribers">Subskrybenci</TabsTrigger>
+              <TabsTrigger value="whyUs" onClick={() => setLocation("/admin/why-us")}>Dlaczego my</TabsTrigger>
+              <TabsTrigger value="services" onClick={() => setLocation("/admin/services")}>Usługi</TabsTrigger>
             </TabsList>
             
             {/* Blog Posts Tab */}
