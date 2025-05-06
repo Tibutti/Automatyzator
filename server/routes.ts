@@ -8,7 +8,8 @@ import {
   insertTemplateSchema,
   insertCaseStudySchema,
   insertWhyUsItemSchema,
-  insertServiceSchema
+  insertServiceSchema,
+  insertSectionSettingSchema
 } from "@shared/schema";
 import { z } from "zod";
 import session from "express-session";
