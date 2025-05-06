@@ -99,6 +99,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "services",
             displayName: "Nasze usługi",
             isEnabled: true,
+            showInMenu: true,
             order: 1,
             updatedAt: new Date()
           },
@@ -106,6 +107,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "why-us",
             displayName: "Dlaczego Automatyzator?",
             isEnabled: true,
+            showInMenu: true,
             order: 2,
             updatedAt: new Date()
           },
@@ -113,6 +115,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "case-studies",
             displayName: "Nasze wdrożenia",
             isEnabled: true,
+            showInMenu: true,
             order: 3,
             updatedAt: new Date()
           },
@@ -120,6 +123,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "templates",
             displayName: "Szablony automatyzacji",
             isEnabled: true,
+            showInMenu: true,
             order: 4,
             updatedAt: new Date()
           },
@@ -127,6 +131,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "blog",
             displayName: "Blog",
             isEnabled: true,
+            showInMenu: true,
             order: 5,
             updatedAt: new Date()
           },
@@ -134,6 +139,7 @@ async function seedDatabaseWithSampleData() {
             sectionKey: "shop",
             displayName: "Sklep",
             isEnabled: true,
+            showInMenu: true,
             order: 6,
             updatedAt: new Date()
           }
