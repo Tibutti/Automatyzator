@@ -42,7 +42,7 @@ export default function Blog() {
       <div className="mb-10">
         <Input
           type="search"
-          placeholder={t('blog.searchPlaceholder')}
+          placeholder="Szukaj artykułów..."
           className="max-w-md mx-auto"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -97,7 +97,7 @@ export default function Blog() {
                         {post.category}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {post.readTime} {t('blog.minRead')}
+                        {post.readTime} min czytania
                       </span>
                     </div>
                     <CardTitle className="text-xl mb-2 hover:text-primary transition-colors">{post.title}</CardTitle>
@@ -126,8 +126,8 @@ export default function Blog() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-4">{t('blog.noResults.title')}</h3>
-            <p>{t('blog.noResults.description')}</p>
+            <h3 className="text-xl font-semibold mb-4">Brak artykułów spełniających kryteria</h3>
+            <p>Spróbuj zmienić kryteria wyszukiwania lub kategorię.</p>
           </div>
         )
       )}
