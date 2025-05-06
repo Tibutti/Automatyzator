@@ -364,6 +364,94 @@ export class DatabaseStorage implements IStorage {
     const existingPosts = await db.select().from(blogPosts).limit(1);
     if (existingPosts.length > 0) return;
     
+    // Sample Why Us items
+    await db.insert(whyUsItems).values([
+      {
+        title: "Oszczędność czasu",
+        description: "Automatyzacja rutynowych zadań pozwala zaoszczędzić nawet 60% czasu pracy.",
+        icon: "clock",
+        order: 1,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Eliminacja błędów",
+        description: "Zautomatyzowane procesy redukują liczbę błędów ludzkich o ponad 90%.",
+        icon: "shield-check",
+        order: 2,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Zwiększenie wydajności",
+        description: "Nasi klienci notują średnio 40% wzrost wydajności operacyjnej.",
+        icon: "trending-up",
+        order: 3,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Skalowalność",
+        description: "Łatwe skalowanie procesów biznesowych bez zwiększania zatrudnienia.",
+        icon: "layers",
+        order: 4,
+        language: "pl",
+        updatedAt: new Date()
+      }
+    ]);
+    
+    // Sample Services
+    await db.insert(services).values([
+      {
+        title: "Analiza AI",
+        description: "Wykorzystujemy sztuczną inteligencję do analizy procesów i identyfikacji obszarów do automatyzacji.",
+        icon: "brain",
+        order: 1,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Automatyzacja procesów",
+        description: "Tworzymy zautomatyzowane przepływy pracy dla powtarzalnych zadań biznesowych.",
+        icon: "settings",
+        order: 2,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Agenty AI",
+        description: "Implementujemy inteligentnych asystentów opartych o najnowsze modele językowe.",
+        icon: "bot",
+        order: 3,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "API i integracje",
+        description: "Łączymy różne systemy i aplikacje w jeden spójny ekosystem.",
+        icon: "plug",
+        order: 4,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Analiza danych",
+        description: "Pomagamy w ekstrakcji wartościowych informacji z danych biznesowych.",
+        icon: "bar-chart",
+        order: 5,
+        language: "pl",
+        updatedAt: new Date()
+      },
+      {
+        title: "Integracje systemów",
+        description: "Eliminujemy silosy informacyjne, łącząc wszystkie systemy firmowe.",
+        icon: "layers",
+        order: 6,
+        language: "pl",
+        updatedAt: new Date()
+      }
+    ]);
+    
     // Sample blog posts
     await db.insert(blogPosts).values([
       {
@@ -484,6 +572,8 @@ export class MemStorage implements IStorage {
   private caseStudies: Map<number, CaseStudy>;
   private contactSubmissions: Map<number, ContactSubmission>;
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
+  private whyUsItems: Map<number, WhyUsItem>;
+  private services: Map<number, Service>;
   
   private userCount: number;
   private blogPostCount: number;
@@ -491,6 +581,8 @@ export class MemStorage implements IStorage {
   private caseStudyCount: number;
   private contactSubmissionCount: number;
   private newsletterSubscriberCount: number;
+  private whyUsItemCount: number;
+  private serviceCount: number;
 
   constructor() {
     this.users = new Map();
@@ -499,6 +591,8 @@ export class MemStorage implements IStorage {
     this.caseStudies = new Map();
     this.contactSubmissions = new Map();
     this.newsletterSubscribers = new Map();
+    this.whyUsItems = new Map();
+    this.services = new Map();
     
     this.userCount = 1;
     this.blogPostCount = 1;
@@ -506,6 +600,8 @@ export class MemStorage implements IStorage {
     this.caseStudyCount = 1;
     this.contactSubmissionCount = 1;
     this.newsletterSubscriberCount = 1;
+    this.whyUsItemCount = 1;
+    this.serviceCount = 1;
     
     // Initialize with sample data
     this.initializeSampleData();
@@ -712,8 +808,172 @@ export class MemStorage implements IStorage {
     this.newsletterSubscribers.delete(id);
   }
   
+  // "Dlaczego Automatyzator?" (Why Us) methods
+  async getWhyUsItems(language = "pl"): Promise<WhyUsItem[]> {
+    return Array.from(this.whyUsItems.values())
+      .filter(item => item.language === language)
+      .sort((a, b) => a.order - b.order);
+  }
+  
+  async getWhyUsItem(id: number): Promise<WhyUsItem | undefined> {
+    return this.whyUsItems.get(id);
+  }
+  
+  async createWhyUsItem(item: InsertWhyUsItem): Promise<WhyUsItem> {
+    const id = this.whyUsItemCount++;
+    const whyUsItem: WhyUsItem = { 
+      ...item, 
+      id, 
+      updatedAt: new Date() 
+    };
+    this.whyUsItems.set(id, whyUsItem);
+    return whyUsItem;
+  }
+  
+  async updateWhyUsItem(id: number, item: Partial<InsertWhyUsItem>): Promise<WhyUsItem> {
+    const existingItem = this.whyUsItems.get(id);
+    if (!existingItem) {
+      throw new Error(`Why Us item with id ${id} not found`);
+    }
+    
+    const updatedItem: WhyUsItem = { 
+      ...existingItem, 
+      ...item, 
+      updatedAt: new Date() 
+    };
+    this.whyUsItems.set(id, updatedItem);
+    return updatedItem;
+  }
+  
+  async deleteWhyUsItem(id: number): Promise<void> {
+    this.whyUsItems.delete(id);
+  }
+  
+  // "Nasze usługi" (Services) methods
+  async getServices(language = "pl"): Promise<Service[]> {
+    return Array.from(this.services.values())
+      .filter(service => service.language === language)
+      .sort((a, b) => a.order - b.order);
+  }
+  
+  async getService(id: number): Promise<Service | undefined> {
+    return this.services.get(id);
+  }
+  
+  async createService(service: InsertService): Promise<Service> {
+    const id = this.serviceCount++;
+    const newService: Service = { 
+      ...service, 
+      id, 
+      updatedAt: new Date() 
+    };
+    this.services.set(id, newService);
+    return newService;
+  }
+  
+  async updateService(id: number, service: Partial<InsertService>): Promise<Service> {
+    const existingService = this.services.get(id);
+    if (!existingService) {
+      throw new Error(`Service with id ${id} not found`);
+    }
+    
+    const updatedService: Service = { 
+      ...existingService, 
+      ...service, 
+      updatedAt: new Date() 
+    };
+    this.services.set(id, updatedService);
+    return updatedService;
+  }
+  
+  async deleteService(id: number): Promise<void> {
+    this.services.delete(id);
+  }
+  
   // Initialize with sample data
   private initializeSampleData() {
+    // Sample Why Us items
+    this.createWhyUsItem({
+      title: "Oszczędność czasu",
+      description: "Automatyzacja rutynowych zadań pozwala zaoszczędzić nawet 60% czasu pracy.",
+      icon: "clock",
+      order: 1,
+      language: "pl"
+    });
+    
+    this.createWhyUsItem({
+      title: "Eliminacja błędów",
+      description: "Zautomatyzowane procesy redukują liczbę błędów ludzkich o ponad 90%.",
+      icon: "shield-check",
+      order: 2,
+      language: "pl"
+    });
+    
+    this.createWhyUsItem({
+      title: "Zwiększenie wydajności",
+      description: "Nasi klienci notują średnio 40% wzrost wydajności operacyjnej.",
+      icon: "trending-up",
+      order: 3,
+      language: "pl"
+    });
+    
+    this.createWhyUsItem({
+      title: "Skalowalność",
+      description: "Łatwe skalowanie procesów biznesowych bez zwiększania zatrudnienia.",
+      icon: "layers",
+      order: 4,
+      language: "pl"
+    });
+    
+    // Sample Services
+    this.createService({
+      title: "Analiza AI",
+      description: "Wykorzystujemy sztuczną inteligencję do analizy procesów i identyfikacji obszarów do automatyzacji.",
+      icon: "brain",
+      order: 1,
+      language: "pl"
+    });
+    
+    this.createService({
+      title: "Automatyzacja procesów",
+      description: "Tworzymy zautomatyzowane przepływy pracy dla powtarzalnych zadań biznesowych.",
+      icon: "settings",
+      order: 2,
+      language: "pl"
+    });
+    
+    this.createService({
+      title: "Agenty AI",
+      description: "Implementujemy inteligentnych asystentów opartych o najnowsze modele językowe.",
+      icon: "bot",
+      order: 3,
+      language: "pl"
+    });
+    
+    this.createService({
+      title: "API i integracje",
+      description: "Łączymy różne systemy i aplikacje w jeden spójny ekosystem.",
+      icon: "plug",
+      order: 4,
+      language: "pl"
+    });
+    
+    this.createService({
+      title: "Analiza danych",
+      description: "Pomagamy w ekstrakcji wartościowych informacji z danych biznesowych.",
+      icon: "bar-chart",
+      order: 5,
+      language: "pl"
+    });
+    
+    this.createService({
+      title: "Integracje systemów",
+      description: "Eliminujemy silosy informacyjne, łącząc wszystkie systemy firmowe.",
+      icon: "layers",
+      order: 6,
+      language: "pl"
+    });
+    
     // Sample blog posts
     this.createBlogPost({
       title: "Jak zacząć z automatyzacją procesów w firmie?",

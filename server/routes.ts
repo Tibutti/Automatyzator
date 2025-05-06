@@ -6,7 +6,9 @@ import {
   insertNewsletterSubscriberSchema,
   insertBlogPostSchema,
   insertTemplateSchema,
-  insertCaseStudySchema
+  insertCaseStudySchema,
+  insertWhyUsItemSchema,
+  insertServiceSchema
 } from "@shared/schema";
 import { z } from "zod";
 import session from "express-session";
