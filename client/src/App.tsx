@@ -46,18 +46,7 @@ function Router() {
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/blog" component={AdminBlog} />
-      <Route path="/admin/templates">
-        <PlaceholderPage title="Zarządzanie szablonami" />
-      </Route>
-      <Route path="/admin/case-studies">
-        <PlaceholderPage title="Zarządzanie case studies" />
-      </Route>
-      <Route path="/admin/messages">
-        <PlaceholderPage title="Wiadomości kontaktowe" />
-      </Route>
-      <Route path="/admin/newsletter">
-        <PlaceholderPage title="Zarządzanie newsletterem" />
-      </Route>
+      {/* Usunięte routy do placeholder stron ponieważ zostały zintegrowane z głównym dashboardem */}
       <Route path="/admin/settings" component={AdminSettings} />
       <Route path="/admin/why-us" component={AdminWhyUs} />
       <Route path="/admin/services" component={AdminServices} />

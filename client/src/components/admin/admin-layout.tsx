@@ -35,24 +35,43 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       href: "/admin/blog",
     },
     {
+      title: "Usługi",
+      icon: <FileText className="h-5 w-5" />,
+      href: "/admin/services",
+    },
+    {
+      title: "Dlaczego my",
+      icon: <FileText className="h-5 w-5" />,
+      href: "/admin/why-us",
+    },
+    {
       title: "Szablony",
       icon: <ShoppingBag className="h-5 w-5" />,
-      href: "/admin/templates",
+      href: "/admin",
+      onClick: () => document.querySelector('[value="templates"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
     },
     {
       title: "Case studies",
       icon: <Briefcase className="h-5 w-5" />,
-      href: "/admin/case-studies",
+      href: "/admin",
+      onClick: () => document.querySelector('[value="case-studies"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
     },
     {
       title: "Wiadomości",
       icon: <MessageSquare className="h-5 w-5" />,
-      href: "/admin/messages",
+      href: "/admin",
+      onClick: () => document.querySelector('[value="messages"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
     },
     {
       title: "Newsletter",
       icon: <Mail className="h-5 w-5" />,
-      href: "/admin/newsletter",
+      href: "/admin",
+      onClick: () => document.querySelector('[value="subscribers"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+    },
+    {
+      title: "Sekcje strony",
+      icon: <Settings className="h-5 w-5" />,
+      href: "/admin/section-settings",
     },
     {
       title: "Ustawienia",
@@ -80,17 +99,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <nav className="flex-1 px-2 pb-4 space-y-1">
               {menuItems.map((item) => (
                 <Link 
-                  key={item.href} 
+                  key={item.title} 
                   href={item.href}
+                  onClick={item.onClick}
                   className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                    location === item.href
+                    location === item.href && !item.onClick
                       ? "bg-gray-100 text-blue-600 dark:bg-gray-700 dark:text-blue-400"
                       : "text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                 >
                   {item.icon}
                   <span className="ml-3">{item.title}</span>
-                  {location === item.href && (
+                  {location === item.href && !item.onClick && (
                     <ChevronRight className="ml-auto h-4 w-4" />
                   )}
                 </Link>
