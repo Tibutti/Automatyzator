@@ -30,6 +30,7 @@ import AdminBlog from "@/pages/admin/blog";
 import AdminSettings from "@/pages/admin/settings";
 import AdminWhyUs from "@/pages/admin/why-us";
 import AdminServices from "@/pages/admin/services";
+import AdminSectionSettings from "@/pages/admin/section-settings";
 import PlaceholderPage from "@/pages/admin/placeholder";
 
 function Router() {
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/admin/settings" component={AdminSettings} />
       <Route path="/admin/why-us" component={AdminWhyUs} />
       <Route path="/admin/services" component={AdminServices} />
+      <Route path="/admin/section-settings" component={AdminSectionSettings} />
       
       {/* Public Routes */}
       <Route path="/">

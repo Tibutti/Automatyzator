@@ -978,6 +978,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Section Settings endpoints
+  app.get("/api/section-settings", async (req: Request, res: Response) => {
+    try {
+      const settings = await storage.getSectionSettings();
+      return res.json(settings);
+    } catch (error) {
+      console.error("Error fetching section settings:", error);
+      return res.status(500).json({ message: "Failed to fetch section settings" });
+    }
+  });
+
+  app.get("/api/section-settings/:key", async (req: Request, res: Response) => {
+    try {
+      const setting = await storage.getSectionSettingByKey(req.params.key);
+      if (!setting) {
+        return res.status(404).json({ message: "Section setting not found" });
+      }
+      return res.json(setting);
+    } catch (error) {
+      console.error("Error fetching section setting:", error);
+      return res.status(500).json({ message: "Failed to fetch section setting" });
+    }
+  });
+
+  // Admin routes for section settings
+  app.post("/api/section-settings", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const settingData = insertSectionSettingSchema.parse(req.body);
+      
+      // Check if key already exists
+      const existingSetting = await storage.getSectionSettingByKey(settingData.sectionKey);
+      if (existingSetting) {
+        return res.status(400).json({ message: "Section key already exists" });
+      }
+      
+      const setting = await storage.createSectionSetting(settingData);
+      return res.status(201).json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid section setting data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating section setting:", error);
+      return res.status(500).json({ message: "Failed to create section setting" });
+    }
+  });
+  
+  // Update section setting
+  app.put("/api/section-settings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingSetting = await storage.getSectionSetting(id);
+      if (!existingSetting) {
+        return res.status(404).json({ message: "Section setting not found" });
+      }
+      
+      // If sectionKey is changing, verify it doesn't conflict
+      if (req.body.sectionKey && req.body.sectionKey !== existingSetting.sectionKey) {
+        const settingWithKey = await storage.getSectionSettingByKey(req.body.sectionKey);
+        if (settingWithKey && settingWithKey.id !== id) {
+          return res.status(400).json({ message: "Section key already exists" });
+        }
+      }
+      
+      const updatedSetting = await storage.updateSectionSetting(id, req.body);
+      return res.json(updatedSetting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid section setting data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating section setting:", error);
+      return res.status(500).json({ message: "Failed to update section setting" });
+    }
+  });
+  
+  // Update section setting by key
+  app.put("/api/section-settings/key/:key", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const key = req.params.key;
+      
+      const existingSetting = await storage.getSectionSettingByKey(key);
+      if (!existingSetting) {
+        return res.status(404).json({ message: "Section setting not found" });
+      }
+      
+      const updatedSetting = await storage.updateSectionSettingByKey(key, req.body);
+      return res.json(updatedSetting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid section setting data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating section setting:", error);
+      return res.status(500).json({ message: "Failed to update section setting" });
+    }
+  });
+  
+  // Delete section setting
+  app.delete("/api/section-settings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingSetting = await storage.getSectionSetting(id);
+      if (!existingSetting) {
+        return res.status(404).json({ message: "Section setting not found" });
+      }
+      
+      await storage.deleteSectionSetting(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting section setting:", error);
+      return res.status(500).json({ message: "Failed to delete section setting" });
+    }
+  });
+
   // Chat with OpenAI endpoint
   app.post("/api/chat", async (req: Request, res: Response) => {
     try {

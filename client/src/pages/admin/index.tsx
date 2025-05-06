@@ -232,6 +232,7 @@ export default function AdminDashboard() {
               <TabsTrigger value="subscribers">Subskrybenci</TabsTrigger>
               <TabsTrigger value="whyUs" onClick={() => setLocation("/admin/why-us")}>Dlaczego my</TabsTrigger>
               <TabsTrigger value="services" onClick={() => setLocation("/admin/services")}>Usługi</TabsTrigger>
+              <TabsTrigger value="sectionSettings" onClick={() => setLocation("/admin/section-settings")}>Sekcje</TabsTrigger>
             </TabsList>
             
             {/* Blog Posts Tab */}
