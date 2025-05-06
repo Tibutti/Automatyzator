@@ -887,10 +887,169 @@ export default function SettingsPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-8">
-                      <p className="text-muted-foreground">Ta sekcja jest w trakcie implementacji.</p>
+                    <div className="grid gap-8">
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Kategorie blogowe</h3>
+                        <div className="grid gap-4">
+                          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Automatyzacja</div>
+                              <div className="text-sm text-muted-foreground">
+                                12 artykułów
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <span className="sr-only">Edytuj</span>
+                                <span className="h-4 w-4">✎</span>
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
+                                <span className="sr-only">Usuń</span>
+                                <span className="h-4 w-4">✕</span>
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Integracje</div>
+                              <div className="text-sm text-muted-foreground">
+                                8 artykułów
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <span className="sr-only">Edytuj</span>
+                                <span className="h-4 w-4">✎</span>
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
+                                <span className="sr-only">Usuń</span>
+                                <span className="h-4 w-4">✕</span>
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Procesy biznesowe</div>
+                              <div className="text-sm text-muted-foreground">
+                                5 artykułów
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <span className="sr-only">Edytuj</span>
+                                <span className="h-4 w-4">✎</span>
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
+                                <span className="sr-only">Usuń</span>
+                                <span className="h-4 w-4">✕</span>
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex rounded-lg border border-dashed p-3">
+                            <Button variant="ghost" className="w-full">
+                              <span className="text-muted-foreground">+ Dodaj nową kategorię</span>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Tagi</h3>
+                        <div className="flex flex-wrap gap-2">
+                          <div className="flex items-center rounded-full bg-secondary px-3 py-1 text-sm">
+                            Automatyzacja
+                            <Button variant="ghost" size="sm" className="ml-1 h-5 w-5 p-0 text-muted-foreground hover:text-foreground">
+                              <span className="sr-only">Usuń</span>
+                              <span className="h-3 w-3">✕</span>
+                            </Button>
+                          </div>
+                          <div className="flex items-center rounded-full bg-secondary px-3 py-1 text-sm">
+                            RPA
+                            <Button variant="ghost" size="sm" className="ml-1 h-5 w-5 p-0 text-muted-foreground hover:text-foreground">
+                              <span className="sr-only">Usuń</span>
+                              <span className="h-3 w-3">✕</span>
+                            </Button>
+                          </div>
+                          <div className="flex items-center rounded-full bg-secondary px-3 py-1 text-sm">
+                            Integracje
+                            <Button variant="ghost" size="sm" className="ml-1 h-5 w-5 p-0 text-muted-foreground hover:text-foreground">
+                              <span className="sr-only">Usuń</span>
+                              <span className="h-3 w-3">✕</span>
+                            </Button>
+                          </div>
+                          <div className="flex items-center rounded-full bg-secondary px-3 py-1 text-sm">
+                            API
+                            <Button variant="ghost" size="sm" className="ml-1 h-5 w-5 p-0 text-muted-foreground hover:text-foreground">
+                              <span className="sr-only">Usuń</span>
+                              <span className="h-3 w-3">✕</span>
+                            </Button>
+                          </div>
+                          <div className="flex items-center rounded-full bg-secondary px-3 py-1 text-sm">
+                            Szablony
+                            <Button variant="ghost" size="sm" className="ml-1 h-5 w-5 p-0 text-muted-foreground hover:text-foreground">
+                              <span className="sr-only">Usuń</span>
+                              <span className="h-3 w-3">✕</span>
+                            </Button>
+                          </div>
+                          <div className="flex items-center rounded-full border border-dashed px-3 py-1 text-sm text-muted-foreground">
+                            + Dodaj nowy tag
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Kategorie szablonów</h3>
+                        <div className="grid gap-4">
+                          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Obieg dokumentów</div>
+                              <div className="text-sm text-muted-foreground">
+                                4 szablony
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <span className="sr-only">Edytuj</span>
+                                <span className="h-4 w-4">✎</span>
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
+                                <span className="sr-only">Usuń</span>
+                                <span className="h-4 w-4">✕</span>
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Integracje z CRM</div>
+                              <div className="text-sm text-muted-foreground">
+                                6 szablonów
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <span className="sr-only">Edytuj</span>
+                                <span className="h-4 w-4">✎</span>
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
+                                <span className="sr-only">Usuń</span>
+                                <span className="h-4 w-4">✕</span>
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex rounded-lg border border-dashed p-3">
+                            <Button variant="ghost" className="w-full">
+                              <span className="text-muted-foreground">+ Dodaj nową kategorię</span>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
+                  <CardFooter>
+                    <Button>
+                      <Save className="mr-2 h-4 w-4" /> Zapisz zmiany
+                    </Button>
+                  </CardFooter>
                 </Card>
               )}
 
@@ -918,10 +1077,12 @@ export default function SettingsPage() {
                                 <select
                                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                   value={field.value}
-                                  onChange={(e) => field.onChange(e.target.value as "pl" | "en")}
+                                  onChange={(e) => field.onChange(e.target.value as "pl" | "en" | "de" | "ko")}
                                 >
                                   <option value="pl">Polski</option>
                                   <option value="en">Angielski</option>
+                                  <option value="de">Niemiecki</option>
+                                  <option value="ko">Koreański</option>
                                 </select>
                               </FormControl>
                               <FormMessage />
@@ -961,6 +1122,50 @@ export default function SettingsPage() {
                                 </FormLabel>
                                 <FormDescription>
                                   Włącz język angielski na stronie
+                                </FormDescription>
+                              </div>
+                              <FormControl>
+                                <Switch
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={languageForm.control}
+                          name="enableGerman"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                              <div className="space-y-0.5">
+                                <FormLabel className="text-base">
+                                  Język niemiecki
+                                </FormLabel>
+                                <FormDescription>
+                                  Włącz język niemiecki na stronie
+                                </FormDescription>
+                              </div>
+                              <FormControl>
+                                <Switch
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={languageForm.control}
+                          name="enableKorean"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                              <div className="space-y-0.5">
+                                <FormLabel className="text-base">
+                                  Język koreański
+                                </FormLabel>
+                                <FormDescription>
+                                  Włącz język koreański na stronie
                                 </FormDescription>
                               </div>
                               <FormControl>
@@ -1582,19 +1787,263 @@ export default function SettingsPage() {
                 </Card>
               )}
               
-              {(activeTab === "communications" || activeTab === "media") && (
+              {activeTab === "communications" && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>{settingsSections.find(s => s.id === activeTab)?.title}</CardTitle>
+                    <CardTitle>Komunikacja</CardTitle>
                     <CardDescription>
-                      {settingsSections.find(s => s.id === activeTab)?.description}
+                      Zarządzaj szablonami wiadomości email i komunikatami.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-8">
-                      <p className="text-muted-foreground">Ta sekcja jest w trakcie implementacji.</p>
+                    <div className="grid gap-8">
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Szablony email</h3>
+                        <div className="grid gap-4">
+                          <div className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Potwierdzenie kontaktu</div>
+                              <div className="text-sm text-muted-foreground">
+                                Wysyłane po wypełnieniu formularza kontaktowego
+                              </div>
+                            </div>
+                            <Button variant="outline">Edytuj</Button>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Newsletter</div>
+                              <div className="text-sm text-muted-foreground">
+                                Wiadomość powitalna po zapisaniu się do newslettera
+                              </div>
+                            </div>
+                            <Button variant="outline">Edytuj</Button>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Potwierdzenie zakupu</div>
+                              <div className="text-sm text-muted-foreground">
+                                Wysyłane po zakupie szablonu
+                              </div>
+                            </div>
+                            <Button variant="outline">Edytuj</Button>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4 shadow-sm">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Potwierdzenie konsultacji</div>
+                              <div className="text-sm text-muted-foreground">
+                                Wysyłane po zarezerwowaniu terminu konsultacji
+                              </div>
+                            </div>
+                            <Button variant="outline">Edytuj</Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Ustawienia SMTP</h3>
+                        <div className="grid gap-6">
+                          <div className="grid gap-3">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                              Serwer SMTP
+                            </label>
+                            <input
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              placeholder="smtp.example.com"
+                              defaultValue="smtp.automatyzator.com"
+                            />
+                          </div>
+                          <div className="grid gap-3">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                              Port
+                            </label>
+                            <input
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              placeholder="587"
+                              defaultValue="587"
+                            />
+                          </div>
+                          <div className="grid gap-3">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                              Nazwa użytkownika
+                            </label>
+                            <input
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              placeholder="user@example.com"
+                              defaultValue="mail@automatyzator.com"
+                            />
+                          </div>
+                          <div className="grid gap-3">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                              Hasło
+                            </label>
+                            <input
+                              type="password"
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              placeholder="••••••••••••"
+                              defaultValue="••••••••••••"
+                            />
+                          </div>
+                          <div className="grid gap-3">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                              Adres nadawcy
+                            </label>
+                            <input
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              placeholder="noreply@example.com"
+                              defaultValue="kontakt@automatyzator.com"
+                            />
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Switch id="smtp-ssl" defaultChecked />
+                            <label
+                              htmlFor="smtp-ssl"
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Używaj SSL/TLS
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
+                  <CardFooter>
+                    <Button>
+                      <Save className="mr-2 h-4 w-4" /> Zapisz ustawienia
+                    </Button>
+                  </CardFooter>
+                </Card>
+              )}
+              
+              {activeTab === "media" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Pliki</CardTitle>
+                    <CardDescription>
+                      Zarządzaj plikami multimedialnymi.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <h3 className="text-lg font-medium">Biblioteka mediów</h3>
+                          <div className="flex space-x-2">
+                            <Button variant="outline" size="sm">
+                              <span className="mr-2">🗂️</span> Nowy folder
+                            </Button>
+                            <Button size="sm">
+                              <span className="mr-2">⬆️</span> Dodaj pliki
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <div className="flex border rounded-md overflow-hidden h-96">
+                          <div className="w-1/4 border-r p-4 overflow-auto">
+                            <div className="space-y-1">
+                              <div className="flex items-center space-x-2 p-2 rounded hover:bg-accent cursor-pointer">
+                                <span>📁</span>
+                                <span>Wszystkie pliki</span>
+                              </div>
+                              <div className="flex items-center space-x-2 p-2 rounded bg-accent cursor-pointer">
+                                <span>🖼️</span>
+                                <span>Obrazy</span>
+                              </div>
+                              <div className="flex items-center space-x-2 p-2 rounded hover:bg-accent cursor-pointer">
+                                <span>📄</span>
+                                <span>Dokumenty</span>
+                              </div>
+                              <div className="flex items-center space-x-2 p-2 rounded hover:bg-accent cursor-pointer">
+                                <span>🎬</span>
+                                <span>Filmy</span>
+                              </div>
+                              <div className="flex items-center space-x-2 p-2 rounded hover:bg-accent cursor-pointer">
+                                <span>📁</span>
+                                <span>Blog</span>
+                              </div>
+                              <div className="flex items-center space-x-2 p-2 rounded hover:bg-accent cursor-pointer">
+                                <span>📁</span>
+                                <span>Szablony</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex-1 p-4 overflow-auto">
+                            <div className="grid grid-cols-4 gap-4">
+                              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                                <div key={i} className="overflow-hidden rounded-md border bg-muted">
+                                  <div className="h-32 w-full bg-secondary"></div>
+                                  <div className="p-2 text-xs truncate">
+                                    obraz-{i}.jpg
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Ustawienia przechowywania</h3>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Miejsce przechowywania</div>
+                              <div className="text-sm text-muted-foreground">
+                                Wybierz, gdzie mają być przechowywane pliki
+                              </div>
+                            </div>
+                            <select
+                              className="flex h-10 w-40 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              defaultValue="local"
+                            >
+                              <option value="local">Lokalnie</option>
+                              <option value="s3">Amazon S3</option>
+                              <option value="gcs">Google Cloud</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Optymalizacja obrazów</div>
+                              <div className="text-sm text-muted-foreground">
+                                Automatycznie kompresuj i optymalizuj obrazy
+                              </div>
+                            </div>
+                            <Switch defaultChecked />
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Maksymalny rozmiar pliku</div>
+                              <div className="text-sm text-muted-foreground">
+                                Maksymalny rozmiar pliku, który można przesłać
+                              </div>
+                            </div>
+                            <select
+                              className="flex h-10 w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              defaultValue="10"
+                            >
+                              <option value="5">5 MB</option>
+                              <option value="10">10 MB</option>
+                              <option value="20">20 MB</option>
+                              <option value="50">50 MB</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <div className="font-medium">Generuj miniaturki</div>
+                              <div className="text-sm text-muted-foreground">
+                                Twórz różne rozmiary obrazów dla różnych urządzeń
+                              </div>
+                            </div>
+                            <Switch defaultChecked />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>
+                      <Save className="mr-2 h-4 w-4" /> Zapisz ustawienia
+                    </Button>
+                  </CardFooter>
                 </Card>
               )}
             </div>
