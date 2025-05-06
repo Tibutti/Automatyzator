@@ -37,11 +37,7 @@ export default function SectionSettingsPage() {
   } = useQuery({
     queryKey: ["/api/section-settings"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/section-settings");
-      if (!res.ok) {
-        throw new Error("Failed to fetch section settings");
-      }
-      return res.json();
+      return await apiRequest<SectionSetting[]>("GET", "/api/section-settings");
     },
   });
 
@@ -58,15 +54,11 @@ export default function SectionSettingsPage() {
     try {
       const newValue = !setting.isEnabled;
       
-      const res = await apiRequest(
+      await apiRequest<SectionSetting>(
         "PUT", 
         `/api/section-settings/${setting.id}`,
         { isEnabled: newValue }
       );
-      
-      if (!res.ok) {
-        throw new Error("Failed to update section setting");
-      }
       
       // Invalidate the query to refresh the data
       queryClient.invalidateQueries({ queryKey: ["/api/section-settings"] });
@@ -88,15 +80,11 @@ export default function SectionSettingsPage() {
     try {
       const newValue = !setting.showInMenu;
       
-      const res = await apiRequest(
+      await apiRequest<SectionSetting>(
         "PUT", 
         `/api/section-settings/${setting.id}`,
         { showInMenu: newValue }
       );
-      
-      if (!res.ok) {
-        throw new Error("Failed to update menu visibility");
-      }
       
       // Invalidate the query to refresh the data
       queryClient.invalidateQueries({ queryKey: ["/api/section-settings"] });
@@ -145,22 +133,18 @@ export default function SectionSettingsPage() {
       setIsSaving(true);
       
       // Update the order of the first setting
-      const res1 = await apiRequest(
+      await apiRequest<SectionSetting>(
         "PUT",
         `/api/section-settings/${newSortedSettings[currentIndex].id}`,
         { order: newSortedSettings[currentIndex].order }
       );
       
       // Update the order of the second setting
-      const res2 = await apiRequest(
+      await apiRequest<SectionSetting>(
         "PUT",
         `/api/section-settings/${newSortedSettings[newIndex].id}`,
         { order: newSortedSettings[newIndex].order }
       );
-      
-      if (!res1.ok || !res2.ok) {
-        throw new Error("Failed to update section order");
-      }
       
       setIsSaving(false);
       

@@ -65,8 +65,7 @@ export default function AdminCaseStudiesPage() {
   // Mutacje
   const createMutation = useMutation({
     mutationFn: async (values: FormValues) => {
-      const res = await apiRequest("POST", "/api/case-studies", values);
-      return res.json();
+      return apiRequest<CaseStudy>("POST", "/api/case-studies", values);
     },
     onSuccess: () => {
       toast({
@@ -87,8 +86,7 @@ export default function AdminCaseStudiesPage() {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, values }: { id: number; values: FormValues }) => {
-      const res = await apiRequest("PUT", `/api/case-studies/${id}`, values);
-      return res.json();
+      return apiRequest<CaseStudy>("PUT", `/api/case-studies/${id}`, values);
     },
     onSuccess: () => {
       toast({
@@ -300,8 +298,8 @@ export default function AdminCaseStudiesPage() {
                       <FormItem className="flex flex-row items-center space-x-2 space-y-0">
                         <FormControl>
                           <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
+                            checked={Boolean(field.value)}
+                            onCheckedChange={(checked) => field.onChange(checked || false)}
                           />
                         </FormControl>
                         <FormLabel>Wyróżnione</FormLabel>
