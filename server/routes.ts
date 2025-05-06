@@ -787,6 +787,196 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // "Dlaczego Automatyzator?" (Why Us) endpoints
+  app.get("/api/why-us", async (req: Request, res: Response) => {
+    try {
+      const lang = req.query.lang as string || 'pl';
+      const items = await storage.getWhyUsItems(lang);
+      return res.json(items);
+    } catch (error) {
+      console.error("Error fetching Why Us items:", error);
+      return res.status(500).json({ message: "Failed to fetch Why Us items" });
+    }
+  });
+  
+  app.get("/api/why-us/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const item = await storage.getWhyUsItem(id);
+      if (!item) {
+        return res.status(404).json({ message: "Why Us item not found" });
+      }
+      
+      return res.json(item);
+    } catch (error) {
+      console.error("Error fetching Why Us item:", error);
+      return res.status(500).json({ message: "Failed to fetch Why Us item" });
+    }
+  });
+  
+  // Admin routes for Why Us items
+  app.post("/api/why-us", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const whyUsItemData = insertWhyUsItemSchema.parse(req.body);
+      const item = await storage.createWhyUsItem(whyUsItemData);
+      return res.status(201).json(item);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid Why Us item data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating Why Us item:", error);
+      return res.status(500).json({ message: "Failed to create Why Us item" });
+    }
+  });
+  
+  app.put("/api/why-us/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingItem = await storage.getWhyUsItem(id);
+      if (!existingItem) {
+        return res.status(404).json({ message: "Why Us item not found" });
+      }
+      
+      const updatedItem = await storage.updateWhyUsItem(id, req.body);
+      return res.json(updatedItem);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid Why Us item data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating Why Us item:", error);
+      return res.status(500).json({ message: "Failed to update Why Us item" });
+    }
+  });
+  
+  app.delete("/api/why-us/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingItem = await storage.getWhyUsItem(id);
+      if (!existingItem) {
+        return res.status(404).json({ message: "Why Us item not found" });
+      }
+      
+      await storage.deleteWhyUsItem(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting Why Us item:", error);
+      return res.status(500).json({ message: "Failed to delete Why Us item" });
+    }
+  });
+  
+  // "Nasze usługi" (Services) endpoints
+  app.get("/api/services", async (req: Request, res: Response) => {
+    try {
+      const lang = req.query.lang as string || 'pl';
+      const services = await storage.getServices(lang);
+      return res.json(services);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+      return res.status(500).json({ message: "Failed to fetch services" });
+    }
+  });
+  
+  app.get("/api/services/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const service = await storage.getService(id);
+      if (!service) {
+        return res.status(404).json({ message: "Service not found" });
+      }
+      
+      return res.json(service);
+    } catch (error) {
+      console.error("Error fetching service:", error);
+      return res.status(500).json({ message: "Failed to fetch service" });
+    }
+  });
+  
+  // Admin routes for Services
+  app.post("/api/services", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const serviceData = insertServiceSchema.parse(req.body);
+      const service = await storage.createService(serviceData);
+      return res.status(201).json(service);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid service data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating service:", error);
+      return res.status(500).json({ message: "Failed to create service" });
+    }
+  });
+  
+  app.put("/api/services/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingService = await storage.getService(id);
+      if (!existingService) {
+        return res.status(404).json({ message: "Service not found" });
+      }
+      
+      const updatedService = await storage.updateService(id, req.body);
+      return res.json(updatedService);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid service data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating service:", error);
+      return res.status(500).json({ message: "Failed to update service" });
+    }
+  });
+  
+  app.delete("/api/services/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingService = await storage.getService(id);
+      if (!existingService) {
+        return res.status(404).json({ message: "Service not found" });
+      }
+      
+      await storage.deleteService(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting service:", error);
+      return res.status(500).json({ message: "Failed to delete service" });
+    }
+  });
+
   // Chat with OpenAI endpoint
   app.post("/api/chat", async (req: Request, res: Response) => {
     try {
