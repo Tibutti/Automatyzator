@@ -188,8 +188,10 @@ export default function SectionSettingsPage() {
           </div>
           
           <p className="text-muted-foreground">
-            Zarządzaj widocznością poszczególnych sekcji strony. Włącz lub wyłącz sekcje za pomocą przełączników.
-            Użyj strzałek, aby zmienić kolejność sekcji na stronie głównej.
+            Zarządzaj widocznością poszczególnych sekcji strony. Możesz kontrolować dwa aspekty:
+            <br />1. <b>Widoczność na stronie</b> - czy sekcja jest wyświetlana na stronie głównej.
+            <br />2. <b>Widoczność w menu</b> - czy sekcja pojawia się w menu nawigacyjnym (tylko jeśli sekcja jest włączona).
+            <br />Użyj strzałek, aby zmienić kolejność sekcji na stronie głównej.
           </p>
           
           <Separator />
