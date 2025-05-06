@@ -13,19 +13,19 @@ export default function HeroSection() {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-4 leading-tight">
-              <span className="text-primary">{t('hero.title')}</span>{" "}
+              <span className="text-primary">Automatyzator</span>{" "}
               <div className="mt-4">
-                <span className="text-foreground">{t('hero.subtitle').split('.')[0]}.</span>{" "}
-                <span className="text-accent">{t('hero.subtitle').split('.')[1]}.</span>
+                <span className="text-foreground">Automatyzuj. Optymalizuj</span>{" "}
+                <span className="text-accent">Skaluj</span>
               </div>
             </h1>
             <p className="text-lg md:text-xl mb-8 font-inter text-gray-700 dark:text-gray-300 max-w-xl">
-              {t('hero.description')}
+              Dostarczamy rozwiązania B2B, które automatyzują procesy, oszczędzają czas i zwiększają efektywność Twojego biznesu. Skorzystaj z naszego doświadczenia w AI, automatyzacji i integracji.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/contact">
                 <Button className="px-6 py-3 h-auto cta-button shadow-lg hover:shadow-xl whitespace-nowrap">
-                  {t('cta.button')}
+                  Rozpocznij projekt
                 </Button>
               </Link>
               <Button
@@ -33,7 +33,7 @@ export default function HeroSection() {
                 className="px-6 py-3 h-auto border-2 border-accent text-foreground hover:bg-accent hover:text-black cta-button whitespace-nowrap"
                 onClick={toggleChat}
               >
-                {t('hero.chatButtonText') || "Zobacz demo Chatbota"}
+                Zobacz demo Chatbota
               </Button>
             </div>
           </div>
@@ -41,7 +41,7 @@ export default function HeroSection() {
             <div className="w-full h-full rounded-xl overflow-hidden relative">
               <img 
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" 
-                alt={t('features.automation')} 
+                alt="Automatyzacja biznesu" 
                 className="w-full h-auto object-cover rounded-xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl"></div>
