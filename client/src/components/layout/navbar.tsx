@@ -7,21 +7,36 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Logo from "@/components/logo";
 import LanguageSwitcher from "@/components/language-switcher";
 import { useTranslation } from "react-i18next";
+import { useSectionSettings } from "@/hooks/use-section-settings";
 
 // Definiowanie typów dla nawigacji
 interface NavLink {
   title: string;
   href: string;
+  sectionKey?: string; // Klucz sekcji do sprawdzenia widoczności
 }
+
+// Definiujemy mapowanie między kluczami sekcji a adresami URL
+const getSectionKeyForUrl = (url: string): string | undefined => {
+  const urlToSectionMap: Record<string, string> = {
+    "/services": "services",
+    "/why-us": "why-us",
+    "/blog": "blog",
+    "/shop": "shop",
+    "/portfolio": "case-studies",
+  };
+  
+  return urlToSectionMap[url];
+};
 
 // Nawigacja będzie korzystać z tłumaczeń
 const getNavLinks = (t: (key: string) => string): NavLink[] => [
   { title: t('header.home'), href: "/" },
-  { title: t('header.services'), href: "/services" },
-  { title: t('header.whyUs'), href: "/why-us" },
-  { title: t('header.blog'), href: "/blog" },
-  { title: t('header.shop'), href: "/shop" },
-  { title: t('header.caseStudy'), href: "/portfolio" },
+  { title: t('header.services'), href: "/services", sectionKey: "services" },
+  { title: t('header.whyUs'), href: "/why-us", sectionKey: "why-us" },
+  { title: t('header.blog'), href: "/blog", sectionKey: "blog" },
+  { title: t('header.shop'), href: "/shop", sectionKey: "shop" },
+  { title: t('header.caseStudy'), href: "/portfolio", sectionKey: "case-studies" },
   { title: t('header.contact'), href: "/contact" },
 ];
 
@@ -29,9 +44,20 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
   const { t } = useTranslation('common');
+  const { isVisible } = useSectionSettings();
   
-  // Pobierz nawigację z tłumaczeniami
-  const navLinks = getNavLinks(t);
+  // Pobierz wszystkie linki nawigacyjne
+  const allNavLinks = getNavLinks(t);
+  
+  // Filtruj linki na podstawie widoczności sekcji
+  const navLinks = allNavLinks.filter(link => {
+    // Jeśli link nie ma powiązanej sekcji (np. strona główna, kontakt), 
+    // zawsze go pokazuj
+    if (!link.sectionKey) return true;
+    
+    // W przeciwnym razie sprawdź, czy sekcja jest widoczna
+    return isVisible(link.sectionKey);
+  });
 
   useEffect(() => {
     const handleScroll = () => {

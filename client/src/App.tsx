@@ -11,6 +11,7 @@ import Layout from "@/components/layout/layout";
 import NotFound from "@/pages/not-found";
 import AdminLayout from "@/components/admin/admin-layout";
 import ProtectedRoute from "@/components/admin/protected-route";
+import SectionGuard from "@/components/section-guard";
 
 // Pages
 import Home from "@/pages/home";
@@ -124,7 +125,9 @@ function App() {
           <TooltipProvider>
             <ChatProvider>
               <Toaster />
-              <Router />
+              <SectionGuard>
+                <Router />
+              </SectionGuard>
             </ChatProvider>
           </TooltipProvider>
         </QueryClientProvider>
