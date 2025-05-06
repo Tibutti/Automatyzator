@@ -7,9 +7,11 @@ import BlogSection from "@/components/blog-section";
 import CtaSection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
 import { useEffect, useState } from "react";
+import { useSectionSettings } from "@/hooks/use-section-settings";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const { isVisible } = useSectionSettings();
   
   useEffect(() => {
     // Zapobiegamy problemom z hydracją przy animacjach
@@ -23,11 +25,11 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       <InteractiveHeroSection />
-      <ServicesSection />
-      <WhyUsSection />
-      <PortfolioSection />
-      <TemplatesSection />
-      <BlogSection />
+      {isVisible("services") && <ServicesSection />}
+      {isVisible("why-us") && <WhyUsSection />}
+      {isVisible("case-studies") && <PortfolioSection />}
+      {isVisible("templates") && <TemplatesSection />}
+      {isVisible("blog") && <BlogSection />}
       <CtaSection />
       <ContactSection />
     </div>

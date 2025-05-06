@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { services, whyUsItems } from "@shared/schema";
+import { services, whyUsItems, sectionSettings } from "@shared/schema";
 
 /**
  * Seeds the database with sample data for Why Us and Services sections
