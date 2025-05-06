@@ -7,11 +7,11 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
-export async function apiRequest(
+export async function apiRequest<T = Response>(
   method: string,
   url: string,
   data?: unknown | undefined,
-): Promise<Response> {
+): Promise<T> {
   const res = await fetch(url, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
@@ -20,7 +20,18 @@ export async function apiRequest(
   });
 
   await throwIfResNotOk(res);
-  return res;
+  
+  // Jeśli T to Response, zwróć res bezpośrednio
+  if (method === 'DELETE' || res.status === 204) {
+    // Dla DELETE lub statusu 204 No Content zwróć null
+    return null as unknown as T;
+  }
+  
+  if (res.headers.get('content-type')?.includes('application/json')) {
+    return res.json() as Promise<T>;
+  }
+  
+  return res as unknown as T;
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
