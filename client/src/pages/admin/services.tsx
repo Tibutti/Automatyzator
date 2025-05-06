@@ -16,6 +16,8 @@ import { insertServiceSchema, type Service } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import AdminLayout from "@/components/admin/admin-layout";
+import ProtectedRoute from "@/components/admin/protected-route";
 
 // Rozszerzamy schemat o walidację
 const formSchema = insertServiceSchema.extend({
