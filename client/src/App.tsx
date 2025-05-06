@@ -32,6 +32,10 @@ import AdminSettings from "@/pages/admin/settings";
 import AdminWhyUs from "@/pages/admin/why-us";
 import AdminServices from "@/pages/admin/services";
 import AdminSectionSettings from "@/pages/admin/section-settings";
+import AdminTemplates from "@/pages/admin/templates";
+import AdminCaseStudies from "@/pages/admin/case-studies";
+import AdminMessages from "@/pages/admin/messages";
+import AdminNewsletter from "@/pages/admin/newsletter";
 import PlaceholderPage from "@/pages/admin/placeholder";
 
 function Router() {

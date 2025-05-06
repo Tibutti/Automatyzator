@@ -47,26 +47,22 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     {
       title: "Szablony",
       icon: <ShoppingBag className="h-5 w-5" />,
-      href: "/admin",
-      onClick: () => document.querySelector('[value="templates"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+      href: "/admin/templates",
     },
     {
       title: "Case studies",
       icon: <Briefcase className="h-5 w-5" />,
-      href: "/admin",
-      onClick: () => document.querySelector('[value="case-studies"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+      href: "/admin/case-studies",
     },
     {
       title: "Wiadomości",
       icon: <MessageSquare className="h-5 w-5" />,
-      href: "/admin",
-      onClick: () => document.querySelector('[value="messages"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+      href: "/admin/messages",
     },
     {
       title: "Newsletter",
       icon: <Mail className="h-5 w-5" />,
-      href: "/admin",
-      onClick: () => document.querySelector('[value="subscribers"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+      href: "/admin/newsletter",
     },
     {
       title: "Sekcje strony",
