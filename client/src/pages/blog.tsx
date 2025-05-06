@@ -42,7 +42,7 @@ export default function Blog() {
       <div className="mb-10">
         <Input
           type="search"
-          placeholder={t('blog.searchPlaceholder') || "Szukaj artykułów..."}
+          placeholder={t('blog.searchPlaceholder')}
           className="max-w-md mx-auto"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,8 +126,8 @@ export default function Blog() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-4">{t('blog.noResults.title') || "Brak artykułów spełniających kryteria"}</h3>
-            <p>{t('blog.noResults.description') || "Spróbuj zmienić kryteria wyszukiwania lub kategorię."}</p>
+            <h3 className="text-xl font-semibold mb-4">{t('blog.noResults.title')}</h3>
+            <p>{t('blog.noResults.description')}</p>
           </div>
         )
       )}
