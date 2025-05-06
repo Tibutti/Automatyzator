@@ -44,19 +44,19 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
   const { t } = useTranslation('common');
-  const { isVisible } = useSectionSettings();
+  const { isVisibleInMenu } = useSectionSettings();
   
   // Pobierz wszystkie linki nawigacyjne
   const allNavLinks = getNavLinks(t);
   
-  // Filtruj linki na podstawie widoczności sekcji
+  // Filtruj linki na podstawie widoczności sekcji w menu
   const navLinks = allNavLinks.filter(link => {
     // Jeśli link nie ma powiązanej sekcji (np. strona główna, kontakt), 
     // zawsze go pokazuj
     if (!link.sectionKey) return true;
     
-    // W przeciwnym razie sprawdź, czy sekcja jest widoczna
-    return isVisible(link.sectionKey);
+    // W przeciwnym razie sprawdź, czy sekcja jest widoczna w menu
+    return isVisibleInMenu(link.sectionKey);
   });
 
   useEffect(() => {

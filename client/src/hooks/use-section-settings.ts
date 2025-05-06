@@ -6,6 +6,7 @@ export interface SectionSetting {
   sectionKey: string;
   displayName: string;
   isEnabled: boolean;
+  showInMenu: boolean;
   order: number;
   updatedAt: Date;
 }
@@ -41,6 +42,25 @@ export function useSectionSettings() {
     return setting ? setting.isEnabled : true;
   };
   
+  const isVisibleInMenu = (key: string): boolean => {
+    if (isLoading || isError || !sectionSettings) {
+      // Jeśli dane są ładowane lub wystąpił błąd, domyślnie pokazujemy w menu
+      return true;
+    }
+
+    const setting = sectionSettings.find(
+      (s: SectionSetting) => s.sectionKey === key
+    );
+    
+    // Jeśli nie znaleziono ustawienia lub sekcja nie jest włączona, nie pokazujemy w menu
+    if (!setting || !setting.isEnabled) {
+      return false;
+    }
+    
+    // Zwracamy wartość showInMenu
+    return setting.showInMenu;
+  };
+  
   const getSortedVisibleSections = (): SectionSetting[] => {
     if (isLoading || isError || !sectionSettings) {
       return [];
@@ -58,6 +78,7 @@ export function useSectionSettings() {
     isError,
     error,
     isVisible,
+    isVisibleInMenu,
     getSortedVisibleSections
   };
 }

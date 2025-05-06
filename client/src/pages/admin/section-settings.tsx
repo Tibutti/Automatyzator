@@ -18,6 +18,7 @@ interface SectionSetting {
   sectionKey: string;
   displayName: string;
   isEnabled: boolean;
+  showInMenu: boolean;
   order: number;
   updatedAt: Date;
 }
@@ -78,6 +79,36 @@ export default function SectionSettingsPage() {
       toast({
         title: "Błąd",
         description: error instanceof Error ? error.message : "Wystąpił błąd podczas aktualizacji ustawienia",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleMenu = async (setting: SectionSetting) => {
+    try {
+      const newValue = !setting.showInMenu;
+      
+      const res = await apiRequest(
+        "PUT", 
+        `/api/section-settings/${setting.id}`,
+        { showInMenu: newValue }
+      );
+      
+      if (!res.ok) {
+        throw new Error("Failed to update menu visibility");
+      }
+      
+      // Invalidate the query to refresh the data
+      queryClient.invalidateQueries({ queryKey: ["/api/section-settings"] });
+      
+      toast({
+        title: "Menu zaktualizowane",
+        description: `Sekcja "${setting.displayName}" będzie ${newValue ? "widoczna" : "ukryta"} w menu.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Błąd",
+        description: error instanceof Error ? error.message : "Wystąpił błąd podczas aktualizacji widoczności w menu",
         variant: "destructive",
       });
     }
@@ -176,49 +207,66 @@ export default function SectionSettingsPage() {
               {sortedSettings.map((setting: SectionSetting) => (
                 <Card key={setting.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="flex flex-col items-center space-y-1">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => moveSection(setting.id, 'up')}
-                            disabled={setting.order === 1}
-                            className="h-7 w-7"
-                          >
-                            <ArrowUp className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => moveSection(setting.id, 'down')}
-                            disabled={setting.order === sortedSettings.length}
-                            className="h-7 w-7"
-                          >
-                            <ArrowDown className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex items-center space-x-2">
-                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
-                              {setting.order}
-                            </span>
-                            <h3 className="font-medium">{setting.displayName}</h3>
+                    <div className="flex flex-col space-y-4">
+                      {/* Górna część karty z numerem, nazwą i strzałkami do zmiany kolejności */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="flex flex-col items-center space-y-1">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => moveSection(setting.id, 'up')}
+                              disabled={setting.order === 1}
+                              className="h-7 w-7"
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => moveSection(setting.id, 'down')}
+                              disabled={setting.order === sortedSettings.length}
+                              className="h-7 w-7"
+                            >
+                              <ArrowDown className="h-4 w-4" />
+                            </Button>
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            Ostatnia aktualizacja: {format(new Date(setting.updatedAt), "dd MMMM yyyy HH:mm", { locale: pl })}
-                          </p>
+                          <div className="space-y-1">
+                            <div className="flex items-center space-x-2">
+                              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+                                {setting.order}
+                              </span>
+                              <h3 className="font-medium">{setting.displayName}</h3>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Ostatnia aktualizacja: {format(new Date(setting.updatedAt), "dd MMMM yyyy HH:mm", { locale: pl })}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {/* Przełącznik widoczności sekcji na stronie */}
+                        <div className="flex items-center space-x-2">
+                          <Label htmlFor={`section-${setting.id}`} className="mr-2">
+                            {setting.isEnabled ? "Widoczna na stronie" : "Ukryta na stronie"}
+                          </Label>
+                          <Switch
+                            id={`section-${setting.id}`}
+                            checked={setting.isEnabled}
+                            onCheckedChange={() => handleToggleSection(setting)}
+                          />
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-2">
-                        <Label htmlFor={`section-${setting.id}`} className="mr-2">
-                          {setting.isEnabled ? "Widoczna" : "Ukryta"}
+                      {/* Dolna część karty z przełącznikiem widoczności w menu */}
+                      <div className="flex items-center justify-end space-x-2 pt-2 border-t">
+                        <Label htmlFor={`menu-${setting.id}`} className="mr-2">
+                          {setting.showInMenu ? "Widoczna w menu" : "Ukryta w menu"}
                         </Label>
                         <Switch
-                          id={`section-${setting.id}`}
-                          checked={setting.isEnabled}
-                          onCheckedChange={() => handleToggleSection(setting)}
+                          id={`menu-${setting.id}`}
+                          checked={setting.showInMenu}
+                          onCheckedChange={() => handleToggleMenu(setting)}
+                          disabled={!setting.isEnabled}
                         />
                       </div>
                     </div>
