@@ -40,12 +40,24 @@ export function useSectionSettings() {
     // Jeśli nie znaleziono ustawienia, domyślnie pokazujemy sekcję
     return setting ? setting.isEnabled : true;
   };
+  
+  const getSortedVisibleSections = (): SectionSetting[] => {
+    if (isLoading || isError || !sectionSettings) {
+      return [];
+    }
+    
+    // Zwróć tylko widoczne sekcje, posortowane według pola order
+    return [...sectionSettings]
+      .filter(section => section.isEnabled)
+      .sort((a, b) => a.order - b.order);
+  };
 
   return {
     sectionSettings,
     isLoading,
     isError,
     error,
-    isVisible
+    isVisible,
+    getSortedVisibleSections
   };
 }

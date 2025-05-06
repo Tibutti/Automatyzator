@@ -7,11 +7,21 @@ import BlogSection from "@/components/blog-section";
 import CtaSection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
 import { useEffect, useState } from "react";
-import { useSectionSettings } from "@/hooks/use-section-settings";
+import { useSectionSettings, SectionSetting } from "@/hooks/use-section-settings";
+
+// Mapowanie komponentów sekcji według klucza
+const SectionComponents: Record<string, React.ComponentType> = {
+  "services": ServicesSection,
+  "why-us": WhyUsSection,
+  "case-studies": PortfolioSection,
+  "templates": TemplatesSection,
+  "blog": BlogSection,
+  "shop": () => null, // Placeholder dla sklepu, który pojawi się w przyszłości
+};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const { isVisible } = useSectionSettings();
+  const { getSortedVisibleSections } = useSectionSettings();
   
   useEffect(() => {
     // Zapobiegamy problemom z hydracją przy animacjach
@@ -22,14 +32,23 @@ export default function Home() {
     return null; // Albo podstawowy loader
   }
   
+  // Pobierz posortowane sekcje
+  const sortedSections = getSortedVisibleSections();
+  
+  // Renderuj sekcje w odpowiedniej kolejności
+  const renderSections = () => {
+    return sortedSections.map((section: SectionSetting) => {
+      const SectionComponent = SectionComponents[section.sectionKey];
+      if (!SectionComponent) return null;
+      
+      return <SectionComponent key={section.sectionKey} />;
+    });
+  };
+  
   return (
     <div className="overflow-x-hidden">
       <InteractiveHeroSection />
-      {isVisible("services") && <ServicesSection />}
-      {isVisible("why-us") && <WhyUsSection />}
-      {isVisible("case-studies") && <PortfolioSection />}
-      {isVisible("templates") && <TemplatesSection />}
-      {isVisible("blog") && <BlogSection />}
+      {renderSections()}
       <CtaSection />
       <ContactSection />
     </div>
