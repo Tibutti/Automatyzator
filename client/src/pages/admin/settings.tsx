@@ -97,9 +97,11 @@ const interfaceSettingsSchema = z.object({
 });
 
 const languageSettingsSchema = z.object({
-  defaultLanguage: z.enum(["pl", "en"]),
+  defaultLanguage: z.enum(["pl", "en", "de", "ko"]),
   enableEnglish: z.boolean(),
   enablePolish: z.boolean(),
+  enableGerman: z.boolean(),
+  enableKorean: z.boolean(),
   autoDetectLanguage: z.boolean(),
 });
 
@@ -247,6 +249,8 @@ export default function SettingsPage() {
       defaultLanguage: "pl",
       enableEnglish: true,
       enablePolish: true,
+      enableGerman: true,
+      enableKorean: true,
       autoDetectLanguage: true,
     },
   });
