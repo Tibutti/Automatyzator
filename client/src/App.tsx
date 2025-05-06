@@ -55,6 +55,10 @@ function Router() {
       <Route path="/admin/why-us" component={AdminWhyUs} />
       <Route path="/admin/services" component={AdminServices} />
       <Route path="/admin/section-settings" component={AdminSectionSettings} />
+      <Route path="/admin/templates" component={AdminTemplates} />
+      <Route path="/admin/case-studies" component={AdminCaseStudies} />
+      <Route path="/admin/messages" component={AdminMessages} />
+      <Route path="/admin/newsletter" component={AdminNewsletter} />
       
       {/* Public Routes */}
       <Route path="/">

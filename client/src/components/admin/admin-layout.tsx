@@ -97,16 +97,15 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 <Link 
                   key={item.title} 
                   href={item.href}
-                  onClick={item.onClick}
                   className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                    location === item.href && !item.onClick
+                    location === item.href
                       ? "bg-gray-100 text-blue-600 dark:bg-gray-700 dark:text-blue-400"
                       : "text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                 >
                   {item.icon}
                   <span className="ml-3">{item.title}</span>
-                  {location === item.href && !item.onClick && (
+                  {location === item.href && (
                     <ChevronRight className="ml-auto h-4 w-4" />
                   )}
                 </Link>

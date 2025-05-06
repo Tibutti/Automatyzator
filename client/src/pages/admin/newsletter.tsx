@@ -173,7 +173,7 @@ export default function AdminNewsletterPage() {
                                 <div className="font-medium">{subscriber.email}</div>
                               </TableCell>
                               <TableCell>
-                                {format(new Date(subscriber.createdAt), "dd MMM yyyy", { locale: pl })}
+                                {format(new Date(subscriber.subscribedAt), "dd MMM yyyy", { locale: pl })}
                               </TableCell>
                               <TableCell className="text-right">
                                 <div className="flex items-center justify-end space-x-2">

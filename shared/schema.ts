@@ -142,6 +142,7 @@ export type InsertCaseStudy = z.infer<typeof insertCaseStudySchema>;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
+export type ContactMessage = ContactSubmission; // Alias dla kompatybilności z kodem w panelu administracyjnym
 
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
