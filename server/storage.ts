@@ -6,7 +6,8 @@ import {
   contactSubmissions, type ContactSubmission, type InsertContactSubmission,
   newsletterSubscribers, type NewsletterSubscriber, type InsertNewsletterSubscriber,
   whyUsItems, type WhyUsItem, type InsertWhyUsItem,
-  services, type Service, type InsertService
+  services, type Service, type InsertService,
+  sectionSettings, type SectionSetting, type InsertSectionSetting
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, asc } from "drizzle-orm";
@@ -70,6 +71,15 @@ export interface IStorage {
   createService(service: InsertService): Promise<Service>;
   updateService(id: number, service: Partial<InsertService>): Promise<Service>;
   deleteService(id: number): Promise<void>;
+  
+  // Section Settings methods
+  getSectionSettings(): Promise<SectionSetting[]>;
+  getSectionSetting(id: number): Promise<SectionSetting | undefined>;
+  getSectionSettingByKey(key: string): Promise<SectionSetting | undefined>;
+  createSectionSetting(setting: InsertSectionSetting): Promise<SectionSetting>;
+  updateSectionSetting(id: number, setting: Partial<InsertSectionSetting>): Promise<SectionSetting>;
+  updateSectionSettingByKey(key: string, setting: Partial<InsertSectionSetting>): Promise<SectionSetting | undefined>;
+  deleteSectionSetting(id: number): Promise<void>;
 }
 
 // Database storage implementation using Drizzle ORM
@@ -358,6 +368,65 @@ export class DatabaseStorage implements IStorage {
     await db.delete(services).where(eq(services.id, id));
   }
   
+  // Section Settings methods
+  async getSectionSettings(): Promise<SectionSetting[]> {
+    return db.select()
+      .from(sectionSettings)
+      .orderBy(asc(sectionSettings.order));
+  }
+  
+  async getSectionSetting(id: number): Promise<SectionSetting | undefined> {
+    const [setting] = await db.select()
+      .from(sectionSettings)
+      .where(eq(sectionSettings.id, id));
+    return setting;
+  }
+  
+  async getSectionSettingByKey(key: string): Promise<SectionSetting | undefined> {
+    const [setting] = await db.select()
+      .from(sectionSettings)
+      .where(eq(sectionSettings.sectionKey, key));
+    return setting;
+  }
+  
+  async createSectionSetting(setting: InsertSectionSetting): Promise<SectionSetting> {
+    const [newSetting] = await db.insert(sectionSettings)
+      .values({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .returning();
+    return newSetting;
+  }
+  
+  async updateSectionSetting(id: number, setting: Partial<InsertSectionSetting>): Promise<SectionSetting> {
+    const [updatedSetting] = await db
+      .update(sectionSettings)
+      .set({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .where(eq(sectionSettings.id, id))
+      .returning();
+    return updatedSetting;
+  }
+  
+  async updateSectionSettingByKey(key: string, setting: Partial<InsertSectionSetting>): Promise<SectionSetting | undefined> {
+    const [updatedSetting] = await db
+      .update(sectionSettings)
+      .set({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .where(eq(sectionSettings.sectionKey, key))
+      .returning();
+    return updatedSetting;
+  }
+  
+  async deleteSectionSetting(id: number): Promise<void> {
+    await db.delete(sectionSettings).where(eq(sectionSettings.id, id));
+  }
+  
   // Initialize sample data if database is empty
   async initializeSampleData() {
     // Check if we already have blog posts
@@ -574,6 +643,7 @@ export class MemStorage implements IStorage {
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
   private whyUsItems: Map<number, WhyUsItem>;
   private services: Map<number, Service>;
+  private sectionSettings: Map<number, SectionSetting>;
   
   private userCount: number;
   private blogPostCount: number;
@@ -583,6 +653,7 @@ export class MemStorage implements IStorage {
   private newsletterSubscriberCount: number;
   private whyUsItemCount: number;
   private serviceCount: number;
+  private sectionSettingCount: number;
 
   constructor() {
     this.users = new Map();
@@ -593,6 +664,7 @@ export class MemStorage implements IStorage {
     this.newsletterSubscribers = new Map();
     this.whyUsItems = new Map();
     this.services = new Map();
+    this.sectionSettings = new Map();
     
     this.userCount = 1;
     this.blogPostCount = 1;
@@ -602,6 +674,7 @@ export class MemStorage implements IStorage {
     this.newsletterSubscriberCount = 1;
     this.whyUsItemCount = 1;
     this.serviceCount = 1;
+    this.sectionSettingCount = 1;
     
     // Initialize with sample data
     this.initializeSampleData();
@@ -889,9 +962,112 @@ export class MemStorage implements IStorage {
   async deleteService(id: number): Promise<void> {
     this.services.delete(id);
   }
+
+  // Section Settings methods
+  async getSectionSettings(): Promise<SectionSetting[]> {
+    return Array.from(this.sectionSettings.values())
+      .sort((a, b) => a.order - b.order);
+  }
+  
+  async getSectionSetting(id: number): Promise<SectionSetting | undefined> {
+    return this.sectionSettings.get(id);
+  }
+  
+  async getSectionSettingByKey(key: string): Promise<SectionSetting | undefined> {
+    return Array.from(this.sectionSettings.values())
+      .find(setting => setting.sectionKey === key);
+  }
+  
+  async createSectionSetting(setting: InsertSectionSetting): Promise<SectionSetting> {
+    const id = this.sectionSettingCount++;
+    const newSetting: SectionSetting = { 
+      ...setting, 
+      id, 
+      updatedAt: new Date() 
+    };
+    this.sectionSettings.set(id, newSetting);
+    return newSetting;
+  }
+  
+  async updateSectionSetting(id: number, setting: Partial<InsertSectionSetting>): Promise<SectionSetting> {
+    const existingSetting = this.sectionSettings.get(id);
+    if (!existingSetting) {
+      throw new Error(`Section setting with id ${id} not found`);
+    }
+    
+    const updatedSetting: SectionSetting = { 
+      ...existingSetting, 
+      ...setting, 
+      updatedAt: new Date() 
+    };
+    this.sectionSettings.set(id, updatedSetting);
+    return updatedSetting;
+  }
+  
+  async updateSectionSettingByKey(key: string, setting: Partial<InsertSectionSetting>): Promise<SectionSetting | undefined> {
+    const existingSetting = Array.from(this.sectionSettings.values())
+      .find(s => s.sectionKey === key);
+      
+    if (!existingSetting) return undefined;
+    
+    const updatedSetting: SectionSetting = { 
+      ...existingSetting, 
+      ...setting, 
+      updatedAt: new Date() 
+    };
+    this.sectionSettings.set(existingSetting.id, updatedSetting);
+    return updatedSetting;
+  }
+  
+  async deleteSectionSetting(id: number): Promise<void> {
+    this.sectionSettings.delete(id);
+  }
   
   // Initialize with sample data
   private initializeSampleData() {
+    // Initialize section settings if not exists
+    this.createSectionSetting({
+      sectionKey: "services",
+      displayName: "Nasze usługi",
+      isEnabled: true,
+      order: 1
+    });
+    
+    this.createSectionSetting({
+      sectionKey: "why-us",
+      displayName: "Dlaczego Automatyzator?",
+      isEnabled: true,
+      order: 2
+    });
+    
+    this.createSectionSetting({
+      sectionKey: "case-studies",
+      displayName: "Nasze wdrożenia",
+      isEnabled: true,
+      order: 3
+    });
+    
+    this.createSectionSetting({
+      sectionKey: "templates",
+      displayName: "Szablony automatyzacji",
+      isEnabled: true,
+      order: 4
+    });
+    
+    this.createSectionSetting({
+      sectionKey: "blog",
+      displayName: "Blog",
+      isEnabled: true,
+      order: 5
+    });
+    
+    this.createSectionSetting({
+      sectionKey: "shop",
+      displayName: "Sklep",
+      isEnabled: true,
+      order: 6
+    });
+    
     // Sample Why Us items
     this.createWhyUsItem({
       title: "Oszczędność czasu",

@@ -151,3 +151,21 @@ export type InsertWhyUsItem = z.infer<typeof insertWhyUsItemSchema>;
 
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
+
+// Ustawienia sekcji (Section Settings) schema
+export const sectionSettings = pgTable("section_settings", {
+  id: serial("id").primaryKey(),
+  sectionKey: text("section_key").notNull().unique(),
+  displayName: text("display_name").notNull(),
+  isEnabled: boolean("is_enabled").notNull().default(true),
+  order: integer("order").notNull().default(0),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertSectionSettingSchema = createInsertSchema(sectionSettings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type SectionSetting = typeof sectionSettings.$inferSelect;
+export type InsertSectionSetting = z.infer<typeof insertSectionSettingSchema>;
