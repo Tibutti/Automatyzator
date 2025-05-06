@@ -2,13 +2,21 @@ import { db } from "./db";
 import { services, whyUsItems, sectionSettings } from "@shared/schema";
 
 /**
- * Seeds the database with sample data for Why Us and Services sections
+ * Seeds the database with sample data for Why Us, Services and Section Settings
  */
 async function seedDatabaseWithSampleData() {
   try {
     // Check if we already have data in these tables
     const existingWhyUsItems = await db.select().from(whyUsItems);
     const existingServices = await db.select().from(services);
+    
+    // Check if section settings exist
+    let existingSectionSettings = [];
+    try {
+      existingSectionSettings = await db.select().from(sectionSettings);
+    } catch (error) {
+      console.log("Section Settings table does not exist yet - will be created");
+    }
     
     // Only seed Why Us items if none exist
     if (existingWhyUsItems.length === 0) {
@@ -80,6 +88,60 @@ async function seedDatabaseWithSampleData() {
           updatedAt: new Date()
         }
       ]);
+    }
+    
+    // Only seed section settings if none exist
+    if (existingSectionSettings.length === 0) {
+      console.log("Seeding Section Settings...");
+      try {
+        await db.insert(sectionSettings).values([
+          {
+            sectionKey: "services",
+            displayName: "Nasze usługi",
+            isEnabled: true,
+            order: 1,
+            updatedAt: new Date()
+          },
+          {
+            sectionKey: "why-us",
+            displayName: "Dlaczego Automatyzator?",
+            isEnabled: true,
+            order: 2,
+            updatedAt: new Date()
+          },
+          {
+            sectionKey: "case-studies",
+            displayName: "Nasze wdrożenia",
+            isEnabled: true,
+            order: 3,
+            updatedAt: new Date()
+          },
+          {
+            sectionKey: "templates",
+            displayName: "Szablony automatyzacji",
+            isEnabled: true,
+            order: 4,
+            updatedAt: new Date()
+          },
+          {
+            sectionKey: "blog",
+            displayName: "Blog",
+            isEnabled: true,
+            order: 5,
+            updatedAt: new Date()
+          },
+          {
+            sectionKey: "shop",
+            displayName: "Sklep",
+            isEnabled: true,
+            order: 6,
+            updatedAt: new Date()
+          }
+        ]);
+        console.log("Section Settings seeded successfully");
+      } catch (error) {
+        console.error("Error seeding section settings:", error);
+      }
     }
     
     // Only seed Services if none exist
