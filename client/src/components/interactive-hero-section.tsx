@@ -561,7 +561,7 @@ export default function InteractiveHeroSection() {
                         }} 
                         className="ml-2"
                       >
-                        {t('common.close')}
+                        Zamknij
                       </Button>
                     </div>
                   </div>
