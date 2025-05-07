@@ -38,8 +38,10 @@ export function useSectionSettings() {
       (s: SectionSetting) => s.sectionKey === key
     );
     
+    console.log(`isVisible check for ${key}:`, setting);
+    
     // Jeśli nie znaleziono ustawienia, domyślnie pokazujemy sekcję
-    return setting ? setting.isEnabled === true : true;
+    return setting ? setting.isEnabled : true;
   };
   
   const isVisibleInMenu = (key: string): boolean => {
@@ -51,6 +53,8 @@ export function useSectionSettings() {
     const setting = sectionSettings.find(
       (s: SectionSetting) => s.sectionKey === key
     );
+    
+    console.log(`isVisibleInMenu check for ${key}:`, setting);
     
     // Jeśli nie znaleziono ustawienia lub sekcja nie jest włączona, nie pokazujemy w menu
     if (!setting || !setting.isEnabled) {
@@ -66,9 +70,11 @@ export function useSectionSettings() {
       return [];
     }
     
+    console.log("All section settings:", sectionSettings);
+    
     // Zwróć tylko widoczne sekcje, posortowane według pola order
     return [...sectionSettings]
-      .filter(section => section.isEnabled === true)  // Jawnie sprawdzamy, czy isEnabled jest true
+      .filter(section => section.isEnabled)  // Nie sprawdzamy jawnie z true, tylko samą wartość boolean
       .sort((a, b) => a.order - b.order);
   };
 

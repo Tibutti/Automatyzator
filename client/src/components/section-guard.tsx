@@ -21,7 +21,7 @@ interface SectionGuardProps {
  */
 export default function SectionGuard({ children }: SectionGuardProps) {
   const [location, setLocation] = useLocation();
-  const { isVisible, isLoading } = useSectionSettings();
+  const { isVisible, isLoading, sectionSettings } = useSectionSettings();
 
   useEffect(() => {
     // Jeśli dane są ładowane, nie podejmuj żadnych działań
@@ -36,11 +36,16 @@ export default function SectionGuard({ children }: SectionGuardProps) {
     // Sprawdź, czy sekcja jest widoczna
     const sectionVisible = isVisible(sectionKey);
 
+    // Dodajemy logowanie, aby zobaczyć co się dzieje
+    console.log(`Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, 
+      sectionSettings?.find(s => s.sectionKey === sectionKey));
+
     // Jeśli sekcja jest ukryta, przekieruj na stronę główną
     if (!sectionVisible) {
+      console.log(`Redirecting from ${location} to / because section ${sectionKey} is not visible`);
       setLocation("/");
     }
-  }, [location, isVisible, isLoading, setLocation]);
+  }, [location, isVisible, isLoading, setLocation, sectionSettings]);
 
   return <>{children}</>;
 }
