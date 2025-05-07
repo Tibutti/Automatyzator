@@ -56,7 +56,9 @@ export default function Navbar() {
     if (!link.sectionKey) return true;
     
     // W przeciwnym razie sprawdź, czy sekcja jest widoczna w menu
-    return isVisibleInMenu(link.sectionKey);
+    const isVisible = isVisibleInMenu(link.sectionKey);
+    console.log(`Menu link visibility check - ${link.title} (${link.sectionKey}):`, isVisible);
+    return isVisible;
   });
 
   useEffect(() => {
