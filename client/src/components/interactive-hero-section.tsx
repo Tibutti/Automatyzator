@@ -443,7 +443,8 @@ export default function InteractiveHeroSection() {
                   style={{ 
                     left: `${point.x * 100}%`, 
                     top: `${point.y * 100}%`,
-                    transition: 'all 0.3s ease-out'
+                    transition: 'all 0.3s ease-out',
+                    margin: '0' // Upewniamy się, że nie ma marginesów
                   }}
                   onMouseEnter={() => setActivePoint(index)}
                   onMouseLeave={() => setActivePoint(null)}
@@ -487,7 +488,8 @@ export default function InteractiveHeroSection() {
                   style={{ 
                     left: `${point.x * 100}%`, 
                     top: `${point.y * 100}%`,
-                    transition: 'all 0.3s ease-out'
+                    transition: 'all 0.3s ease-out',
+                    margin: '0' // Upewniamy się, że nie ma marginesów
                   }}
                   onClick={() => setActivePoint(activePoint === index ? null : index)}
                 >
@@ -505,7 +507,7 @@ export default function InteractiveHeroSection() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[10px] font-medium w-16 text-center -ml-[12px]">{point.label}</div>
+                  <div className="text-[10px] absolute left-1/2 -translate-x-1/2 top-8 font-medium w-16 text-center">{point.label}</div>
                 </div>
               ))}
               
