@@ -8,11 +8,12 @@ export interface SectionSetting {
   isEnabled: boolean;
   showInMenu: boolean;
   order: number;
-  updatedAt: Date;
+  metadata?: string | null;
+  updatedAt: string | Date;
 }
 
 // Dane sekcji bezpośrednio zaszyte w kodzie, jako rozwiązanie fallbackowe gdy API nie działa
-const DEFAULT_SECTION_SETTINGS = [
+const DEFAULT_SECTION_SETTINGS: SectionSetting[] = [
   {
     "id": 1,
     "sectionKey": "services",
@@ -95,14 +96,35 @@ export function useSectionSettings() {
     queryKey: ["/api/section-settings"],
     queryFn: async () => {
       try {
-        const res = await apiRequest("GET", "/api/section-settings");
-        if (!res.ok) {
-          console.error("Failed to fetch section settings from API");
+        const response = await apiRequest<SectionSetting[]>("GET", "/api/section-settings");
+        console.log("Raw API response for section settings:", response);
+        
+        if (!response || response.length === 0) {
+          console.error("Failed to fetch section settings from API or received empty array");
           return null;
         }
-        const data = await res.json();
-        console.log("Loaded section settings from API:", data);
-        return data && data.length > 0 ? data : null;
+        
+        // Konwertujemy wartości z bazy danych na prawidłowe wartości boolean
+        // Używamy ścisłego porównania z true
+        const mappedSettings = response.map(setting => {
+          // Logowanie przed konwersją
+          console.log(`Before conversion - ID: ${setting.id}, Key: ${setting.sectionKey}, isEnabled: ${setting.isEnabled} (${typeof setting.isEnabled}), showInMenu: ${setting.showInMenu} (${typeof setting.showInMenu})`);
+          
+          // Metoda konwersji - ścisłe porównanie do true
+          const convertedSetting = {
+            ...setting,
+            isEnabled: setting.isEnabled === true,
+            showInMenu: setting.showInMenu === true
+          };
+          
+          // Logowanie po konwersji
+          console.log(`After conversion - ID: ${setting.id}, Key: ${setting.sectionKey}, isEnabled: ${convertedSetting.isEnabled} (${typeof convertedSetting.isEnabled}), showInMenu: ${convertedSetting.showInMenu} (${typeof convertedSetting.showInMenu})`);
+          
+          return convertedSetting;
+        });
+        
+        console.log("Transformed section settings:", mappedSettings);
+        return mappedSettings;
       } catch (err) {
         console.error("Error fetching section settings:", err);
         return null;

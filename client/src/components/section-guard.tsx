@@ -41,23 +41,16 @@ export default function SectionGuard({ children }: SectionGuardProps) {
     );
     
     // Sprawdź, czy sekcja jest widoczna
-    // Nie przekierowujemy użytkownika, ponieważ wszystkie sekcje są teraz widoczne
     const sectionVisible = isVisible(sectionKey);
     console.log(`SectionGuard check - Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, sectionSetting);
 
+    // Teraz przekierowujemy użytkownika, jeśli sekcja jest niewidoczna
     if (!sectionVisible) {
-      console.log(`SectionGuard: Sekcja ${sectionKey} jest niewidoczna, ale nie przekierowujemy użytkownika`);
+      console.log(`SectionGuard: Sekcja ${sectionKey} jest niewidoczna, przekierowuję na stronę główną`);
+      setLocation("/");
     } else {
       console.log(`SectionGuard: Sekcja ${sectionKey} jest widoczna, pozwalam na renderowanie`);
     }
-    
-    /* 
-    // Wykomentowany kod przekierowania - odkomentuj, gdy przekierowanie ma działać
-    if (!sectionVisible) {
-      console.log(`SectionGuard: Redirecting from ${location} to / because section ${sectionKey} is not visible`);
-      setLocation("/");
-    }
-    */
   }, [location, isVisible, isLoading, setLocation, sectionSettings]);
 
   return <>{children}</>;
