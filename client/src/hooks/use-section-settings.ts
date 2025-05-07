@@ -39,7 +39,7 @@ export function useSectionSettings() {
     );
     
     // Jeśli nie znaleziono ustawienia, domyślnie pokazujemy sekcję
-    return setting ? setting.isEnabled : true;
+    return setting ? setting.isEnabled === true : true;
   };
   
   const isVisibleInMenu = (key: string): boolean => {
@@ -68,7 +68,7 @@ export function useSectionSettings() {
     
     // Zwróć tylko widoczne sekcje, posortowane według pola order
     return [...sectionSettings]
-      .filter(section => section.isEnabled)
+      .filter(section => section.isEnabled === true)  // Jawnie sprawdzamy, czy isEnabled jest true
       .sort((a, b) => a.order - b.order);
   };
 
