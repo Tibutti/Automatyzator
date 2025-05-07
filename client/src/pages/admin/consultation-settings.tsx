@@ -111,7 +111,7 @@ function ConsultationSettingsContent() {
     } catch (error) {
       toast({
         title: "Błąd",
-        description: error.message || "Wystąpił błąd podczas zapisywania ustawień",
+        description: error instanceof Error ? error.message : "Wystąpił błąd podczas zapisywania ustawień",
         variant: "destructive",
       });
     } finally {
@@ -121,48 +121,54 @@ function ConsultationSettingsContent() {
 
   if (isLoading) {
     return (
-      <AdminLayout title="Ustawienia konsultacji">
-        <div className="flex justify-center items-center p-8">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      <AdminLayout>
+        <div className="flex flex-col gap-4">
+          <h1 className="text-2xl font-bold">Ustawienia konsultacji</h1>
+          <div className="flex justify-center items-center p-8">
+            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          </div>
         </div>
       </AdminLayout>
     );
   }
 
   return (
-    <AdminLayout title="Ustawienia konsultacji">
-      <Card>
-        <CardHeader>
-          <CardTitle>Konfiguracja Calendly</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="calendlyUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Adres URL Calendly</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="https://calendly.com/twoj-login/konsultacja"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <AdminLayout>
+      <div className="flex flex-col gap-4">
+        <h1 className="text-2xl font-bold">Ustawienia konsultacji</h1>
+        <Card>
+          <CardHeader>
+            <CardTitle>Konfiguracja Calendly</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="calendlyUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Adres URL Calendly</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="https://calendly.com/twoj-login/konsultacja"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <Button type="submit" disabled={isSaving}>
-                {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Zapisz ustawienia
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+                <Button type="submit" disabled={isSaving}>
+                  {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Zapisz ustawienia
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
     </AdminLayout>
   );
 }

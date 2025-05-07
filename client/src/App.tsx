@@ -32,6 +32,7 @@ import AdminSettings from "@/pages/admin/settings";
 import AdminWhyUs from "@/pages/admin/why-us";
 import AdminServices from "@/pages/admin/services";
 import AdminSectionSettings from "@/pages/admin/section-settings";
+import AdminConsultationSettings from "@/pages/admin/consultation-settings";
 import AdminTemplates from "@/pages/admin/templates";
 import AdminCaseStudies from "@/pages/admin/case-studies";
 import AdminMessages from "@/pages/admin/messages";
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/admin/why-us" component={AdminWhyUs} />
       <Route path="/admin/services" component={AdminServices} />
       <Route path="/admin/section-settings" component={AdminSectionSettings} />
+      <Route path="/admin/consultation-settings" component={AdminConsultationSettings} />
       <Route path="/admin/templates" component={AdminTemplates} />
       <Route path="/admin/case-studies" component={AdminCaseStudies} />
       <Route path="/admin/messages" component={AdminMessages} />

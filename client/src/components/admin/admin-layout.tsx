@@ -70,6 +70,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       href: "/admin/section-settings",
     },
     {
+      title: "Ustawienia konsultacji",
+      icon: <Settings className="h-5 w-5" />,
+      href: "/admin/consultation-settings",
+    },
+    {
       title: "Ustawienia",
       icon: <Settings className="h-5 w-5" />,
       href: "/admin/settings",
