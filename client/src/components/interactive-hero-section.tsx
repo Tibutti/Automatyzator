@@ -520,35 +520,50 @@ export default function InteractiveHeroSection() {
                 </div>
               ))}
               
-              {/* Szczegółowy opis po kliknięciu - analogiczny do wersji desktopowej */}
+              {/* Szczegółowy opis po kliknięciu - w formie dymków */}
+              {/* Tło przysłaniające dla lepszej widoczności dymka */}
+              {activePoint !== null && (
+                <div 
+                  className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                  onClick={() => setActivePoint(null)}
+                />
+              )}
+              
               {connectionPoints.map((point, index) => (
                 <div 
                   key={`tooltip-${index}`}
                   className={`
-                    absolute w-max max-w-[180px] z-30
-                    ${activePoint === index ? 'opacity-100' : 'opacity-0'} 
+                    fixed z-50
+                    ${activePoint === index ? 'opacity-100' : 'opacity-0 pointer-events-none'} 
                     transition-opacity duration-300
-                    ${index === 0 ? 'left-1/2 -translate-x-1/2 top-16' : // Dane Biznesowe - pod ikoną
-                    index === 1 ? 'left-1/2 -translate-x-1/2 top-16' : // Analiza AI - pod ikoną
-                    index === 2 ? 'right-full mr-4 top-1/2 -translate-y-1/2' : // Automatyzacja - po lewej
-                    index === 3 ? 'left-1/2 -translate-x-1/2 top-16' : // Integracja - pod ikoną
-                    index === 4 ? 'left-full ml-4 top-1/2 -translate-y-1/2' : // Chmura - po prawej
-                    index === 5 ? 'left-1/2 -translate-x-1/2 top-16' : // API - pod ikoną
-                    'left-1/2 -translate-x-1/2 top-16'} // pozostałe - pod ikoną
                   `}
                   style={{ 
-                    left: `${point.x * 100}%`, 
-                    top: `${point.y * 100}%`,
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)'
                   }}
                 >
-                  <div className="glass-card p-3 text-center shadow-xl">
-                    <div className="font-semibold text-sm">{point.label}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{point.description}</div>
-                    <Link href="/why-us">
-                      <Button className="mt-3 whitespace-nowrap" size="sm" variant="outline" onClick={() => setActivePoint(null)}>
-                        <span className="whitespace-nowrap text-[10px]">{t('blog.readMore')}</span>
+                  <div className="glass-card p-4 rounded-xl text-center shadow-xl max-w-[90vw] md:max-w-[300px]" onClick={(e) => e.stopPropagation()}>
+                    <div className="font-semibold text-base mb-2">{point.label}</div>
+                    <div className="text-sm text-muted-foreground mb-3">{point.description}</div>
+                    <div className="flex justify-center">
+                      <Link href="/why-us">
+                        <Button className="whitespace-nowrap" size="sm" onClick={() => setActivePoint(null)}>
+                          <span className="whitespace-nowrap">{t('blog.readMore')}</span>
+                        </Button>
+                      </Link>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={(e) => {
+                          e.stopPropagation(); 
+                          setActivePoint(null);
+                        }} 
+                        className="ml-2"
+                      >
+                        {t('common.close')}
                       </Button>
-                    </Link>
+                    </div>
                   </div>
                 </div>
               ))}
