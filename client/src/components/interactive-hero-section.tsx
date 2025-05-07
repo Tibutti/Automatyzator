@@ -492,11 +492,11 @@ export default function InteractiveHeroSection() {
                   onClick={() => setActivePoint(activePoint === index ? null : index)}
                 >
                   <div className={`
-                    rounded-full p-1.5 mb-1 border-2 border-slate-400 dark:border-slate-500
+                    rounded-full w-8 h-8 p-1.5 mb-1 border-2 border-slate-400 dark:border-slate-500
                     ${activePoint === index 
                       ? 'bg-primary shadow-lg shadow-primary/20' 
                       : 'bg-card shadow-md'}
-                    transition-all duration-300
+                    transition-all duration-300 flex items-center justify-center aspect-square
                   `}>
                     {/* Zmniejszamy odrobinę ikonki na mobile dla lepszej czytelności */}
                     <div className={`h-4 w-4 transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''}`}>
