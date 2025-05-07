@@ -461,9 +461,11 @@ export default function InteractiveHeroSection() {
                     </div>
                   </div>
                   
-                  {/* Stała etykieta procesu - widoczna zawsze */}
+                  {/* Etykieta procesu - widoczna tylko po najechaniu */}
                   <div className={`
                     absolute font-medium text-[11px] md:text-xs text-center w-20 py-1 px-2 rounded-lg bg-card/60 backdrop-blur-sm shadow-sm border border-slate-800/5
+                    ${activePoint === index ? 'opacity-100' : 'opacity-0'}
+                    transition-all duration-300
                     ${index === 0 ? 'left-1/2 -translate-x-1/2 bottom-[calc(100%+10px)]' : // Dane Biznesowe - nad elementem 
                     index === 1 ? 'left-1/2 -translate-x-1/2 top-16' : // Analiza AI - pod elementem
                     index === 2 ? 'right-full mr-8 top-1/2 -translate-y-1/2 w-32' : // Automatyzacja - po lewej
