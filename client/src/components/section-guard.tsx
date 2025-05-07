@@ -24,26 +24,40 @@ export default function SectionGuard({ children }: SectionGuardProps) {
   const { isVisible, isLoading, sectionSettings } = useSectionSettings();
 
   useEffect(() => {
+    console.log(`SectionGuard efectt running for path: ${location}`);
+    
     // Jeśli dane są ładowane, nie podejmuj żadnych działań
-    if (isLoading) return;
+    if (isLoading) {
+      console.log(`SectionGuard: Dane ładowane, wstrzymuję przekierowanie`);
+      return;
+    }
 
     // Sprawdź, czy bieżąca ścieżka odpowiada sekcji
     const sectionKey = pathToSectionKeyMap[location];
 
     // Jeśli nie znaleziono powiązanej sekcji, pozwól na renderowanie
-    if (!sectionKey) return;
+    if (!sectionKey) {
+      console.log(`SectionGuard: Brak mapowania sekcji dla ścieżki ${location}, pozwalam na renderowanie`);
+      return;
+    }
+
+    // Uzyskaj ustawienie sekcji
+    const sectionSetting = sectionSettings?.find(
+      (s: SectionSetting) => s.sectionKey === sectionKey
+    );
 
     // Sprawdź, czy sekcja jest widoczna
     const sectionVisible = isVisible(sectionKey);
 
     // Dodajemy logowanie, aby zobaczyć co się dzieje
-    console.log(`Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, 
-      sectionSettings?.find((s: SectionSetting) => s.sectionKey === sectionKey));
+    console.log(`SectionGuard check - Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, sectionSetting);
 
-    // Jeśli sekcja jest ukryta, przekieruj na stronę główną
+    // Jeśli sekcja jest ukryta (isEnabled === false), przekieruj na stronę główną
     if (!sectionVisible) {
-      console.log(`Redirecting from ${location} to / because section ${sectionKey} is not visible`);
+      console.log(`SectionGuard: Redirecting from ${location} to / because section ${sectionKey} is not visible`);
       setLocation("/");
+    } else {
+      console.log(`SectionGuard: Sekcja ${sectionKey} jest widoczna, pozwalam na renderowanie`);
     }
   }, [location, isVisible, isLoading, setLocation, sectionSettings]);
 
