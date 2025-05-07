@@ -449,13 +449,13 @@ export default function InteractiveHeroSection() {
                   onMouseLeave={() => setActivePoint(null)}
                 >
                   <div className={`
-                    rounded-full p-3 mb-2 border-2 border-slate-400 dark:border-slate-500
+                    rounded-full p-3 mb-2 border-2 border-slate-400 dark:border-slate-500 w-12 h-12
                     ${activePoint === index 
                       ? 'bg-primary shadow-lg shadow-primary/20' 
                       : 'bg-card shadow-md'}
-                    transition-all duration-300
+                    transition-all duration-300 flex items-center justify-center aspect-square
                   `}>
-                    <div className={`transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''}`}>
+                    <div className={`transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''} flex items-center justify-center`}>
                       {point.icon}
                     </div>
                   </div>
@@ -499,8 +499,10 @@ export default function InteractiveHeroSection() {
                     transition-all duration-300 flex items-center justify-center aspect-square
                   `}>
                     {/* Zmniejszamy odrobinę ikonki na mobile dla lepszej czytelności */}
-                    <div className={`h-4 w-4 transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''}`}>
-                      {point.icon}
+                    <div className={`h-4 w-4 transition-transform duration-700 ${activePoint === index ? 'animate-spin-slow' : ''} flex items-center justify-center`}>
+                      <div className="scale-[0.67]">
+                        {point.icon}
+                      </div>
                     </div>
                   </div>
                   <div className="text-[10px] font-medium w-16 text-center -ml-[12px]">{point.label}</div>
