@@ -461,33 +461,20 @@ export default function InteractiveHeroSection() {
                     </div>
                   </div>
                   
-                  {/* Etykieta procesu - widoczna tylko po najechaniu */}
-                  <div className={`
-                    absolute font-medium text-[11px] md:text-xs text-center w-20 py-1 px-2 rounded-lg bg-card/60 backdrop-blur-sm shadow-sm border border-slate-800/5
-                    ${activePoint === index ? 'opacity-100' : 'opacity-0'}
-                    transition-all duration-300
-                    ${index === 0 ? 'left-1/2 -translate-x-1/2 bottom-[calc(100%+10px)]' : // Dane Biznesowe - nad elementem 
-                    index === 1 ? 'left-1/2 -translate-x-1/2 top-16' : // Analiza AI - pod elementem
-                    index === 2 ? 'right-full mr-8 top-1/2 -translate-y-1/2 w-32' : // Automatyzacja - po lewej
-                    index === 3 ? 'left-1/2 -translate-x-1/2 top-16' : // Integracja - pod elementem
-                    index === 4 ? 'left-full ml-8 top-1/2 -translate-y-1/2 w-32' : // Chmura - po prawej
-                    'left-1/2 -translate-x-1/2 top-16'} // pozostałe - domyślnie pod
-                  `}>
-                    {point.label}
-                  </div>
+                  {/* Usunięto etykietę procesu, pozostawiając tylko szczegółowy opis */}
                   
                   {/* Szczegółowy opis - widoczny tylko po najechaniu */}
                   <div className={`
                     absolute w-max max-w-[180px]
                     ${activePoint === index ? 'opacity-100' : 'opacity-0'} 
                     transition-opacity duration-300
-                    ${index === 0 ? 'left-1/2 -translate-x-1/2 top-20' : // Dane Biznesowe - pod etykietą
-                    index === 1 ? 'left-1/2 -translate-x-1/2 top-20' : // Analiza AI - pod etykietą
-                    index === 2 ? 'right-full mr-12 top-1/2 -translate-y-1/2' : // Automatyzacja - po lewej za etykietą
-                    index === 3 ? 'left-1/2 -translate-x-1/2 top-20' : // Integracja - pod etykietą
-                    index === 4 ? 'left-full ml-12 top-1/2 -translate-y-1/2' : // Chmura - po prawej za etykietą
-                    index === 5 ? 'left-1/2 -translate-x-1/2 top-20' : // API - pod etykietą
-                    'left-1/2 -translate-x-1/2 top-20'} // pozostałe - pod etykietą
+                    ${index === 0 ? 'left-1/2 -translate-x-1/2 top-16' : // Dane Biznesowe - pod ikoną
+                    index === 1 ? 'left-1/2 -translate-x-1/2 top-16' : // Analiza AI - pod ikoną
+                    index === 2 ? 'right-full mr-4 top-1/2 -translate-y-1/2' : // Automatyzacja - po lewej
+                    index === 3 ? 'left-1/2 -translate-x-1/2 top-16' : // Integracja - pod ikoną
+                    index === 4 ? 'left-full ml-4 top-1/2 -translate-y-1/2' : // Chmura - po prawej
+                    index === 5 ? 'left-1/2 -translate-x-1/2 top-16' : // API - pod ikoną
+                    'left-1/2 -translate-x-1/2 top-16'} // pozostałe - pod ikoną
                     z-30
                   `}>
                     <div className="glass-card p-3 text-center shadow-xl">
