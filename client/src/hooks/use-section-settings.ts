@@ -116,6 +116,10 @@ export function useSectionSettings() {
   
   // Fallback do domyślnych ustawień jeśli API zwróci null
   const sectionSettings = apiSectionSettings || DEFAULT_SECTION_SETTINGS;
+  
+  console.log("Używamy sectionSettings:", sectionSettings ? "z API" : "domyślne", 
+    "Ilość elementów:", sectionSettings?.length || 0, 
+    "Przykładowe wartości isEnabled:", sectionSettings?.map((s: SectionSetting) => s.isEnabled).join(", "));
 
   const isVisible = (key: string): boolean => {
     if (isLoading || isError || !sectionSettings) {

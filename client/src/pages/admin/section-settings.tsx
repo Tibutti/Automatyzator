@@ -37,8 +37,21 @@ export default function SectionSettingsPage() {
   } = useQuery({
     queryKey: ["/api/section-settings"],
     queryFn: async () => {
-      return await apiRequest<SectionSetting[]>("GET", "/api/section-settings");
+      try {
+        const response = await apiRequest<SectionSetting[]>("GET", "/api/section-settings");
+        // Konwertujemy wartości z bazy danych na prawidłowe wartości boolean
+        // żeby przełączniki działały poprawnie
+        return response.map(setting => ({
+          ...setting,
+          isEnabled: Boolean(setting.isEnabled),
+          showInMenu: Boolean(setting.showInMenu)
+        }));
+      } catch (err) {
+        console.error("Error fetching section settings:", err);
+        throw err;
+      }
     },
+    refetchInterval: 2000, // Odświeżanie co 2 sekundy aby zobaczyć zmiany na bieżąco
   });
 
   // Update sortedSettings when data is loaded
