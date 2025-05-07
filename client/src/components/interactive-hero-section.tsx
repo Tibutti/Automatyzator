@@ -460,13 +460,33 @@ export default function InteractiveHeroSection() {
                       {point.icon}
                     </div>
                   </div>
+                  
+                  {/* Stała etykieta procesu - widoczna zawsze */}
+                  <div className={`
+                    absolute font-medium text-[11px] md:text-xs text-center w-20 py-1 px-2 rounded-lg bg-card/60 backdrop-blur-sm shadow-sm border border-slate-800/5
+                    ${index === 0 ? 'left-1/2 -translate-x-1/2 bottom-[calc(100%+10px)]' : // Dane Biznesowe - nad elementem 
+                    index === 1 ? 'left-1/2 -translate-x-1/2 top-16' : // Analiza AI - pod elementem
+                    index === 2 ? 'right-full mr-8 top-1/2 -translate-y-1/2 w-32' : // Automatyzacja - po lewej
+                    index === 3 ? 'left-1/2 -translate-x-1/2 top-16' : // Integracja - pod elementem
+                    index === 4 ? 'left-full ml-8 top-1/2 -translate-y-1/2 w-32' : // Chmura - po prawej
+                    'left-1/2 -translate-x-1/2 top-16'} // pozostałe - domyślnie pod
+                  `}>
+                    {point.label}
+                  </div>
+                  
+                  {/* Szczegółowy opis - widoczny tylko po najechaniu */}
                   <div className={`
                     absolute w-max max-w-[180px]
                     ${activePoint === index ? 'opacity-100' : 'opacity-0'} 
                     transition-opacity duration-300
-                    ${index === 2 ? 'right-full mr-4 top-0' : // Automatyzacja Procesów - po lewej
-                     index === 4 ? 'left-full ml-4 top-0' : // Chmura - po prawej
-                     'left-1/2 -translate-x-1/2 top-16'} // pozostałe - pod elementem
+                    ${index === 0 ? 'left-1/2 -translate-x-1/2 top-20' : // Dane Biznesowe - pod etykietą
+                    index === 1 ? 'left-1/2 -translate-x-1/2 top-20' : // Analiza AI - pod etykietą
+                    index === 2 ? 'right-full mr-12 top-1/2 -translate-y-1/2' : // Automatyzacja - po lewej za etykietą
+                    index === 3 ? 'left-1/2 -translate-x-1/2 top-20' : // Integracja - pod etykietą
+                    index === 4 ? 'left-full ml-12 top-1/2 -translate-y-1/2' : // Chmura - po prawej za etykietą
+                    index === 5 ? 'left-1/2 -translate-x-1/2 top-20' : // API - pod etykietą
+                    'left-1/2 -translate-x-1/2 top-20'} // pozostałe - pod etykietą
+                    z-30
                   `}>
                     <div className="glass-card p-3 text-center shadow-xl">
                       <div className="font-semibold text-sm">{point.label}</div>
@@ -507,7 +527,7 @@ export default function InteractiveHeroSection() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[10px] absolute left-1/2 -translate-x-1/2 top-8 font-medium w-16 text-center">{point.label}</div>
+                  <div className="text-[10px] absolute left-1/2 -translate-x-1/2 top-8 font-medium w-16 text-center py-1 px-1.5 rounded-md bg-card/60 backdrop-blur-sm shadow-sm border border-slate-800/5">{point.label}</div>
                 </div>
               ))}
               
