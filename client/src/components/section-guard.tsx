@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { useSectionSettings } from "@/hooks/use-section-settings";
+import { useSectionSettings, type SectionSetting } from "@/hooks/use-section-settings";
 
 // Mapowanie ścieżek URL do kluczy sekcji
 const pathToSectionKeyMap: Record<string, string> = {
@@ -38,7 +38,7 @@ export default function SectionGuard({ children }: SectionGuardProps) {
 
     // Dodajemy logowanie, aby zobaczyć co się dzieje
     console.log(`Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, 
-      sectionSettings?.find(s => s.sectionKey === sectionKey));
+      sectionSettings?.find((s: SectionSetting) => s.sectionKey === sectionKey));
 
     // Jeśli sekcja jest ukryta, przekieruj na stronę główną
     if (!sectionVisible) {

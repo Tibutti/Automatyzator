@@ -85,11 +85,15 @@ export default function SectionSettingsPage() {
     try {
       const newValue = !setting.showInMenu;
       
-      await apiRequest<SectionSetting>(
+      console.log("Updating section menu visibility:", setting.id, "New showInMenu value:", newValue);
+      
+      const updatedSetting = await apiRequest<SectionSetting>(
         "PUT", 
         `/api/section-settings/${setting.id}`,
         { showInMenu: newValue }
       );
+      
+      console.log("Updated setting response:", updatedSetting);
       
       // Invalidate the query to refresh the data
       queryClient.invalidateQueries({ queryKey: ["/api/section-settings"] });
@@ -99,6 +103,7 @@ export default function SectionSettingsPage() {
         description: `Sekcja "${setting.displayName}" będzie ${newValue ? "widoczna" : "ukryta"} w menu.`,
       });
     } catch (error) {
+      console.error("Error updating menu visibility:", error);
       toast({
         title: "Błąd",
         description: error instanceof Error ? error.message : "Wystąpił błąd podczas aktualizacji widoczności w menu",
