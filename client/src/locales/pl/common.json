@@ -95,6 +95,9 @@
     "views": "wyświetleń",
     "authorDesc": "Ekspert automatyzacji procesów biznesowych"
   },
+  "buttons": {
+    "close": "Zamknij"
+  },
   "templates": {
     "title": "Szablony automatyzacji",
     "subtitle": "Gotowe rozwiązania",

@@ -101,6 +101,9 @@
       "description": "검색 조건이나 카테고리를 변경해 보세요."
     }
   },
+  "buttons": {
+    "close": "닫기"
+  },
   "templates": {
     "title": "자동화 템플릿",
     "subtitle": "바로 사용 가능한 솔루션",

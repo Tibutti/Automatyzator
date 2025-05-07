@@ -95,6 +95,9 @@
     "views": "views",
     "authorDesc": "Business process automation expert"
   },
+  "buttons": {
+    "close": "Close"
+  },
   "templates": {
     "title": "Automation Templates",
     "subtitle": "Ready-made solutions",

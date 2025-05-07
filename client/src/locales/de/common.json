@@ -95,6 +95,9 @@
     "views": "Aufrufe",
     "authorDesc": "Experte für Geschäftsprozessautomatisierung"
   },
+  "buttons": {
+    "close": "Schließen"
+  },
   "templates": {
     "title": "Automatisierungsvorlagen",
     "subtitle": "Fertige Lösungen",
