@@ -516,7 +516,7 @@ export default function InteractiveHeroSection() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[10px] absolute left-1/2 -translate-x-1/2 top-8 font-medium w-16 text-center py-1 px-1.5 rounded-md bg-card/60 backdrop-blur-sm shadow-sm border border-slate-800/5">{point.label}</div>
+                  {/* Usunięte stałe etykiety pod ikonami */}
                 </div>
               ))}
               
