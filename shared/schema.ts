@@ -161,6 +161,7 @@ export const sectionSettings = pgTable("section_settings", {
   isEnabled: boolean("is_enabled").notNull().default(true),
   showInMenu: boolean("show_in_menu").notNull().default(true),
   order: integer("order").notNull().default(0),
+  metadata: text("metadata"),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
