@@ -26,12 +26,6 @@ export default function SectionGuard({ children }: SectionGuardProps) {
   useEffect(() => {
     console.log(`SectionGuard efectt running for path: ${location}`);
     
-    // Jeśli dane są ładowane, nie podejmuj żadnych działań
-    if (isLoading) {
-      console.log(`SectionGuard: Dane ładowane, wstrzymuję przekierowanie`);
-      return;
-    }
-
     // Sprawdź, czy bieżąca ścieżka odpowiada sekcji
     const sectionKey = pathToSectionKeyMap[location];
 
@@ -45,20 +39,25 @@ export default function SectionGuard({ children }: SectionGuardProps) {
     const sectionSetting = sectionSettings?.find(
       (s: SectionSetting) => s.sectionKey === sectionKey
     );
-
+    
     // Sprawdź, czy sekcja jest widoczna
+    // Nie przekierowujemy użytkownika, ponieważ wszystkie sekcje są teraz widoczne
     const sectionVisible = isVisible(sectionKey);
-
-    // Dodajemy logowanie, aby zobaczyć co się dzieje
     console.log(`SectionGuard check - Path: ${location}, Section key: ${sectionKey}, Visible: ${sectionVisible}`, sectionSetting);
 
-    // Jeśli sekcja jest ukryta (isEnabled === false), przekieruj na stronę główną
     if (!sectionVisible) {
-      console.log(`SectionGuard: Redirecting from ${location} to / because section ${sectionKey} is not visible`);
-      setLocation("/");
+      console.log(`SectionGuard: Sekcja ${sectionKey} jest niewidoczna, ale nie przekierowujemy użytkownika`);
     } else {
       console.log(`SectionGuard: Sekcja ${sectionKey} jest widoczna, pozwalam na renderowanie`);
     }
+    
+    /* 
+    // Wykomentowany kod przekierowania - odkomentuj, gdy przekierowanie ma działać
+    if (!sectionVisible) {
+      console.log(`SectionGuard: Redirecting from ${location} to / because section ${sectionKey} is not visible`);
+      setLocation("/");
+    }
+    */
   }, [location, isVisible, isLoading, setLocation, sectionSettings]);
 
   return <>{children}</>;

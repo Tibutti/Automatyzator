@@ -11,26 +11,111 @@ export interface SectionSetting {
   updatedAt: Date;
 }
 
+// Dane sekcji bezpośrednio zaszyte w kodzie, jako rozwiązanie fallbackowe gdy API nie działa
+const DEFAULT_SECTION_SETTINGS = [
+  {
+    "id": 1,
+    "sectionKey": "services",
+    "displayName": "Nasze usługi",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 1,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 2,
+    "sectionKey": "why-us",
+    "displayName": "Dlaczego Automatyzator?",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 2,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 3,
+    "sectionKey": "case-studies",
+    "displayName": "Nasze wdrożenia",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 3,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 4,
+    "sectionKey": "templates",
+    "displayName": "Szablony automatyzacji",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 4,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 5,
+    "sectionKey": "blog",
+    "displayName": "Blog",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 5,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 6,
+    "sectionKey": "shop",
+    "displayName": "Sklep",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 6,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 7,
+    "sectionKey": "consultation",
+    "displayName": "Bezpłatna konsultacja",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 7,
+    "metadata": "{\"calendlyUrl\": \"https://calendly.com/automatyzator/konsultacja\"}",
+    "updatedAt": new Date().toISOString()
+  }
+];
+
 export function useSectionSettings() {
   const {
-    data: sectionSettings,
+    data: apiSectionSettings,
     isLoading,
     isError,
     error
   } = useQuery({
     queryKey: ["/api/section-settings"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/section-settings");
-      if (!res.ok) {
-        throw new Error("Failed to fetch section settings");
+      try {
+        const res = await apiRequest("GET", "/api/section-settings");
+        if (!res.ok) {
+          console.error("Failed to fetch section settings from API");
+          return null;
+        }
+        const data = await res.json();
+        console.log("Loaded section settings from API:", data);
+        return data && data.length > 0 ? data : null;
+      } catch (err) {
+        console.error("Error fetching section settings:", err);
+        return null;
       }
-      const data = await res.json();
-      console.log("Loaded section settings from API:", data);
-      return data;
     },
-    // Dodajemy refetchInterval, aby periodycznie odświeżać dane
+    // Dodajemy ustawienia, które pomogą w szybszym ładowaniu danych
     refetchInterval: 5000,
+    refetchOnWindowFocus: true,
+    staleTime: 1000,
   });
+  
+  // Fallback do domyślnych ustawień jeśli API zwróci null
+  const sectionSettings = apiSectionSettings || DEFAULT_SECTION_SETTINGS;
 
   const isVisible = (key: string): boolean => {
     if (isLoading || isError || !sectionSettings) {
