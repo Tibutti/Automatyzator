@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 import ChatWidget from "@/components/chat-widget";
 import CookieConsent from "@/components/cookie-consent";
 import { useSectionSettings, SectionSetting } from "@/hooks/use-section-settings";
@@ -44,16 +45,6 @@ export default function Consultation() {
   }, [sectionSettings]);
   
   useEffect(() => {
-    // Dodaj stylizację, która ukryje duplikaty stopki
-    const styleElement = document.createElement('style');
-    styleElement.textContent = `
-      /* Ukryj wszystkie stopki oprócz pierwszej */
-      body > div > footer:not(:first-of-type) {
-        display: none !important;
-      }
-    `;
-    document.head.appendChild(styleElement);
-    
     // Użyj widget.js z Calendly
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
@@ -62,9 +53,6 @@ export default function Consultation() {
     
     return () => {
       // Cleanup
-      if (document.head.contains(styleElement)) {
-        document.head.removeChild(styleElement);
-      }
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
@@ -132,6 +120,7 @@ export default function Consultation() {
           </div>
         </div>
       </main>
+      <Footer />
       <ChatWidget />
       <CookieConsent />
     </div>

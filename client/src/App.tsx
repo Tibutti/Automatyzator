@@ -101,11 +101,7 @@ function Router() {
           <Contact />
         </Layout>
       </Route>
-      <Route path="/consultation">
-        <Layout>
-          <Consultation />
-        </Layout>
-      </Route>
+      <Route path="/consultation" component={Consultation} />
 
       <Route>
         <Layout>
