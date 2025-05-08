@@ -56,8 +56,8 @@ const DEFAULT_SECTION_SETTINGS: SectionSetting[] = [
   },
   {
     "id": 5,
-    "sectionKey": "blog",
-    "displayName": "Blog",
+    "sectionKey": "trainings",
+    "displayName": "Szkolenia",
     "isEnabled": true,
     "showInMenu": true,
     "order": 5,
@@ -66,8 +66,8 @@ const DEFAULT_SECTION_SETTINGS: SectionSetting[] = [
   },
   {
     "id": 6,
-    "sectionKey": "shop",
-    "displayName": "Sklep",
+    "sectionKey": "blog",
+    "displayName": "Blog",
     "isEnabled": true,
     "showInMenu": true,
     "order": 6,
@@ -76,11 +76,21 @@ const DEFAULT_SECTION_SETTINGS: SectionSetting[] = [
   },
   {
     "id": 7,
+    "sectionKey": "shop",
+    "displayName": "Sklep",
+    "isEnabled": true,
+    "showInMenu": true,
+    "order": 7,
+    "metadata": null,
+    "updatedAt": new Date().toISOString()
+  },
+  {
+    "id": 8,
     "sectionKey": "consultation",
     "displayName": "Bezpłatna konsultacja",
     "isEnabled": true,
     "showInMenu": true,
-    "order": 7,
+    "order": 8,
     "metadata": "{\"calendlyUrl\": \"https://calendly.com/automatyzator/konsultacja\"}",
     "updatedAt": new Date().toISOString()
   }
