@@ -539,11 +539,137 @@ export class DatabaseStorage implements IStorage {
     await db.delete(heroSettings).where(eq(heroSettings.id, id));
   }
   
+  // Metoda do inicjalizacji ustawień Hero w bazie danych
+  async initializeHeroSettingsInDB() {
+    try {
+      // Tablica ustawień hero do dodania
+      const heroSettingsData: InsertHeroSetting[] = [
+        {
+          pageKey: "home",
+          title: "Automatyzator",
+          subtitle: "Automatyzuj. Integruj. Skaluj",
+          description: "Dostarczamy rozwiązania B2B, które automatyzują procesy, oszczędzają czas i zwiększają efektywność Twojego biznesu. Skorzystaj z naszego doświadczenia w AI, automatyzacji i integracji.",
+          primaryButtonText: "Rozpocznij projekt",
+          primaryButtonUrl: "/contact",
+          secondaryButtonText: "Zobacz demo Chatbota",
+          secondaryButtonUrl: "#",
+          imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "services",
+          title: "Nasze Usługi",
+          subtitle: "Automatyzacja. Integracja. Skalowalność.",
+          description: "Profesjonalne usługi automatyzacji procesów biznesowych dla Twojej firmy. Skorzystaj z naszej wiedzy i doświadczenia, aby przyspieszyć rozwój swojego biznesu.",
+          primaryButtonText: "Skontaktuj się",
+          primaryButtonUrl: "/contact",
+          secondaryButtonText: "Zobacz ofertę",
+          secondaryButtonUrl: "#services-list",
+          imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "why-us",
+          title: "Dlaczego Automatyzator?",
+          subtitle: "Doświadczenie. Jakość. Rezultaty.",
+          description: "Wybierając nas, wybierasz lata doświadczenia, terminowość i sprawdzone rozwiązania. Poznaj zalety współpracy z naszym zespołem ekspertów.",
+          primaryButtonText: "Poznaj nasz zespół",
+          primaryButtonUrl: "#team",
+          secondaryButtonText: "Zobacz przypadki użycia",
+          secondaryButtonUrl: "/case-studies",
+          imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "blog",
+          title: "Blog Automatyzatora",
+          subtitle: "Wiedza. Inspiracje. Trendy.",
+          description: "Dzielimy się wiedzą i doświadczeniem z zakresu automatyzacji, AI i najnowszych trendów technologicznych. Poznaj najnowsze artykuły z naszego bloga.",
+          primaryButtonText: "Najnowsze artykuły",
+          primaryButtonUrl: "#articles",
+          secondaryButtonText: null,
+          secondaryButtonUrl: null,
+          imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "trainings",
+          title: "Szkolenia",
+          subtitle: "Wiedza. Praktyka. Rozwój.",
+          description: "Profesjonalne szkolenia z zakresu automatyzacji procesów biznesowych, programowania i nowych technologii. Rozwijaj kompetencje swoje i swojego zespołu.",
+          primaryButtonText: "Zobacz ofertę szkoleń",
+          primaryButtonUrl: "#trainings-list",
+          secondaryButtonText: "Szkolenie indywidualne",
+          secondaryButtonUrl: "/contact?subject=Szkolenie%20indywidualne",
+          imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "templates",
+          title: "Gotowe Szablony",
+          subtitle: "Natychmiastowe. Konfigurowalne. Efektywne.",
+          description: "Skorzystaj z gotowych rozwiązań, które możesz wdrożyć od razu. Szablony automatyzacji procesów biznesowych dla różnych branż i zastosowań.",
+          primaryButtonText: "Przeglądaj szablony",
+          primaryButtonUrl: "#templates-list",
+          secondaryButtonText: "Szablon na zamówienie",
+          secondaryButtonUrl: "/contact?subject=Szablon%20na%20zamówienie",
+          imageUrl: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "case-studies",
+          title: "Case Studies",
+          subtitle: "Wdrożenia. Efekty. Referencje.",
+          description: "Zobacz, jak nasze rozwiązania pomogły innym firmom osiągnąć sukces. Rzeczywiste przykłady automatyzacji procesów biznesowych i ich rezultaty.",
+          primaryButtonText: "Wszystkie wdrożenia",
+          primaryButtonUrl: "#case-studies-list",
+          secondaryButtonText: null,
+          secondaryButtonUrl: null,
+          imageUrl: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        },
+        {
+          pageKey: "contact",
+          title: "Kontakt",
+          subtitle: "Porozmawiajmy o Twoim projekcie",
+          description: "Jesteśmy gotowi pomóc Ci zautomatyzować procesy biznesowe i zwiększyć efektywność Twojej firmy. Skontaktuj się z nami i opowiedz o swoich potrzebach.",
+          primaryButtonText: "Wyślij wiadomość",
+          primaryButtonUrl: "#contact-form",
+          secondaryButtonText: "Umów konsultację",
+          secondaryButtonUrl: "/consultation",
+          imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          isEnabled: true
+        }
+      ];
+      
+      // Dodajemy wszystkie ustawienia do bazy danych
+      for (const setting of heroSettingsData) {
+        const existingSetting = await this.getHeroSettingByPageKey(setting.pageKey);
+        if (!existingSetting) {
+          await this.createHeroSetting(setting);
+          console.log(`Dodano ustawienia hero dla strony: ${setting.pageKey}`);
+        }
+      }
+      
+      console.log("Inicjalizacja ustawień hero zakończona pomyślnie");
+    } catch (error) {
+      console.error("Błąd podczas inicjalizacji ustawień hero:", error);
+      throw error;
+    }
+  }
+  
   // Initialize sample data if database is empty
   async initializeSampleData() {
     // Check if we already have blog posts
     const existingPosts = await db.select().from(blogPosts).limit(1);
-    if (existingPosts.length > 0) return;
+    if (existingPosts.length > 0) {
+      // Check if we need to initialize hero settings even if other data exists
+      const existingHeroSettings = await db.select().from(heroSettings).limit(1);
+      if (existingHeroSettings.length === 0) {
+        await this.initializeHeroSettingsInDB();
+      }
+      return;
+    }
     
     // Sample Why Us items
     await db.insert(whyUsItems).values([
@@ -713,6 +839,9 @@ export class DatabaseStorage implements IStorage {
       }
     ] as any[]);
     
+    // Initialize hero settings
+    await this.initializeHeroSettingsInDB();
+      
     // Sample case studies
     await db.insert(caseStudies).values([
       {
