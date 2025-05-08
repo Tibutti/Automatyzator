@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import AdminLayout from "@/components/admin/admin-layout";
 import ProtectedRoute from "@/components/admin/protected-route";
-import { Loader2, Globe, Settings, PenIcon, Check, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Loader2, Globe, Settings, PenIcon, Check, X, ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -202,13 +202,45 @@ export default function HeroSettings() {
           
           <Separator />
           
+          <div className="flex justify-between mb-4">
+            <Button 
+              onClick={() => {
+                form.reset({
+                  pageKey: "home",
+                  title: "",
+                  subtitle: "",
+                  description: "",
+                  primaryButtonText: "",
+                  primaryButtonUrl: "",
+                  secondaryButtonText: "",
+                  secondaryButtonUrl: "",
+                  imageUrl: "",
+                  isEnabled: true
+                });
+                setEditingId(null);
+                setIsDialogOpen(true);
+              }}
+              className="flex items-center"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Dodaj nowe ustawienia
+            </Button>
+          </div>
+          
           {isLoading ? (
             <div className="flex justify-center p-4">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
+          ) : !Array.isArray(heroSettings) || heroSettings.length === 0 ? (
+            <div className="text-center p-8 border rounded-lg">
+              <h3 className="text-lg font-medium mb-2">Brak ustawień sekcji Hero</h3>
+              <p className="text-muted-foreground mb-4">
+                Dodaj ustawienia dla sekcji Hero dla różnych stron, aby kontrolować ich wygląd.
+              </p>
+            </div>
           ) : (
             <Accordion type="single" collapsible className="w-full">
-              {Array.isArray(heroSettings) && heroSettings.map((heroSetting) => (
+              {heroSettings.map((heroSetting) => (
                 <AccordionItem key={heroSetting.id} value={heroSetting.id.toString()}>
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center justify-between w-full pr-4">
