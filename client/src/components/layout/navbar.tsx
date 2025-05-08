@@ -115,14 +115,32 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
-            // Link jest aktywny jeśli:
+            // Specjalny przypadek dla linku "Główna" - jest aktywny tylko gdy
+            // jesteśmy na górze strony (activeSection === '/')
+            if (link.href === '/') {
+              // Link "Główna" jest aktywny tylko wtedy, gdy jesteśmy na stronie głównej
+              // I NIE przeglądamy innej sekcji
+              return (
+                <Link key={link.href} href={link.href}>
+                  <div 
+                    className={`font-inter hover:text-primary transition-colors cursor-pointer ${
+                      location === '/' && activeSection === '/' 
+                        ? "text-primary font-semibold border-b-2 border-primary pb-1" 
+                        : ""
+                    }`}
+                    data-active={location === '/' && activeSection === '/'}
+                  >
+                    {link.title}
+                  </div>
+                </Link>
+              );
+            }
+            
+            // Dla pozostałych linków, standardowa logika:
             // - URL dokładnie odpowiada lokalizacji (dla podstron)
             // - ALBO jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
-            //   ALE nie podświetlamy sekcji "Główna" gdy inna sekcja jest aktywna
             const isActive = location === link.href || 
-                            (location === '/' && 
-                             activeSection === link.href && 
-                             !(link.href === '/' && activeSection !== '/'));
+                            (location === '/' && activeSection === link.href);
             
             return (
               <Link key={link.href} href={link.href}>
@@ -157,14 +175,32 @@ export default function Navbar() {
             <SheetContent side="right">
               <nav className="flex flex-col space-y-6 mt-10">
                 {navLinks.map((link) => {
-                  // Link jest aktywny jeśli:
+                  // Specjalny przypadek dla linku "Główna" - jest aktywny tylko gdy
+                  // jesteśmy na górze strony (activeSection === '/')
+                  if (link.href === '/') {
+                    // Link "Główna" jest aktywny tylko wtedy, gdy jesteśmy na stronie głównej
+                    // I NIE przeglądamy innej sekcji
+                    return (
+                      <Link key={link.href} href={link.href}>
+                        <div 
+                          className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
+                            location === '/' && activeSection === '/' 
+                              ? "text-primary font-bold" 
+                              : ""
+                          }`}
+                          data-active={location === '/' && activeSection === '/'}
+                        >
+                          {link.title}
+                        </div>
+                      </Link>
+                    );
+                  }
+                  
+                  // Dla pozostałych linków, standardowa logika:
                   // - URL dokładnie odpowiada lokalizacji (dla podstron)
                   // - ALBO jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
-                  //   ALE nie podświetlamy sekcji "Główna" gdy inna sekcja jest aktywna
                   const isActive = location === link.href || 
-                                  (location === '/' && 
-                                   activeSection === link.href && 
-                                   !(link.href === '/' && activeSection !== '/'));
+                                  (location === '/' && activeSection === link.href);
                   
                   return (
                     <Link key={link.href} href={link.href}>
