@@ -115,16 +115,19 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
-            // Sprawdzamy, czy link jest aktywny - albo przez URL, albo przez sekcję
-            const isActive = location === link.href || activeSection === link.href;
+            // Link jest aktywny jeśli URL dokładnie odpowiada lokalizacji LUB
+            // jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+            const isActive = location === link.href || 
+                            (location === '/' && activeSection === link.href);
             
             return (
               <Link key={link.href} href={link.href}>
-                <div className={`font-inter hover:text-primary transition-colors cursor-pointer ${
-                  isActive
-                    ? "text-primary font-semibold border-b-2 border-primary pb-1" 
-                    : ""
-                }`}>
+                <div 
+                  className={`font-inter hover:text-primary transition-colors cursor-pointer ${
+                    isActive ? "text-primary font-semibold border-b-2 border-primary pb-1" : ""
+                  }`}
+                  data-active={isActive}
+                >
                   {link.title}
                 </div>
               </Link>
@@ -150,16 +153,19 @@ export default function Navbar() {
             <SheetContent side="right">
               <nav className="flex flex-col space-y-6 mt-10">
                 {navLinks.map((link) => {
-                  // Sprawdzamy, czy link jest aktywny - albo przez URL, albo przez sekcję
-                  const isActive = location === link.href || activeSection === link.href;
+                  // Link jest aktywny jeśli URL dokładnie odpowiada lokalizacji LUB
+                  // jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+                  const isActive = location === link.href || 
+                                  (location === '/' && activeSection === link.href);
                   
                   return (
                     <Link key={link.href} href={link.href}>
-                      <div className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
-                        isActive
-                          ? "text-primary font-bold" 
-                          : ""
-                      }`}>
+                      <div 
+                        className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
+                          isActive ? "text-primary font-bold" : ""
+                        }`}
+                        data-active={isActive}
+                      >
                         {link.title}
                       </div>
                     </Link>

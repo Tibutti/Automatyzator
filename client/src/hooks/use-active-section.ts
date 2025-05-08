@@ -1,87 +1,73 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * Hook do śledzenia aktywnej sekcji podczas przewijania strony
+ */
 export function useActiveSection() {
   const [activeSection, setActiveSection] = useState<string>('/');
 
   useEffect(() => {
-    console.log("useActiveSection mounted");
+    // Resetujemy aktywną sekcję przy montowaniu komponentu
+    console.log("useActiveSection - inicjalizacja");
     
-    // Tablica z mapowaniem ID sekcji na URL
-    const sectionToUrlMap: Record<string, string> = {
-      'services-section': '/services',
-      'why-us-section': '/why-us',
-      'blog-section': '/blog',
-      'templates-section': '/shop',
-      'case-studies-section': '/portfolio',
-      'contact-section': '/contact',
-      'hero-section': '/',
-    };
-
-    // Konfiguracja Intersection Observer z mniejszymi marginami, aby łatwiej wykrywać sekcje
-    const options = {
-      root: null, // viewport
-      rootMargin: '0px 0px -30% 0px', // Pozwala wybrać sekcję, gdy jest w górnej części widoku
-      threshold: 0.1, // Obniżamy próg wykrycia widoczności
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      // Sortujemy wejścia, aby sekcje wyżej na stronie miały priorytet
-      const visibleEntries = entries
-        .filter(entry => entry.isIntersecting)
-        .sort((a, b) => {
-          // Niższy boundingClientRect.top = wyżej na stronie
-          return a.boundingClientRect.top - b.boundingClientRect.top;
-        });
-
-      console.log("Widoczne sekcje:", visibleEntries.map(entry => entry.target.id));
-
-      if (visibleEntries.length > 0) {
-        // Bierzemy najwyższą widoczną sekcję
-        const sectionId = visibleEntries[0].target.id;
-        const url = sectionToUrlMap[sectionId];
+    // Mapowanie ID sekcji na odpowiadające ścieżki URL
+    const sectionMap = [
+      { id: 'hero-section', url: '/' },
+      { id: 'services-section', url: '/services' },
+      { id: 'why-us-section', url: '/why-us' },
+      { id: 'blog-section', url: '/blog' },
+      { id: 'templates-section', url: '/shop' },
+      { id: 'case-studies-section', url: '/portfolio' },
+      { id: 'contact-section', url: '/contact' }
+    ];
+    
+    // Funkcja sprawdzająca, która sekcja jest aktualnie widoczna
+    const checkVisibleSections = () => {
+      const viewportHeight = window.innerHeight;
+      const scrollPosition = window.scrollY;
+      
+      // Określamy pozycję widoku - 20% od góry ekranu
+      const triggerPosition = scrollPosition + viewportHeight * 0.2;
+      
+      // Sprawdzamy wszystkie zdefiniowane sekcje
+      for (const section of sectionMap) {
+        const element = document.getElementById(section.id);
         
-        if (url) {
-          console.log(`Aktywna sekcja: ${sectionId} => URL: ${url}`);
-          setActiveSection(url);
+        if (element) {
+          const { top, bottom } = element.getBoundingClientRect();
+          const absoluteTop = scrollPosition + top;
+          const absoluteBottom = scrollPosition + bottom;
+          
+          // Sprawdzamy, czy pozycja wyzwolenia znajduje się w obszarze elementu
+          if (triggerPosition >= absoluteTop && triggerPosition <= absoluteBottom) {
+            console.log(`Aktywna sekcja: ${section.id} => ${section.url}`);
+            setActiveSection(section.url);
+            return; // Znaleziono aktywną sekcję, można zakończyć pętle
+          }
         }
       }
     };
-
-    // Inicjalizacja obserwatora z opóźnieniem, aby dać czas na renderowanie DOM
+    
+    // Sprawdzamy widoczne sekcje na początku
     setTimeout(() => {
-      // Najpierw szukamy wszystkich elementów sekcji w DOM
-      const sectionsInDOM = Object.keys(sectionToUrlMap)
-        .map(id => document.getElementById(id))
-        .filter(el => el !== null); // Filtrujemy nieistniejące elementy
+      console.log("Sprawdzanie początkowych sekcji");
       
-      console.log("Znalezione sekcje w DOM:", sectionsInDOM.map(el => el?.id));
-      
-      if (sectionsInDOM.length === 0) {
-        console.warn("Nie znaleziono żadnych elementów sekcji w DOM!");
-        return;
+      // Sprawdzamy, czy elementy sekcji istnieją w DOM
+      const missingElements = sectionMap.filter(section => !document.getElementById(section.id));
+      if (missingElements.length > 0) {
+        console.warn("Brakujące elementy sekcji:", missingElements.map(s => s.id));
       }
       
-      // Tworzymy obserwator po znalezieniu sekcji
-      const observer = new IntersectionObserver(handleIntersection, options);
-      
-      // Rejestracja wszystkich sekcji
-      sectionsInDOM.forEach(element => {
-        if (element) {
-          observer.observe(element);
-          console.log(`Obserwuję sekcję: ${element.id}`);
-        }
-      });
-      
-      // Czyszczenie obserwatora przy odmontowaniu komponentu
-      return () => {
-        console.log("Odłączanie obserwatora");
-        observer.disconnect();
-      };
-    }, 500); // 500ms powinno wystarczyć na renderowanie DOM
+      checkVisibleSections();
+    }, 500);
     
-    // Czyszczenie dla głównego useEffect
+    // Nasłuchujemy zdarzenia przewijania
+    window.addEventListener('scroll', checkVisibleSections, { passive: true });
+    
+    // Czyszczenie przy odmontowaniu komponentu
     return () => {
-      console.log("useActiveSection unmounted");
+      console.log("useActiveSection - czyszczenie");
+      window.removeEventListener('scroll', checkVisibleSections);
     };
   }, []);
 
