@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Training } from "@shared/schema";
 import { VisibilityGuard } from "@/components/visibility-guard";
@@ -25,104 +26,89 @@ export function TrainingsSection() {
 
   return (
     <VisibilityGuard sectionKey="trainings">
-      <section id="trainings" className="py-16 bg-muted/30">
-        <div className="container px-4 md:px-6 mx-auto max-w-6xl">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              {t("trainings.title")}
-            </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-              {t("trainings.subtitle")}
-            </p>
+      <section id="trainings" className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12">
+            <h2 className="text-3xl font-montserrat font-bold text-foreground">{t("trainings.title")}</h2>
+            <Link href="/trainings">
+              <a className="mt-4 md:mt-0 text-primary font-inter font-semibold hover:underline">
+                {t("trainings.viewAll")}
+              </a>
+            </Link>
           </div>
           
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[...Array(3)].map((_, i) => (
-                <Card key={i} className="animate-pulse">
-                  <CardHeader className="h-40 bg-muted"></CardHeader>
-                  <CardContent className="mt-4">
-                    <div className="h-6 bg-muted rounded mb-2"></div>
-                    <div className="h-4 bg-muted rounded w-3/4 mb-4"></div>
-                    <div className="space-y-2">
-                      <div className="h-4 bg-muted rounded"></div>
-                      <div className="h-4 bg-muted rounded w-5/6"></div>
+                <Card key={i} className="overflow-hidden">
+                  <Skeleton className="h-48 w-full" />
+                  <CardContent className="p-6">
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-full mb-4" />
+                    <div className="flex justify-between items-center mb-4">
+                      <Skeleton className="h-8 w-20" />
+                      <Skeleton className="h-4 w-24" />
                     </div>
+                    <Skeleton className="h-10 w-full" />
                   </CardContent>
-                  <CardFooter className="h-12 bg-muted mt-4"></CardFooter>
                 </Card>
               ))}
             </div>
           ) : displayedTrainings.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {displayedTrainings.map((training) => (
-                <Card key={training.id} className="overflow-hidden transition-all hover:shadow-lg border border-border/40">
-                  {training.imageUrl && (
-                    <div className="relative h-48 w-full overflow-hidden">
+                <Card key={training.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    {training.imageUrl && (
                       <img 
                         src={training.imageUrl} 
                         alt={training.title} 
-                        className="w-full h-full object-cover transition-transform hover:scale-105"
+                        className="w-full h-48 object-cover" 
                       />
-                      {training.featured && (
-                        <Badge className="absolute top-2 right-2 bg-primary">
-                          {t("trainings.featured")}
-                        </Badge>
-                      )}
-                    </div>
-                  )}
-                  <CardHeader>
-                    <CardTitle className="text-xl">{training.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">
+                    )}
+                    {training.featured && (
+                      <div className="absolute top-4 left-4 bg-accent text-black px-3 py-1 rounded-full text-sm font-semibold">
+                        {t("trainings.featured")}
+                      </div>
+                    )}
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-montserrat font-bold mb-2 text-foreground">
+                      {training.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
                       {training.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-                      <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-2" />
-                        <span>{t("trainings.duration")}: {training.duration}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <GraduationCap className="h-4 w-4 mr-2" />
-                        <span>
-                          {t("trainings.level")}: {t(`trainings.levels.${training.level.toLowerCase()}`)}
-                        </span>
-                      </div>
-                      <div className="flex items-center col-span-2 mt-2">
-                        <span className="font-medium text-base">
-                          {t("trainings.price")}: {new Intl.NumberFormat(i18n.language, { 
-                            style: 'currency', 
-                            currency: 'PLN' 
-                          }).format(training.price / 100)}
-                        </span>
+                    </p>
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-2xl font-montserrat font-bold text-primary">
+                        {new Intl.NumberFormat(i18n.language, { 
+                          style: 'currency', 
+                          currency: 'PLN' 
+                        }).format(training.price / 100)}
+                      </span>
+                      <div className="flex items-center gap-1 text-sm">
+                        <Clock className="h-4 w-4" />
+                        <span>{training.duration}</span>
                       </div>
                     </div>
+                    <div className="flex gap-2 mb-4">
+                      <Badge variant="outline">
+                        <GraduationCap className="h-3 w-3 mr-1" />
+                        {t(`trainings.levels.${training.level.toLowerCase()}`)}
+                      </Badge>
+                    </div>
+                    <Link href={`/trainings/${training.id}`}>
+                      <Button className="w-full cta-button">
+                        {t("trainings.register")}
+                      </Button>
+                    </Link>
                   </CardContent>
-                  <CardFooter className="gap-2 pt-0">
-                    <Button variant="outline" size="sm" className="w-full">
-                      {t("trainings.readMore")}
-                    </Button>
-                    <Button size="sm" className="w-full">
-                      {t("trainings.register")}
-                    </Button>
-                  </CardFooter>
                 </Card>
               ))}
             </div>
           ) : (
             <div className="text-center py-8">
               <p className="text-muted-foreground">Nie znaleziono żadnych szkoleń</p>
-            </div>
-          )}
-          
-          {trainings.length > 3 && (
-            <div className="flex justify-center mt-10">
-              <Link href="/trainings">
-                <Button variant="outline">
-                  {t("trainings.viewAll")}
-                </Button>
-              </Link>
             </div>
           )}
         </div>
