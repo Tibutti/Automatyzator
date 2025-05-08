@@ -8,6 +8,7 @@ import Logo from "@/components/logo";
 import LanguageSwitcher from "@/components/language-switcher";
 import { useTranslation } from "react-i18next";
 import { useSectionSettings } from "@/hooks/use-section-settings";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 // Definiowanie typów dla nawigacji
 interface NavLink {
@@ -22,7 +23,7 @@ const getSectionKeyForUrl = (url: string): string | undefined => {
     "/services": "services",
     "/why-us": "why-us",
     "/blog": "blog",
-    "/shop": "shop",
+    "/shop": "templates",
     "/portfolio": "case-studies",
   };
   
@@ -43,6 +44,7 @@ const getNavLinks = (t: (key: string) => string): NavLink[] => [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
+  const activeSection = useActiveSection(); // Dodajemy hook, który śledzi aktywną sekcję podczas przewijania
   const { t } = useTranslation('common');
   const { isVisibleInMenu, getSectionOrder, isLoading, isError, sectionSettings } = useSectionSettings();
   
@@ -112,17 +114,22 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <div className={`font-inter hover:text-primary transition-colors cursor-pointer ${
-                location === link.href 
-                  ? "text-primary font-semibold border-b-2 border-primary pb-1" 
-                  : ""
-              }`}>
-                {link.title}
-              </div>
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            // Sprawdzamy, czy link jest aktywny - albo przez URL, albo przez sekcję
+            const isActive = location === link.href || activeSection === link.href;
+            
+            return (
+              <Link key={link.href} href={link.href}>
+                <div className={`font-inter hover:text-primary transition-colors cursor-pointer ${
+                  isActive
+                    ? "text-primary font-semibold border-b-2 border-primary pb-1" 
+                    : ""
+                }`}>
+                  {link.title}
+                </div>
+              </Link>
+            );
+          })}
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
@@ -142,17 +149,22 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="flex flex-col space-y-6 mt-10">
-                {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href}>
-                    <div className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
-                      location === link.href 
-                        ? "text-primary font-bold" 
-                        : ""
-                    }`}>
-                      {link.title}
-                    </div>
-                  </Link>
-                ))}
+                {navLinks.map((link) => {
+                  // Sprawdzamy, czy link jest aktywny - albo przez URL, albo przez sekcję
+                  const isActive = location === link.href || activeSection === link.href;
+                  
+                  return (
+                    <Link key={link.href} href={link.href}>
+                      <div className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
+                        isActive
+                          ? "text-primary font-bold" 
+                          : ""
+                      }`}>
+                        {link.title}
+                      </div>
+                    </Link>
+                  );
+                })}
               </nav>
             </SheetContent>
           </Sheet>
