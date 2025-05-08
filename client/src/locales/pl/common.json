@@ -26,6 +26,7 @@
   "services": {
     "title": "Nasze usługi",
     "description": "Kompleksowe podejście do automatyzacji procesów biznesowych",
+    "subtitle": "Kompleksowe podejście do automatyzacji procesów biznesowych",
     "service1": {
       "title": "Audyt procesów",
       "description": "Analiza obecnych procesów i identyfikacja obszarów do optymalizacji"

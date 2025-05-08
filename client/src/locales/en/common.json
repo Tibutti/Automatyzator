@@ -26,6 +26,7 @@
   "services": {
     "title": "Our Services",
     "description": "Comprehensive approach to business process automation",
+    "subtitle": "Comprehensive approach to business process automation",
     "service1": {
       "title": "Process Audit",
       "description": "Analysis of current processes and identification of areas for optimization"

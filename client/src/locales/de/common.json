@@ -26,6 +26,7 @@
   "services": {
     "title": "Unsere Dienstleistungen",
     "description": "Umfassender Ansatz zur Automatisierung von Geschäftsprozessen",
+    "subtitle": "Umfassender Ansatz zur Automatisierung von Geschäftsprozessen",
     "service1": {
       "title": "Prozessaudit",
       "description": "Analyse der aktuellen Prozesse und Identifizierung von Optimierungsbereichen"
