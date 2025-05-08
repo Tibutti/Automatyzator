@@ -35,7 +35,7 @@ const getNavLinks = (t: (key: string) => string): NavLink[] => [
   { title: t('header.services'), href: "/services", sectionKey: "services" },
   { title: t('header.whyUs'), href: "/why-us", sectionKey: "why-us" },
   { title: t('header.blog'), href: "/blog", sectionKey: "blog" },
-  { title: t('header.shop'), href: "/shop", sectionKey: "shop" },
+  { title: t('header.shop'), href: "/shop", sectionKey: "templates" }, // Zmieniono klucz sekcji
   { title: t('header.caseStudy'), href: "/portfolio", sectionKey: "case-studies" },
   { title: t('header.contact'), href: "/contact" },
 ];

@@ -7,7 +7,7 @@ const pathToSectionKeyMap: Record<string, string> = {
   "/services": "services",
   "/why-us": "why-us",
   "/blog": "blog",
-  "/shop": "shop",
+  "/shop": "templates", // Zmieniono na templates, aby odpowiadało prawdziwej zawartości
   "/portfolio": "case-studies",
 };
 
