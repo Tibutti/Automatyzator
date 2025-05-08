@@ -135,7 +135,15 @@
       "intermediate": "Fortgeschritten",
       "advanced": "Experte"
     },
-    "featured": "Empfohlen"
+    "featured": "Empfohlen",
+    "pageTitle": "Schulungsangebote",
+    "pageDescription": "Entdecken Sie unser vollständiges Angebot an Schulungen zur Automatisierung von Geschäftsprozessen, Integration und Datenanalyse",
+    "searchPlaceholder": "Nach Schulung suchen...",
+    "filterByLevel": "Nach Niveau filtern",
+    "allLevels": "Alle Niveaus",
+    "noResults": "Keine Schulungen gefunden",
+    "tryDifferentFilters": "Versuchen Sie, Ihre Suchkriterien zu ändern oder ein anderes Niveau auszuwählen",
+    "clearFilters": "Filter löschen"
   },
   "contact": {
     "title": "Kontakt",

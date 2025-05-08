@@ -136,7 +136,15 @@
       "intermediate": "Intermediate",
       "advanced": "Advanced"
     },
-    "featured": "Featured"
+    "featured": "Featured",
+    "pageTitle": "Training Offers",
+    "pageDescription": "Explore our full range of trainings on business process automation, integration, and data analysis",
+    "searchPlaceholder": "Search for a training...",
+    "filterByLevel": "Filter by level",
+    "allLevels": "All levels",
+    "noResults": "No trainings found",
+    "tryDifferentFilters": "Try changing your search criteria or selecting a different level",
+    "clearFilters": "Clear filters"
   },
   "contact": {
     "title": "Contact",
