@@ -15,7 +15,7 @@ export default function HeroSection() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-4 leading-tight">
               <span className="text-primary">Automatyzator</span>{" "}
               <div className="mt-4">
-                <span className="text-foreground">Automatyzuj. Optymalizuj</span>{" "}
+                <span className="text-foreground">Automatyzuj.</span>{" "}
                 <span className="text-accent">Skaluj</span>
               </div>
             </h1>
