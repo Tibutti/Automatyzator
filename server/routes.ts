@@ -16,6 +16,7 @@ import {
 import { z } from "zod";
 import session from "express-session";
 import { generateChatResponse } from "./openai";
+import csurf from "csurf";
 import { 
   hashPassword, 
   comparePasswords, 
@@ -59,6 +60,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
       },
     })
   );
+
+  // Setup CSRF protection
+  const csrfProtection = csurf({ 
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax"
+    } 
+  });
+  
+  // Apply CSRF protection to all state-changing routes (POST, PUT, DELETE)
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    // Skip CSRF protection for APIs that don't require it (like public GET endpoints)
+    const skipCSRF = 
+      req.method === "GET" || 
+      req.path === "/api/admin/login" || 
+      req.path === "/api/chat" ||
+      req.path.startsWith("/api/auth/"); // Skip for auth-related endpoints like password reset
+      
+    if (skipCSRF) {
+      next();
+    } else {
+      csrfProtection(req, res, next);
+    }
+  });
+  
+  // Middleware to provide CSRF token to the client
+  app.get("/api/csrf-token", csrfProtection, (req: Request, res: Response) => {
+    res.json({ csrfToken: req.csrfToken() });
+  });
+  
+  // Add CSRF token to all responses
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    // Store the original json method
+    const originalJson = res.json;
+    
+    // Override the json method
+    res.json = function(body) {
+      // Only add csrf token if it exists on the request
+      if ((req as any).csrfToken) {
+        // If body is already an object, add the token
+        if (typeof body === 'object' && body !== null) {
+          body._csrf = (req as any).csrfToken();
+        }
+      }
+      // Call the original json method
+      return originalJson.call(this, body);
+    };
+    
+    next();
+  });
 
   // Middleware to check authentication for admin routes
   const requireAuth = (req: Request, res: Response, next: NextFunction) => {
