@@ -1401,6 +1401,172 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Password reset functionality
+  
+  // 1. Request password reset - sends token to user
+  app.post("/api/admin/forgot-password", async (req: Request, res: Response) => {
+    try {
+      const { username } = req.body;
+      
+      if (!username) {
+        return res.status(400).json({ message: "Username is required" });
+      }
+      
+      // Find user by username
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        // For security reasons, don't reveal if user exists
+        return res.status(200).json({ 
+          message: "If a user with that username exists, a password reset email has been sent." 
+        });
+      }
+      
+      // Generate reset token and set expiry date
+      const { token, expiresAt } = generatePasswordResetToken();
+      
+      // Store token with user
+      await storage.setPasswordResetToken(user.id, token, expiresAt);
+      
+      // Note: In a real application, we would send an email with the token,
+      // but for this demo we'll just return the token in the response
+      // In production, NEVER return the token in the response
+      
+      return res.status(200).json({ 
+        message: "Password reset initiated. Check your email for instructions.",
+        // Only for development/demo:
+        token,
+        expiresAt
+      });
+    } catch (error) {
+      console.error("Error initiating password reset:", error);
+      return res.status(500).json({ message: "Failed to initiate password reset" });
+    }
+  });
+  
+  // 2. Verify reset token before displaying reset form
+  app.get("/api/admin/reset-password/:token", async (req: Request, res: Response) => {
+    try {
+      const { token } = req.params;
+      
+      if (!token) {
+        return res.status(400).json({ message: "Token is required" });
+      }
+      
+      // Find user by reset token
+      const user = await storage.getUserByResetToken(token);
+      
+      if (!user) {
+        return res.status(404).json({ message: "Invalid or expired token" });
+      }
+      
+      // Verify token is not expired
+      if (!isResetTokenValid(user.resetTokenExpiresAt)) {
+        return res.status(400).json({ message: "Token has expired" });
+      }
+      
+      return res.status(200).json({ 
+        message: "Token is valid",
+        username: user.username
+      });
+    } catch (error) {
+      console.error("Error verifying reset token:", error);
+      return res.status(500).json({ message: "Failed to verify token" });
+    }
+  });
+  
+  // 3. Reset password with token
+  app.post("/api/admin/reset-password", async (req: Request, res: Response) => {
+    try {
+      const { token, newPassword } = req.body;
+      
+      if (!token || !newPassword) {
+        return res.status(400).json({ 
+          message: "Token and new password are required" 
+        });
+      }
+      
+      // Find user by reset token
+      const user = await storage.getUserByResetToken(token);
+      
+      if (!user) {
+        return res.status(404).json({ message: "Invalid or expired token" });
+      }
+      
+      // Verify token is not expired
+      if (!isResetTokenValid(user.resetTokenExpiresAt)) {
+        return res.status(400).json({ message: "Token has expired" });
+      }
+      
+      // Verify password strength
+      if (!isPasswordStrong(newPassword)) {
+        return res.status(400).json({ 
+          message: "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." 
+        });
+      }
+      
+      // Hash new password
+      const hashedPassword = await hashPassword(newPassword);
+      
+      // Update user password and clear reset token
+      await storage.resetUserPassword(user.id, hashedPassword);
+      
+      return res.status(200).json({ 
+        message: "Password successfully reset. You can now log in with your new password." 
+      });
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      return res.status(500).json({ message: "Failed to reset password" });
+    }
+  });
+
+  // 4. Change password (for logged in users)
+  app.post("/api/admin/change-password", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const { currentPassword, newPassword } = req.body;
+      const userId = req.session.user!.id;
+      
+      if (!currentPassword || !newPassword) {
+        return res.status(400).json({ 
+          message: "Current password and new password are required" 
+        });
+      }
+      
+      // Get user by ID
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Verify current password
+      const isPasswordValid = await comparePasswords(currentPassword, user.password);
+      
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: "Current password is incorrect" });
+      }
+      
+      // Verify password strength
+      if (!isPasswordStrong(newPassword)) {
+        return res.status(400).json({ 
+          message: "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." 
+        });
+      }
+      
+      // Hash new password
+      const hashedPassword = await hashPassword(newPassword);
+      
+      // Update user password
+      await storage.updateUserPassword(userId, hashedPassword);
+      
+      return res.status(200).json({ 
+        message: "Password successfully changed." 
+      });
+    } catch (error) {
+      console.error("Error changing password:", error);
+      return res.status(500).json({ message: "Failed to change password" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

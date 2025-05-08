@@ -13,9 +13,26 @@ const ACCOUNT_LOCKOUT_TIME = 15 * 60 * 1000;
 // Czas sesji w milisekundach (30 minut)
 export const SESSION_MAX_AGE = 30 * 60 * 1000;
 
+// Czas ważności tokenu resetowania hasła w milisekundach (1 godzina)
+export const PASSWORD_RESET_TOKEN_EXPIRY = 60 * 60 * 1000;
+
 // Generuje losowy token o podanej długości
 export function generateSecureToken(length = 32): string {
   return randomBytes(length).toString("hex");
+}
+
+// Generuje token resetowania hasła i jego datę ważności
+export function generatePasswordResetToken(): { token: string; expiresAt: Date } {
+  const token = generateSecureToken(64);
+  const expiresAt = new Date();
+  expiresAt.setTime(expiresAt.getTime() + PASSWORD_RESET_TOKEN_EXPIRY);
+  return { token, expiresAt };
+}
+
+// Sprawdza, czy token resetowania hasła jest aktualny
+export function isResetTokenValid(tokenExpiresAt: Date | null): boolean {
+  if (!tokenExpiresAt) return false;
+  return new Date(tokenExpiresAt) > new Date();
 }
 
 // Generuje bezpieczny hash hasła z solą
