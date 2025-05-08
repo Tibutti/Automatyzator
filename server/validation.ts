@@ -2,6 +2,15 @@ import { z } from "zod";
 import DOMPurify from "isomorphic-dompurify";
 
 // Reusable walidatory dla często używanych pól
+
+// Schemat walidacji dla zapytań czatu
+export const chatQuerySchema = z.object({
+  message: z.string()
+    .min(1, "Wiadomość nie może być pusta")
+    .max(500, "Wiadomość nie może przekraczać 500 znaków")
+    .transform(val => DOMPurify.sanitize(val.trim())),
+  language: z.enum(['pl', 'en', 'de', 'ko']).default('pl')
+});
 export const usernameSchema = z.string()
   .min(3, "Nazwa użytkownika musi mieć co najmniej 3 znaki")
   .max(50, "Nazwa użytkownika nie może przekraczać 50 znaków")

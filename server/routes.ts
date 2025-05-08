@@ -856,36 +856,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Contact form endpoint
-  app.post("/api/contact", async (req: Request, res: Response) => {
+  app.post("/api/contact", validateBody(insertContactSubmissionSchema), async (req: Request, res: Response) => {
     try {
-      const submission = insertContactSubmissionSchema.parse(req.body);
+      const submission = req.body;
       const result = await storage.createContactSubmission(submission);
       return res.status(201).json(result);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid form data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error submitting contact form:", error);
       return res.status(500).json({ message: "Failed to submit contact form" });
     }
   });
 
   // Newsletter subscription endpoint
-  app.post("/api/newsletter", async (req: Request, res: Response) => {
+  app.post("/api/newsletter", validateBody(insertNewsletterSubscriberSchema), async (req: Request, res: Response) => {
     try {
-      const subscriber = insertNewsletterSubscriberSchema.parse(req.body);
+      const subscriber = req.body;
       const result = await storage.createNewsletterSubscriber(subscriber);
       return res.status(201).json(result);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid email", 
-          errors: error.errors 
-        });
-      }
       console.error("Error subscribing to newsletter:", error);
       return res.status(500).json({ message: "Failed to subscribe to newsletter" });
     }
@@ -985,18 +973,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Admin routes for Why Us items
-  app.post("/api/why-us", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/why-us", requireAuth, validateBody(insertWhyUsItemSchema), async (req: Request, res: Response) => {
     try {
-      const whyUsItemData = insertWhyUsItemSchema.parse(req.body);
+      const whyUsItemData = req.body;
       const item = await storage.createWhyUsItem(whyUsItemData);
       return res.status(201).json(item);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid Why Us item data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error creating Why Us item:", error);
       return res.status(500).json({ message: "Failed to create Why Us item" });
     }
@@ -1080,18 +1062,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Admin routes for Services
-  app.post("/api/services", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/services", requireAuth, validateBody(insertServiceSchema), async (req: Request, res: Response) => {
     try {
-      const serviceData = insertServiceSchema.parse(req.body);
+      const serviceData = req.body;
       const service = await storage.createService(serviceData);
       return res.status(201).json(service);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid service data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error creating service:", error);
       return res.status(500).json({ message: "Failed to create service" });
     }
@@ -1186,18 +1162,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Admin routes for trainings
-  app.post("/api/trainings", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/trainings", requireAuth, validateBody(insertTrainingSchema), async (req: Request, res: Response) => {
     try {
-      const trainingData = insertTrainingSchema.parse(req.body);
+      const trainingData = req.body;
       const training = await storage.createTraining(trainingData);
       return res.status(201).json(training);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid training data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error creating training:", error);
       return res.status(500).json({ message: "Failed to create training" });
     }
@@ -1501,13 +1471,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Chat with OpenAI endpoint
-  app.post("/api/chat", async (req: Request, res: Response) => {
+  app.post("/api/chat", validateBody(chatQuerySchema), async (req: Request, res: Response) => {
     try {
-      const { message, language = 'pl' } = req.body;
-      
-      if (!message || typeof message !== 'string') {
-        return res.status(400).json({ message: "Message is required and must be a string" });
-      }
+      const { message, language } = req.body;
       
       // Przekaż język jako parametr do funkcji generateChatResponse
       const response = await generateChatResponse(message, language);
