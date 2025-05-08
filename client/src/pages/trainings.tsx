@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Clock, GraduationCap, Search, Filter } from "lucide-react";
+import { Training } from "@shared/schema";
 import { 
   Card, 
   CardContent, 
@@ -28,12 +29,21 @@ export default function Trainings() {
   const [searchTerm, setSearchTerm] = useState("");
   const [level, setLevel] = useState<string>("all");
   
-  const { data: trainings = [], isLoading } = useQuery({
-    queryKey: ["/api/trainings"],
+  const currentLanguage = i18n.language;
+  
+  const { data: trainings = [], isLoading } = useQuery<Training[]>({
+    queryKey: ["/api/trainings", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`/api/trainings?lang=${currentLanguage}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }
   });
 
   // Filtrowanie szkoleń
-  const filteredTrainings = trainings.filter((training: any) => {
+  const filteredTrainings = trainings.filter((training) => {
     const matchesSearch = training.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          training.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesLevel = level === "all" || training.level.toLowerCase() === level.toLowerCase();
@@ -101,7 +111,7 @@ export default function Trainings() {
           </div>
         ) : filteredTrainings.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTrainings.map((training: any) => (
+            {filteredTrainings.map((training) => (
               <Card key={training.id} className="overflow-hidden transition-all hover:shadow-lg border border-border/40">
                 {training.imageUrl && (
                   <div className="relative h-48 w-full overflow-hidden">
