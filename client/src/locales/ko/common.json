@@ -27,6 +27,7 @@
   "services": {
     "title": "서비스",
     "description": "비즈니스 프로세스 자동화에 대한 종합적인 접근",
+    "subtitle": "비즈니스 프로세스 자동화에 대한 종합적인 접근",
     "service1": {
       "title": "프로세스 감사",
       "description": "현재 프로세스 분석 및 최적화 영역 식별"
