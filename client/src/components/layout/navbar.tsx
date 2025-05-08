@@ -99,11 +99,11 @@ export default function Navbar() {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? "bg-background shadow-md py-3" : "py-4"
+      isScrolled ? "bg-background shadow-md py-4" : "py-5"
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <div>
+        <div className="pt-1">
           <Link href="/">
             <div className="flex items-center cursor-pointer">
               <div className="flex-shrink-0 mr-1">
@@ -115,7 +115,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-7 pt-1">
           {navLinks.map((link) => {
             // Specjalny przypadek dla linku "Główna" - jest aktywny tylko gdy
             // jesteśmy na górze strony (activeSection === '/')
