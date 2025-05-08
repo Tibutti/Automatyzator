@@ -153,6 +153,29 @@ export type InsertWhyUsItem = z.infer<typeof insertWhyUsItemSchema>;
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
 
+// Szkolenia (Trainings) schema
+export const trainings = pgTable("trainings", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  imageUrl: text("image_url"),
+  duration: text("duration").notNull(),
+  level: text("level").notNull(),
+  price: integer("price").notNull(),
+  featured: boolean("featured").default(false),
+  order: integer("order").notNull().default(0),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  language: text("language").notNull().default("pl"),
+});
+
+export const insertTrainingSchema = createInsertSchema(trainings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type Training = typeof trainings.$inferSelect;
+export type InsertTraining = z.infer<typeof insertTrainingSchema>;
+
 // Ustawienia sekcji (Section Settings) schema
 export const sectionSettings = pgTable("section_settings", {
   id: serial("id").primaryKey(),

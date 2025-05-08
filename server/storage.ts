@@ -7,6 +7,7 @@ import {
   newsletterSubscribers, type NewsletterSubscriber, type InsertNewsletterSubscriber,
   whyUsItems, type WhyUsItem, type InsertWhyUsItem,
   services, type Service, type InsertService,
+  trainings, type Training, type InsertTraining,
   sectionSettings, type SectionSetting, type InsertSectionSetting
 } from "@shared/schema";
 import { db } from "./db";
