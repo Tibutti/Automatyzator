@@ -23,6 +23,7 @@ import Shop from "@/pages/shop";
 import Portfolio from "@/pages/portfolio";
 import Contact from "@/pages/contact";
 import Consultation from "@/pages/consultation";
+import Trainings from "@/pages/trainings";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/login";
@@ -102,6 +103,11 @@ function Router() {
         </Layout>
       </Route>
       <Route path="/consultation" component={Consultation} />
+      <Route path="/trainings">
+        <Layout>
+          <Trainings />
+        </Layout>
+      </Route>
 
       <Route>
         <Layout>

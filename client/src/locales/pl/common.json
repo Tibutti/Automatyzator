@@ -121,7 +121,15 @@
       "intermediate": "Średniozaawansowany",
       "advanced": "Zaawansowany"
     },
-    "featured": "Polecane"
+    "featured": "Polecane",
+    "pageTitle": "Oferta szkoleń",
+    "pageDescription": "Zapoznaj się z naszą pełną ofertą szkoleń z zakresu automatyzacji procesów biznesowych, integracji i analizy danych",
+    "searchPlaceholder": "Szukaj szkolenia...",
+    "filterByLevel": "Filtruj według poziomu",
+    "allLevels": "Wszystkie poziomy",
+    "noResults": "Nie znaleziono szkoleń",
+    "tryDifferentFilters": "Spróbuj zmienić kryteria wyszukiwania lub wybrać inny poziom zaawansowania",
+    "clearFilters": "Wyczyść filtry"
   },
   "contact": {
     "title": "Kontakt",
