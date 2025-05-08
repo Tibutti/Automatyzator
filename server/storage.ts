@@ -8,7 +8,8 @@ import {
   whyUsItems, type WhyUsItem, type InsertWhyUsItem,
   services, type Service, type InsertService,
   trainings, type Training, type InsertTraining,
-  sectionSettings, type SectionSetting, type InsertSectionSetting
+  sectionSettings, type SectionSetting, type InsertSectionSetting,
+  heroSettings, type HeroSetting, type InsertHeroSetting
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, asc } from "drizzle-orm";
@@ -89,6 +90,14 @@ export interface IStorage {
   updateSectionSetting(id: number, setting: Partial<InsertSectionSetting>): Promise<SectionSetting>;
   updateSectionSettingByKey(key: string, setting: Partial<InsertSectionSetting>): Promise<SectionSetting | undefined>;
   deleteSectionSetting(id: number): Promise<void>;
+  
+  // Hero Settings methods
+  getHeroSettings(): Promise<HeroSetting[]>;
+  getHeroSetting(id: number): Promise<HeroSetting | undefined>;
+  getHeroSettingByPageKey(pageKey: string): Promise<HeroSetting | undefined>;
+  createHeroSetting(setting: InsertHeroSetting): Promise<HeroSetting>;
+  updateHeroSetting(id: number, setting: Partial<InsertHeroSetting>): Promise<HeroSetting>;
+  deleteHeroSetting(id: number): Promise<void>;
 }
 
 // Database storage implementation using Drizzle ORM
