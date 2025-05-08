@@ -134,7 +134,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-7 pt-1">
+        <nav className="hidden md:flex items-center space-x-4 pt-1">
           {navLinks.map((link) => {
             // Specjalny przypadek dla linku "Główna" - jest aktywny tylko gdy
             // jesteśmy na górze strony (activeSection === '/')
