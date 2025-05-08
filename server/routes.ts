@@ -41,6 +41,7 @@ import {
   loginSchema,
   contactSubmissionSchema,
   chatMessageSchema,
+  chatQuerySchema,
   newsletterSubscriptionSchema,
   blogPostSchema,
   resetPasswordRequestSchema,
@@ -1244,9 +1245,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin routes for section settings
-  app.post("/api/section-settings", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/section-settings", requireAuth, validateBody(insertSectionSettingSchema), async (req: Request, res: Response) => {
     try {
-      const settingData = insertSectionSettingSchema.parse(req.body);
+      const settingData = req.body;
       
       // Check if key already exists
       const existingSetting = await storage.getSectionSettingByKey(settingData.sectionKey);
@@ -1257,12 +1258,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const setting = await storage.createSectionSetting(settingData);
       return res.status(201).json(setting);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid section setting data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error creating section setting:", error);
       return res.status(500).json({ message: "Failed to create section setting" });
     }
@@ -1359,7 +1354,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/hero-settings/:id", async (req: Request, res: Response) => {
+  app.get("/api/hero-settings/:id", validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -1392,9 +1387,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.post("/api/hero-settings", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/hero-settings", requireAuth, validateBody(insertHeroSettingSchema), async (req: Request, res: Response) => {
     try {
-      const settingData = insertHeroSettingSchema.parse(req.body);
+      const settingData = req.body;
       
       // Check if key already exists
       const existingSetting = await storage.getHeroSettingByPageKey(settingData.pageKey);
@@ -1405,18 +1400,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const setting = await storage.createHeroSetting(settingData);
       return res.status(201).json(setting);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid hero setting data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error creating hero setting:", error);
       return res.status(500).json({ message: "Failed to create hero setting" });
     }
   });
   
-  app.put("/api/hero-settings/:id", requireAuth, async (req: Request, res: Response) => {
+  app.put("/api/hero-settings/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), validateBody(heroSettingSchema), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -1439,18 +1428,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updatedSetting = await storage.updateHeroSetting(id, req.body);
       return res.json(updatedSetting);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid hero setting data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error updating hero setting:", error);
       return res.status(500).json({ message: "Failed to update hero setting" });
     }
   });
   
-  app.delete("/api/hero-settings/:id", requireAuth, async (req: Request, res: Response) => {
+  app.delete("/api/hero-settings/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
