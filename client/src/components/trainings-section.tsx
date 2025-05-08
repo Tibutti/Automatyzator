@@ -14,11 +14,17 @@ export function TrainingsSection() {
   const currentLanguage = i18n.language;
   
   const { data: trainings = [], isLoading } = useQuery<Training[]>({
-    queryKey: ["/api/trainings"],
+    queryKey: ["/api/trainings", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`/api/trainings?lang=${currentLanguage}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }
   });
 
   const filteredTrainings = trainings
-    .filter(training => training.language === currentLanguage)
     .sort((a, b) => a.order - b.order);
 
   const featuredTrainings = filteredTrainings.filter(training => training.featured).slice(0, 3);
