@@ -17,6 +17,7 @@ import { z } from "zod";
 import session from "express-session";
 import { generateChatResponse } from "./openai";
 import csurf from "csurf";
+import helmet from "helmet";
 import { 
   hashPassword, 
   comparePasswords, 
@@ -57,6 +58,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         httpOnly: true,
         maxAge: SESSION_MAX_AGE,
         sameSite: "lax"
+      },
+    })
+  );
+  
+  // Konfiguracja nagłówków bezpieczeństwa za pomocą Helmet (po sesji)
+  app.use(
+    helmet({
+      // Podstawowe zabezpieczenia
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+          styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+          imgSrc: ["'self'", "data:", "https://*"],
+          fontSrc: ["'self'", "https://fonts.gstatic.com"],
+          connectSrc: ["'self'", "https://api.openai.com"],
+          frameSrc: ["'self'", "https://calendly.com"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: [],
+        },
+      },
+      // Zapobieganie clickjacking przez ustawienie X-Frame-Options
+      frameguard: {
+        action: "sameorigin",
+      },
+      // Ustaw nagłówek Cross-Origin-Resource-Policy
+      crossOriginResourcePolicy: { policy: "cross-origin" },
+      // Ustaw nagłówek X-XSS-Protection
+      xssFilter: true,
+      // Ustaw nagłówek Strict-Transport-Security
+      hsts: {
+        maxAge: 31536000, // 1 rok
+        includeSubDomains: true,
+        preload: true,
+      },
+      // Ustaw nagłówek X-Permitted-Cross-Domain-Policies
+      permittedCrossDomainPolicies: {
+        permittedPolicies: "none",
+      },
+      // Ustaw nagłówek Referrer-Policy
+      referrerPolicy: {
+        policy: "same-origin",
       },
     })
   );
