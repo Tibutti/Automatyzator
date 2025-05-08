@@ -37,7 +37,7 @@ export function TrainingsSection() {
           </div>
           
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto max-w-6xl">
               {[...Array(3)].map((_, i) => (
                 <Card key={i} className="animate-pulse">
                   <CardHeader className="h-40 bg-muted"></CardHeader>
@@ -54,7 +54,7 @@ export function TrainingsSection() {
               ))}
             </div>
           ) : displayedTrainings.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto max-w-6xl">
               {displayedTrainings.map((training) => (
                 <Card key={training.id} className="overflow-hidden transition-all hover:shadow-lg border border-border/40">
                   {training.imageUrl && (

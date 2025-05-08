@@ -25,6 +25,7 @@ const getSectionKeyForUrl = (url: string): string | undefined => {
     "/blog": "blog",
     "/shop": "templates",
     "/portfolio": "case-studies",
+    "/trainings": "trainings",
   };
   
   return urlToSectionMap[url];
@@ -37,6 +38,7 @@ const getNavLinks = (t: (key: string) => string): NavLink[] => [
   { title: t('header.whyUs'), href: "/why-us", sectionKey: "why-us" },
   { title: t('header.blog'), href: "/blog", sectionKey: "blog" },
   { title: t('header.shop'), href: "/shop", sectionKey: "templates" },
+  { title: t('header.trainings'), href: "/trainings", sectionKey: "trainings" },
   { title: t('header.caseStudy'), href: "/portfolio", sectionKey: "case-studies" },
   { title: t('header.contact'), href: "/contact" }, // Kontakt nie ma klucza sekcji - zawsze będzie ostatni
 ];
