@@ -108,7 +108,7 @@ export function TrainingsSection() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">Nie znaleziono żadnych szkoleń</p>
+              <p className="text-muted-foreground">{t("trainings.noResults")}</p>
             </div>
           )}
         </div>
