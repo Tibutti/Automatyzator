@@ -94,7 +94,7 @@ export default function Blog() {
                           {post.category}
                         </span>
                         <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {post.readTime} min czytania
+                          {post.readTime} {t("blog.minRead")}
                         </span>
                       </div>
                       <CardTitle className="text-xl mb-2 hover:text-primary transition-colors">{post.title}</CardTitle>
@@ -123,8 +123,8 @@ export default function Blog() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <h3 className="text-xl font-semibold mb-4">Brak artykułów spełniających kryteria</h3>
-              <p>Spróbuj zmienić kryteria wyszukiwania lub kategorię.</p>
+              <h3 className="text-xl font-semibold mb-4">{t("blog.noResults.title")}</h3>
+              <p>{t("blog.noResults.description")}</p>
             </div>
           )
         )}
