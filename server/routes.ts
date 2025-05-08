@@ -1524,13 +1524,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Password reset functionality
   
   // 1. Request password reset - sends token to user
-  app.post("/api/admin/forgot-password", async (req: Request, res: Response) => {
+  app.post("/api/admin/forgot-password", validateBody(resetPasswordRequestSchema), async (req: Request, res: Response) => {
     try {
       const { username } = req.body;
-      
-      if (!username) {
-        return res.status(400).json({ message: "Username is required" });
-      }
       
       // Find user by username
       const user = await storage.getUserByUsername(username);
@@ -1564,13 +1560,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // 2. Verify reset token before displaying reset form
-  app.get("/api/admin/reset-password/:token", async (req: Request, res: Response) => {
+  app.get("/api/admin/reset-password/:token", validateParams(z.object({ token: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const { token } = req.params;
-      
-      if (!token) {
-        return res.status(400).json({ message: "Token is required" });
-      }
       
       // Find user by reset token
       const user = await storage.getUserByResetToken(token);
@@ -1595,15 +1587,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // 3. Reset password with token
-  app.post("/api/admin/reset-password", async (req: Request, res: Response) => {
+  app.post("/api/admin/reset-password", validateBody(resetPasswordSchema), async (req: Request, res: Response) => {
     try {
       const { token, newPassword } = req.body;
-      
-      if (!token || !newPassword) {
-        return res.status(400).json({ 
-          message: "Token and new password are required" 
-        });
-      }
       
       // Find user by reset token
       const user = await storage.getUserByResetToken(token);
@@ -1640,16 +1626,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // 4. Change password (for logged in users)
-  app.post("/api/admin/change-password", requireAuth, async (req: Request, res: Response) => {
+  app.post("/api/admin/change-password", requireAuth, validateBody(changePasswordSchema), async (req: Request, res: Response) => {
     try {
       const { currentPassword, newPassword } = req.body;
       const userId = req.session.user!.id;
-      
-      if (!currentPassword || !newPassword) {
-        return res.status(400).json({ 
-          message: "Current password and new password are required" 
-        });
-      }
       
       // Get user by ID
       const user = await storage.getUser(userId);
