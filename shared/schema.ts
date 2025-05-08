@@ -11,6 +11,8 @@ export const users = pgTable("users", {
   loginAttempts: integer("login_attempts").default(0),
   lockedUntil: timestamp("locked_until"),
   passwordUpdatedAt: timestamp("password_updated_at").defaultNow(),
+  resetToken: text("reset_token"),
+  resetTokenExpiresAt: timestamp("reset_token_expires_at"),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({

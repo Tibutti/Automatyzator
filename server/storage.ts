@@ -24,6 +24,9 @@ export interface IStorage {
   updateUserLockedUntil(id: number, lockedUntil: Date | null): Promise<User>;
   updateUserLastLogin(id: number): Promise<User>;
   updateUserPassword(id: number, hashedPassword: string): Promise<User>;
+  setPasswordResetToken(id: number, token: string, expiry: Date): Promise<User>;
+  getUserByResetToken(token: string): Promise<User | undefined>;
+  clearPasswordResetToken(id: number): Promise<User>;
   
   // Blog post methods
   getBlogPosts(): Promise<BlogPost[]>;
@@ -159,6 +162,45 @@ export class DatabaseStorage implements IStorage {
       .set({ 
         password: hashedPassword,
         passwordUpdatedAt: new Date()
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  async setPasswordResetToken(id: number, token: string, expiry: Date): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        resetToken: token,
+        resetTokenExpiresAt: expiry
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  async getUserByResetToken(token: string): Promise<User | undefined> {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(
+        and(
+          eq(users.resetToken, token),
+          token !== null,
+          users.resetTokenExpiresAt !== null,
+          users.resetTokenExpiresAt > new Date()
+        )
+      );
+    return user;
+  }
+
+  async clearPasswordResetToken(id: number): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        resetToken: null,
+        resetTokenExpiresAt: null
       })
       .where(eq(users.id, id))
       .returning();
@@ -1049,6 +1091,45 @@ export class MemStorage implements IStorage {
       ...user, 
       password: hashedPassword,
       passwordUpdatedAt: new Date()
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+
+  async setPasswordResetToken(id: number, token: string, expiry: Date): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { 
+      ...user, 
+      resetToken: token,
+      resetTokenExpiresAt: expiry
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+
+  async getUserByResetToken(token: string): Promise<User | undefined> {
+    const currentTime = new Date();
+    return Array.from(this.users.values()).find(
+      (user) => user.resetToken === token && 
+                user.resetTokenExpiresAt !== null && 
+                user.resetTokenExpiresAt > currentTime
+    );
+  }
+
+  async clearPasswordResetToken(id: number): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { 
+      ...user, 
+      resetToken: null,
+      resetTokenExpiresAt: null
     };
     this.users.set(id, updatedUser);
     return updatedUser;
