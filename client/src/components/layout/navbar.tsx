@@ -115,10 +115,14 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
-            // Link jest aktywny jeśli URL dokładnie odpowiada lokalizacji LUB
-            // jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+            // Link jest aktywny jeśli:
+            // - URL dokładnie odpowiada lokalizacji (dla podstron)
+            // - ALBO jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+            //   ALE nie podświetlamy sekcji "Główna" gdy inna sekcja jest aktywna
             const isActive = location === link.href || 
-                            (location === '/' && activeSection === link.href);
+                            (location === '/' && 
+                             activeSection === link.href && 
+                             !(link.href === '/' && activeSection !== '/'));
             
             return (
               <Link key={link.href} href={link.href}>
@@ -153,10 +157,14 @@ export default function Navbar() {
             <SheetContent side="right">
               <nav className="flex flex-col space-y-6 mt-10">
                 {navLinks.map((link) => {
-                  // Link jest aktywny jeśli URL dokładnie odpowiada lokalizacji LUB
-                  // jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+                  // Link jest aktywny jeśli:
+                  // - URL dokładnie odpowiada lokalizacji (dla podstron)
+                  // - ALBO jesteśmy na stronie głównej (/) i aktywna sekcja odpowiada linkowi
+                  //   ALE nie podświetlamy sekcji "Główna" gdy inna sekcja jest aktywna
                   const isActive = location === link.href || 
-                                  (location === '/' && activeSection === link.href);
+                                  (location === '/' && 
+                                   activeSection === link.href && 
+                                   !(link.href === '/' && activeSection !== '/'));
                   
                   return (
                     <Link key={link.href} href={link.href}>
