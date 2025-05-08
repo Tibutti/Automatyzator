@@ -64,10 +64,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup CSRF protection
   const csrfProtection = csurf({ 
     cookie: {
+      key: '_csrf',
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax"
-    } 
+      sameSite: "lax",
+      path: '/'
+    },
+    ignoreMethods: ['GET', 'HEAD', 'OPTIONS']
   });
   
   // Apply CSRF protection to all state-changing routes (POST, PUT, DELETE)
