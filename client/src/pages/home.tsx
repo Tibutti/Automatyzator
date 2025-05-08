@@ -6,6 +6,7 @@ import TemplatesSection from "@/components/templates-section";
 import BlogSection from "@/components/blog-section";
 import CtaSection from "@/components/cta-section";
 import ContactSection from "@/components/contact-section";
+import { TrainingsSection } from "@/components/trainings-section";
 import { useEffect, useState } from "react";
 import { useSectionSettings, SectionSetting } from "@/hooks/use-section-settings";
 
@@ -16,6 +17,7 @@ const SectionComponents: Record<string, React.ComponentType> = {
   "case-studies": PortfolioSection,
   "templates": TemplatesSection,
   "blog": BlogSection,
+  "trainings": TrainingsSection,
   "shop": () => null, // Placeholder dla sklepu, który pojawi się w przyszłości
 };
 

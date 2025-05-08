@@ -128,11 +128,19 @@ async function seedDatabaseWithSampleData() {
             updatedAt: new Date()
           },
           {
+            sectionKey: "trainings",
+            displayName: "Szkolenia",
+            isEnabled: true,
+            showInMenu: true,
+            order: 5,
+            updatedAt: new Date()
+          },
+          {
             sectionKey: "blog",
             displayName: "Blog",
             isEnabled: true,
             showInMenu: true,
-            order: 5,
+            order: 6,
             updatedAt: new Date()
           },
           {
@@ -140,7 +148,7 @@ async function seedDatabaseWithSampleData() {
             displayName: "Sklep",
             isEnabled: true,
             showInMenu: true,
-            order: 6,
+            order: 7,
             updatedAt: new Date()
           }
         ]);
