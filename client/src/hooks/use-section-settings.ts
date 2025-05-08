@@ -212,6 +212,28 @@ export function useSectionSettings() {
     return visibleSections;
   };
 
+  // Funkcja pobierająca wartość pola order dla konkretnej sekcji
+  const getSectionOrder = (key: string): number => {
+    if (isLoading || isError || !sectionSettings) {
+      // Jeśli dane są ładowane lub wystąpił błąd, zwracamy domyślną wartość
+      console.log(`getSectionOrder (dane niedostępne) dla ${key} - zwracam domyślnie 999`);
+      return 999; // Wysoka wartość, aby umieścić na końcu
+    }
+
+    const setting = sectionSettings.find(
+      (s: SectionSetting) => s.sectionKey === key
+    );
+    
+    // Jeśli nie znaleziono ustawienia, zwracamy domyślną wartość
+    if (!setting) {
+      console.log(`getSectionOrder: Nie znaleziono ustawienia dla ${key} - zwracam domyślnie 999`);
+      return 999;
+    }
+    
+    console.log(`getSectionOrder dla ${key}: order=${setting.order}`);
+    return setting.order;
+  };
+  
   return {
     sectionSettings,
     isLoading,
@@ -219,6 +241,7 @@ export function useSectionSettings() {
     error,
     isVisible,
     isVisibleInMenu,
-    getSortedVisibleSections
+    getSortedVisibleSections,
+    getSectionOrder
   };
 }

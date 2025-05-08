@@ -29,22 +29,22 @@ const getSectionKeyForUrl = (url: string): string | undefined => {
   return urlToSectionMap[url];
 };
 
-// Nawigacja będzie korzystać z tłumaczeń
+// Bazowa konfiguracja nawigacji - kolejność zostanie określona przez ustawienia sekcji
 const getNavLinks = (t: (key: string) => string): NavLink[] => [
-  { title: t('header.home'), href: "/" },
+  { title: t('header.home'), href: "/" }, // Strona główna nie ma klucza sekcji - zawsze będzie pierwsza
   { title: t('header.services'), href: "/services", sectionKey: "services" },
   { title: t('header.whyUs'), href: "/why-us", sectionKey: "why-us" },
   { title: t('header.blog'), href: "/blog", sectionKey: "blog" },
-  { title: t('header.shop'), href: "/shop", sectionKey: "templates" }, // Zmieniono klucz sekcji
+  { title: t('header.shop'), href: "/shop", sectionKey: "templates" },
   { title: t('header.caseStudy'), href: "/portfolio", sectionKey: "case-studies" },
-  { title: t('header.contact'), href: "/contact" },
+  { title: t('header.contact'), href: "/contact" }, // Kontakt nie ma klucza sekcji - zawsze będzie ostatni
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
   const { t } = useTranslation('common');
-  const { isVisibleInMenu, isLoading, isError } = useSectionSettings();
+  const { isVisibleInMenu, getSectionOrder, isLoading, isError, sectionSettings } = useSectionSettings();
   
   // Pobierz wszystkie linki nawigacyjne
   const allNavLinks = getNavLinks(t);
@@ -52,7 +52,7 @@ export default function Navbar() {
   console.log("Navbar rendering, all links:", allNavLinks);
   
   // Filtruj linki na podstawie widoczności sekcji w menu
-  const navLinks = allNavLinks.filter(link => {
+  const filteredLinks = allNavLinks.filter(link => {
     // Jeśli link nie ma powiązanej sekcji (np. strona główna, kontakt), 
     // zawsze go pokazuj
     if (!link.sectionKey) {
@@ -65,6 +65,23 @@ export default function Navbar() {
     console.log(`Menu link visibility check - ${link.title} (${link.sectionKey}):`, visible);
     
     return visible;
+  });
+  
+  // Sortuj linki na podstawie pola order z konfiguracji sekcji
+  const navLinks = [...filteredLinks].sort((a, b) => {
+    // Strona główna zawsze pierwsza
+    if (a.href === "/") return -1;
+    if (b.href === "/") return 1;
+    
+    // Kontakt zawsze ostatni
+    if (a.href === "/contact") return 1;
+    if (b.href === "/contact") return -1;
+    
+    // Sortowanie na podstawie pola order
+    const orderA = a.sectionKey ? getSectionOrder(a.sectionKey) : 0;
+    const orderB = b.sectionKey ? getSectionOrder(b.sectionKey) : 0;
+    
+    return orderA - orderB;
   });
 
   useEffect(() => {
@@ -98,7 +115,9 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               <div className={`font-inter hover:text-primary transition-colors cursor-pointer ${
-                location === link.href ? "text-primary" : ""
+                location === link.href 
+                  ? "text-primary font-semibold border-b-2 border-primary pb-1" 
+                  : ""
               }`}>
                 {link.title}
               </div>
@@ -126,7 +145,9 @@ export default function Navbar() {
                 {navLinks.map((link) => (
                   <Link key={link.href} href={link.href}>
                     <div className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
-                      location === link.href ? "text-primary" : ""
+                      location === link.href 
+                        ? "text-primary font-bold" 
+                        : ""
                     }`}>
                       {link.title}
                     </div>
