@@ -1214,6 +1214,128 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ message: "Failed to delete section setting" });
     }
   });
+  
+  // Hero Settings endpoints
+  app.get("/api/hero-settings", async (req: Request, res: Response) => {
+    try {
+      const settings = await storage.getHeroSettings();
+      return res.json(settings);
+    } catch (error) {
+      console.error("Error fetching hero settings:", error);
+      return res.status(500).json({ message: "Failed to fetch hero settings" });
+    }
+  });
+
+  app.get("/api/hero-settings/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const setting = await storage.getHeroSetting(id);
+      if (!setting) {
+        return res.status(404).json({ message: "Hero setting not found" });
+      }
+      
+      return res.json(setting);
+    } catch (error) {
+      console.error("Error fetching hero setting:", error);
+      return res.status(500).json({ message: "Failed to fetch hero setting" });
+    }
+  });
+  
+  app.get("/api/hero-settings/page/:pageKey", async (req: Request, res: Response) => {
+    try {
+      const setting = await storage.getHeroSettingByPageKey(req.params.pageKey);
+      if (!setting) {
+        return res.status(404).json({ message: "Hero setting not found for this page" });
+      }
+      
+      return res.json(setting);
+    } catch (error) {
+      console.error("Error fetching hero setting by page key:", error);
+      return res.status(500).json({ message: "Failed to fetch hero setting" });
+    }
+  });
+  
+  app.post("/api/hero-settings", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const settingData = insertHeroSettingSchema.parse(req.body);
+      
+      // Check if key already exists
+      const existingSetting = await storage.getHeroSettingByPageKey(settingData.pageKey);
+      if (existingSetting) {
+        return res.status(400).json({ message: "Hero setting for this page already exists" });
+      }
+      
+      const setting = await storage.createHeroSetting(settingData);
+      return res.status(201).json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid hero setting data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating hero setting:", error);
+      return res.status(500).json({ message: "Failed to create hero setting" });
+    }
+  });
+  
+  app.put("/api/hero-settings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingSetting = await storage.getHeroSetting(id);
+      if (!existingSetting) {
+        return res.status(404).json({ message: "Hero setting not found" });
+      }
+      
+      // If pageKey is changing, verify it doesn't conflict
+      if (req.body.pageKey && req.body.pageKey !== existingSetting.pageKey) {
+        const settingWithPageKey = await storage.getHeroSettingByPageKey(req.body.pageKey);
+        if (settingWithPageKey && settingWithPageKey.id !== id) {
+          return res.status(400).json({ message: "Hero setting for this page already exists" });
+        }
+      }
+      
+      const updatedSetting = await storage.updateHeroSetting(id, req.body);
+      return res.json(updatedSetting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid hero setting data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating hero setting:", error);
+      return res.status(500).json({ message: "Failed to update hero setting" });
+    }
+  });
+  
+  app.delete("/api/hero-settings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingSetting = await storage.getHeroSetting(id);
+      if (!existingSetting) {
+        return res.status(404).json({ message: "Hero setting not found" });
+      }
+      
+      await storage.deleteHeroSetting(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting hero setting:", error);
+      return res.status(500).json({ message: "Failed to delete hero setting" });
+    }
+  });
 
   // Chat with OpenAI endpoint
   app.post("/api/chat", async (req: Request, res: Response) => {

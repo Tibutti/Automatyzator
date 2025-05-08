@@ -494,6 +494,51 @@ export class DatabaseStorage implements IStorage {
     await db.delete(sectionSettings).where(eq(sectionSettings.id, id));
   }
   
+  // Hero Settings methods
+  async getHeroSettings(): Promise<HeroSetting[]> {
+    const result = await db.select().from(heroSettings).orderBy(heroSettings.pageKey);
+    return result;
+  }
+  
+  async getHeroSetting(id: number): Promise<HeroSetting | undefined> {
+    const [result] = await db.select().from(heroSettings).where(eq(heroSettings.id, id));
+    return result || undefined;
+  }
+  
+  async getHeroSettingByPageKey(pageKey: string): Promise<HeroSetting | undefined> {
+    const [result] = await db.select().from(heroSettings).where(eq(heroSettings.pageKey, pageKey));
+    return result || undefined;
+  }
+  
+  async createHeroSetting(setting: InsertHeroSetting): Promise<HeroSetting> {
+    const [result] = await db.insert(heroSettings).values({
+      ...setting,
+      updatedAt: new Date(),
+      isEnabled: setting.isEnabled ?? true,
+      imageUrl: setting.imageUrl ?? null,
+      primaryButtonText: setting.primaryButtonText ?? null,
+      primaryButtonUrl: setting.primaryButtonUrl ?? null,
+      secondaryButtonText: setting.secondaryButtonText ?? null,
+      secondaryButtonUrl: setting.secondaryButtonUrl ?? null
+    }).returning();
+    return result;
+  }
+  
+  async updateHeroSetting(id: number, setting: Partial<InsertHeroSetting>): Promise<HeroSetting> {
+    const [result] = await db.update(heroSettings)
+      .set({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .where(eq(heroSettings.id, id))
+      .returning();
+    return result;
+  }
+  
+  async deleteHeroSetting(id: number): Promise<void> {
+    await db.delete(heroSettings).where(eq(heroSettings.id, id));
+  }
+  
   // Initialize sample data if database is empty
   async initializeSampleData() {
     // Check if we already have blog posts
