@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import type { HeroSetting as HeroSettingType } from "@shared/schema";
@@ -73,16 +73,20 @@ export default function HeroSettings() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Pobierz wszystkie ustawienia hero
-  const { data: heroSettings, isLoading } = useQuery<HeroSetting[]>({
+  const { data: heroSettings, isLoading, error } = useQuery<HeroSetting[]>({
     queryKey: ["/api/hero-settings"],
-    onError: (error) => {
+  });
+  
+  // Obsługa błędów
+  useEffect(() => {
+    if (error) {
       toast({
         title: "Błąd ładowania ustawień Hero",
         description: error instanceof Error ? error.message : "Wystąpił nieznany błąd",
         variant: "destructive",
       });
-    },
-  });
+    }
+  }, [error, toast]);
 
   // Przygotuj formularz
   const form = useForm<HeroFormValues>({
@@ -204,7 +208,7 @@ export default function HeroSettings() {
             </div>
           ) : (
             <Accordion type="single" collapsible className="w-full">
-              {heroSettings?.map((heroSetting) => (
+              {Array.isArray(heroSettings) && heroSettings.map((heroSetting) => (
                 <AccordionItem key={heroSetting.id} value={heroSetting.id.toString()}>
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center justify-between w-full pr-4">
@@ -233,11 +237,10 @@ export default function HeroSettings() {
                         </Button>
                         <Switch 
                           checked={heroSetting.isEnabled}
-                          onCheckedChange={(e) => {
-                            e.stopPropagation();
+                          onCheckedChange={() => {
                             handleToggleVisibility(heroSetting);
                           }}
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e: React.MouseEvent) => e.stopPropagation()}
                         />
                       </div>
                     </div>
@@ -311,6 +314,19 @@ export default function HeroSettings() {
               </DialogHeader>
               
               <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="pageKey">Strona</Label>
+                  <select 
+                    id="pageKey" 
+                    {...form.register("pageKey")}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2"
+                  >
+                    {Object.entries(PAGE_KEY_TO_NAME).map(([key, name]) => (
+                      <option key={key} value={key}>{name}</option>
+                    ))}
+                  </select>
+                </div>
+                
                 <div className="grid gap-2">
                   <Label htmlFor="title">Tytuł</Label>
                   <Input 
