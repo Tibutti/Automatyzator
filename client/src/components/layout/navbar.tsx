@@ -45,6 +45,7 @@ const getNavLinks = (t: (key: string) => string): NavLink[] => [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
   const activeSection = useActiveSection(); // Dodajemy hook, który śledzi aktywną sekcję podczas przewijania
   const { t } = useTranslation('common');
@@ -167,7 +168,7 @@ export default function Navbar() {
         <div className="md:hidden flex items-center gap-1">
           <LanguageSwitcher />
           <ThemeToggle />
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="ml-1">
                 <Menu className="h-6 w-6" />
@@ -183,7 +184,7 @@ export default function Navbar() {
                     // Link "Główna" jest aktywny tylko wtedy, gdy jesteśmy na stronie głównej
                     // I NIE przeglądamy innej sekcji
                     return (
-                      <Link key={link.href} href={link.href}>
+                      <Link key={link.href} href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
                         <div 
                           className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
                             location === '/' && activeSection === '/' 
@@ -205,7 +206,7 @@ export default function Navbar() {
                                   (location === '/' && activeSection === link.href);
                   
                   return (
-                    <Link key={link.href} href={link.href}>
+                    <Link key={link.href} href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
                       <div 
                         className={`text-lg font-inter hover:text-primary transition-colors cursor-pointer ${
                           isActive ? "text-primary font-bold" : ""
