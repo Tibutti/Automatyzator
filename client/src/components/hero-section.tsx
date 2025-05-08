@@ -174,7 +174,7 @@ export default function HeroSection({ pageKey }: HeroSectionProps) {
   // Obsługa ładowania danych
   if (isLoading) {
     return (
-      <section className="relative bg-background py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-background pt-36 md:pt-44 pb-20 md:pb-28 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 z-10">
@@ -203,7 +203,7 @@ export default function HeroSection({ pageKey }: HeroSectionProps) {
   const subtitleParts = heroSetting.subtitle.split('. ');
   
   return (
-    <section id="hero" className="relative bg-background py-20 md:py-28 overflow-hidden">
+    <section id="hero" className="relative bg-background pt-36 md:pt-44 pb-20 md:pb-28 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 z-10">
