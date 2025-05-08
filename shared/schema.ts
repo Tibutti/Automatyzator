@@ -2,11 +2,15 @@ import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Users schema (keep existing user model)
+// Users schema with enhanced security
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  lastLoginAt: timestamp("last_login_at"),
+  loginAttempts: integer("login_attempts").default(0),
+  lockedUntil: timestamp("locked_until"),
+  passwordUpdatedAt: timestamp("password_updated_at").defaultNow(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({

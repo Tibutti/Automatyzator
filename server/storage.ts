@@ -20,6 +20,10 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserLoginAttempts(id: number, attempts: number): Promise<User>;
+  updateUserLockedUntil(id: number, lockedUntil: Date | null): Promise<User>;
+  updateUserLastLogin(id: number): Promise<User>;
+  updateUserPassword(id: number, hashedPassword: string): Promise<User>;
   
   // Blog post methods
   getBlogPosts(): Promise<BlogPost[]>;
