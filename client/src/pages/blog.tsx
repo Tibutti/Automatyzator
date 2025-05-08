@@ -39,7 +39,7 @@ export default function Blog() {
         <div className="mb-10">
           <Input
             type="search"
-            placeholder="Szukaj artykułów..."
+            placeholder={t("blog.searchPlaceholder")}
             className="max-w-md mx-auto"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
