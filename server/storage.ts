@@ -73,6 +73,14 @@ export interface IStorage {
   updateService(id: number, service: Partial<InsertService>): Promise<Service>;
   deleteService(id: number): Promise<void>;
   
+  // Szkolenia (Trainings) methods
+  getTrainings(language?: string): Promise<Training[]>;
+  getTraining(id: number): Promise<Training | undefined>;
+  getFeaturedTrainings(limit?: number): Promise<Training[]>;
+  createTraining(training: InsertTraining): Promise<Training>;
+  updateTraining(id: number, training: Partial<InsertTraining>): Promise<Training>;
+  deleteTraining(id: number): Promise<void>;
+
   // Section Settings methods
   getSectionSettings(): Promise<SectionSetting[]>;
   getSectionSetting(id: number): Promise<SectionSetting | undefined>;
@@ -369,6 +377,55 @@ export class DatabaseStorage implements IStorage {
     await db.delete(services).where(eq(services.id, id));
   }
   
+  // Szkolenia (Trainings) methods
+  async getTrainings(language = "pl"): Promise<Training[]> {
+    return db.select()
+      .from(trainings)
+      .where(eq(trainings.language, language))
+      .orderBy(asc(trainings.order));
+  }
+  
+  async getTraining(id: number): Promise<Training | undefined> {
+    const [training] = await db.select()
+      .from(trainings)
+      .where(eq(trainings.id, id));
+    return training;
+  }
+  
+  async getFeaturedTrainings(limit = 3): Promise<Training[]> {
+    return db.select()
+      .from(trainings)
+      .where(eq(trainings.featured, true))
+      .orderBy(asc(trainings.order))
+      .limit(limit);
+  }
+  
+  async createTraining(training: InsertTraining): Promise<Training> {
+    const [newTraining] = await db.insert(trainings)
+      .values({
+        ...training,
+        updatedAt: new Date()
+      })
+      .returning();
+    return newTraining;
+  }
+  
+  async updateTraining(id: number, training: Partial<InsertTraining>): Promise<Training> {
+    const [updatedTraining] = await db
+      .update(trainings)
+      .set({
+        ...training,
+        updatedAt: new Date()
+      })
+      .where(eq(trainings.id, id))
+      .returning();
+    return updatedTraining;
+  }
+  
+  async deleteTraining(id: number): Promise<void> {
+    await db.delete(trainings).where(eq(trainings.id, id));
+  }
+  
   // Section Settings methods
   async getSectionSettings(): Promise<SectionSetting[]> {
     return db.select()
@@ -644,6 +701,7 @@ export class MemStorage implements IStorage {
   private newsletterSubscribers: Map<number, NewsletterSubscriber>;
   private whyUsItems: Map<number, WhyUsItem>;
   private services: Map<number, Service>;
+  private trainings: Map<number, Training>;
   private sectionSettings: Map<number, SectionSetting>;
   
   private userCount: number;
@@ -654,6 +712,7 @@ export class MemStorage implements IStorage {
   private newsletterSubscriberCount: number;
   private whyUsItemCount: number;
   private serviceCount: number;
+  private trainingCount: number;
   private sectionSettingCount: number;
 
   constructor() {
@@ -665,6 +724,7 @@ export class MemStorage implements IStorage {
     this.newsletterSubscribers = new Map();
     this.whyUsItems = new Map();
     this.services = new Map();
+    this.trainings = new Map();
     this.sectionSettings = new Map();
     
     this.userCount = 1;
@@ -675,6 +735,7 @@ export class MemStorage implements IStorage {
     this.newsletterSubscriberCount = 1;
     this.whyUsItemCount = 1;
     this.serviceCount = 1;
+    this.trainingCount = 1;
     this.sectionSettingCount = 1;
     
     // Initialize with sample data
@@ -962,6 +1023,54 @@ export class MemStorage implements IStorage {
   
   async deleteService(id: number): Promise<void> {
     this.services.delete(id);
+  }
+  
+  // Szkolenia (Trainings) methods
+  async getTrainings(language = "pl"): Promise<Training[]> {
+    return Array.from(this.trainings.values())
+      .filter(training => training.language === language)
+      .sort((a, b) => a.order - b.order);
+  }
+  
+  async getTraining(id: number): Promise<Training | undefined> {
+    return this.trainings.get(id);
+  }
+  
+  async getFeaturedTrainings(limit = 3): Promise<Training[]> {
+    return Array.from(this.trainings.values())
+      .filter(training => training.featured)
+      .sort((a, b) => a.order - b.order)
+      .slice(0, limit);
+  }
+  
+  async createTraining(training: InsertTraining): Promise<Training> {
+    const id = this.trainingCount++;
+    const newTraining: Training = { 
+      ...training, 
+      id, 
+      updatedAt: new Date() 
+    };
+    this.trainings.set(id, newTraining);
+    return newTraining;
+  }
+  
+  async updateTraining(id: number, training: Partial<InsertTraining>): Promise<Training> {
+    const existingTraining = this.trainings.get(id);
+    if (!existingTraining) {
+      throw new Error(`Training with id ${id} not found`);
+    }
+    
+    const updatedTraining: Training = { 
+      ...existingTraining, 
+      ...training, 
+      updatedAt: new Date() 
+    };
+    this.trainings.set(id, updatedTraining);
+    return updatedTraining;
+  }
+  
+  async deleteTraining(id: number): Promise<void> {
+    this.trainings.delete(id);
   }
 
   // Section Settings methods

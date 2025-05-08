@@ -23,7 +23,7 @@ export function TrainingsSection() {
   const displayedTrainings = featuredTrainings.length > 0 ? featuredTrainings : filteredTrainings.slice(0, 3);
 
   return (
-    <Section id="trainings" className="py-16 bg-muted/30">
+    <section id="trainings" className="py-16 bg-muted/30">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -124,6 +124,6 @@ export function TrainingsSection() {
           </div>
         )}
       </div>
-    </Section>
+    </section>
   );
 }
