@@ -105,14 +105,32 @@ export default function Navbar() {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <div className="pt-1">
-          <Link href="/">
-            <div className="flex items-center cursor-pointer">
+          {location === '/' ? (
+            // Na stronie głównej - dodajemy ręczne odświeżenie
+            <a 
+              href="/" 
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = '/';
+              }}
+              className="flex items-center cursor-pointer"
+            >
               <div className="flex-shrink-0 mr-1">
                 <Logo />
               </div>
               <span className="text-xl font-bold ml-0">Automatyzator</span>
-            </div>
-          </Link>
+            </a>
+          ) : (
+            // Na innych stronach - standardowy link powrotu do strony głównej
+            <Link href="/">
+              <div className="flex items-center cursor-pointer">
+                <div className="flex-shrink-0 mr-1">
+                  <Logo />
+                </div>
+                <span className="text-xl font-bold ml-0">Automatyzator</span>
+              </div>
+            </Link>
+          )}
         </div>
 
         {/* Desktop Navigation */}
