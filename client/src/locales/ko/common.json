@@ -109,7 +109,9 @@
       "technology": "기술",
       "ai": "인공지능",
       "rpa": "RPA",
-      "integration": "통합"
+      "integration": "통합",
+      "poradnik": "가이드",
+      "porównanie": "비교"
     }
   },
   "buttons": {
