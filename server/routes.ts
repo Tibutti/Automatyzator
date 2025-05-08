@@ -32,6 +32,28 @@ import {
   isPasswordStrong,
   PASSWORD_RESET_TOKEN_EXPIRY
 } from "./security";
+import {
+  validateBody,
+  validateQuery,
+  validateParams
+} from "./middlewares/validation-middleware";
+import {
+  loginSchema,
+  contactSubmissionSchema,
+  chatMessageSchema,
+  newsletterSubscriptionSchema,
+  blogPostSchema,
+  resetPasswordRequestSchema,
+  resetPasswordSchema,
+  changePasswordSchema,
+  templateSchema,
+  caseStudySchema,
+  whyUsItemSchema,
+  serviceSchema,
+  trainingSchema,
+  sectionSettingSchema,
+  heroSettingSchema
+} from "./validation";
 
 // Interface for a user from the session
 interface SessionUser {
@@ -167,13 +189,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   };
 
   // Admin login
-  app.post("/api/admin/login", async (req: Request, res: Response) => {
+  app.post("/api/admin/login", validateBody(loginSchema), async (req: Request, res: Response) => {
     try {
       const { username, password } = req.body;
-
-      if (!username || !password) {
-        return res.status(400).json({ message: "Username and password are required" });
-      }
 
       // Get user by username
       const user = await storage.getUserByUsername(username);

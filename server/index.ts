@@ -1,10 +1,19 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { errorHandler, notFoundHandler, payloadSizeHandler } from "./middlewares/error-handler";
+import { dynamicRateLimiter } from "./middlewares/rate-limiter";
+import { validationErrorHandler } from "./middlewares/validation-middleware";
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// Parse JSON z limitem 10MB i obsługą błędów
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+app.use(payloadSizeHandler);
+
+// Limitowanie liczby zapytań
+app.use(dynamicRateLimiter);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -39,13 +48,14 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
-  });
+  // Obsługa błędów walidacji - musi być po trasach
+  app.use(validationErrorHandler);
+  
+  // Obsługa nieistniejących tras
+  app.use(notFoundHandler);
+  
+  // Globalny handler błędów - musi być ostatni
+  app.use(errorHandler);
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
