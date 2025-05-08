@@ -1,53 +1,10 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import helmet from "helmet";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// Konfiguracja nagłówków bezpieczeństwa za pomocą Helmet
-app.use(
-  helmet({
-    // Podstawowe zabezpieczenia
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        imgSrc: ["'self'", "data:", "https://*"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        connectSrc: ["'self'", "https://api.openai.com"],
-        frameSrc: ["'self'", "https://calendly.com"],
-        objectSrc: ["'none'"],
-        upgradeInsecureRequests: [],
-      },
-    },
-    // Zapobieganie clickjacking przez ustawienie X-Frame-Options
-    frameguard: {
-      action: "sameorigin",
-    },
-    // Ustaw nagłówek X-Content-Type-Options na nosniff
-    crossOriginResourcePolicy: { policy: "cross-origin" },
-    // Ustaw nagłówek X-XSS-Protection
-    xssFilter: true,
-    // Ustaw nagłówek Strict-Transport-Security
-    hsts: {
-      maxAge: 31536000, // 1 rok
-      includeSubDomains: true,
-      preload: true,
-    },
-    // Ustaw nagłówek X-Permitted-Cross-Domain-Policies
-    permittedCrossDomainPolicies: {
-      permittedPolicies: "none",
-    },
-    // Ustaw nagłówek Referrer-Policy
-    referrerPolicy: {
-      policy: "same-origin",
-    },
-  })
-);
 
 app.use((req, res, next) => {
   const start = Date.now();
