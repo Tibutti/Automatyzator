@@ -712,6 +712,7 @@ export class MemStorage implements IStorage {
   private services: Map<number, Service>;
   private trainings: Map<number, Training>;
   private sectionSettings: Map<number, SectionSetting>;
+  private heroSettings: Map<number, HeroSetting>;
   
   private userCount: number;
   private blogPostCount: number;
@@ -723,6 +724,7 @@ export class MemStorage implements IStorage {
   private serviceCount: number;
   private trainingCount: number;
   private sectionSettingCount: number;
+  private heroSettingCount: number;
 
   constructor() {
     this.users = new Map();
@@ -735,6 +737,7 @@ export class MemStorage implements IStorage {
     this.services = new Map();
     this.trainings = new Map();
     this.sectionSettings = new Map();
+    this.heroSettings = new Map();
     
     this.userCount = 1;
     this.blogPostCount = 1;
@@ -746,6 +749,7 @@ export class MemStorage implements IStorage {
     this.serviceCount = 1;
     this.trainingCount = 1;
     this.sectionSettingCount = 1;
+    this.heroSettingCount = 1;
     
     // Initialize with sample data
     this.initializeSampleData();
@@ -1142,8 +1146,145 @@ export class MemStorage implements IStorage {
     this.sectionSettings.delete(id);
   }
   
+  // Hero Settings methods
+  async getHeroSettings(): Promise<HeroSetting[]> {
+    return Array.from(this.heroSettings.values());
+  }
+  
+  async getHeroSetting(id: number): Promise<HeroSetting | undefined> {
+    return this.heroSettings.get(id);
+  }
+  
+  async getHeroSettingByPageKey(pageKey: string): Promise<HeroSetting | undefined> {
+    return Array.from(this.heroSettings.values()).find(
+      (setting) => setting.pageKey === pageKey
+    );
+  }
+  
+  async createHeroSetting(setting: InsertHeroSetting): Promise<HeroSetting> {
+    const id = this.heroSettingCount++;
+    const heroSetting: HeroSetting = { 
+      ...setting, 
+      id, 
+      updatedAt: new Date() 
+    };
+    this.heroSettings.set(id, heroSetting);
+    return heroSetting;
+  }
+  
+  async updateHeroSetting(id: number, setting: Partial<InsertHeroSetting>): Promise<HeroSetting> {
+    const existingSetting = this.heroSettings.get(id);
+    if (!existingSetting) {
+      throw new Error(`Hero setting with id ${id} not found`);
+    }
+    
+    const updatedSetting: HeroSetting = { 
+      ...existingSetting, 
+      ...setting, 
+      updatedAt: new Date() 
+    };
+    this.heroSettings.set(id, updatedSetting);
+    return updatedSetting;
+  }
+  
+  async deleteHeroSetting(id: number): Promise<void> {
+    this.heroSettings.delete(id);
+  }
+  
   // Initialize with sample data
   private initializeSampleData() {
+    // Initialize hero settings
+    this.createHeroSetting({
+      pageKey: "home",
+      title: "Automatyzator",
+      subtitle: "Automatyzuj. Integruj. Skaluj",
+      description: "Dostarczamy rozwiązania B2B, które automatyzują procesy, oszczędzają czas i zwiększają efektywność Twojego biznesu. Skorzystaj z naszego doświadczenia w AI, automatyzacji i integracji.",
+      primaryButtonText: "Rozpocznij projekt",
+      primaryButtonUrl: "/contact",
+      secondaryButtonText: "Zobacz demo Chatbota",
+      secondaryButtonUrl: "#",
+      imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "services",
+      title: "Nasze Usługi",
+      subtitle: "Automatyzacja. Integracja. Skalowalność.",
+      description: "Profesjonalne usługi automatyzacji procesów biznesowych dla Twojej firmy. Skorzystaj z naszej wiedzy i doświadczenia, aby przyspieszyć rozwój swojego biznesu.",
+      primaryButtonText: "Skontaktuj się",
+      primaryButtonUrl: "/contact",
+      secondaryButtonText: "Zobacz ofertę",
+      secondaryButtonUrl: "#services-list",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "why-us",
+      title: "Dlaczego Automatyzator?",
+      subtitle: "Doświadczenie. Jakość. Rezultaty.",
+      description: "Wybierając nas, wybierasz lata doświadczenia, terminowość i sprawdzone rozwiązania. Poznaj zalety współpracy z naszym zespołem ekspertów.",
+      primaryButtonText: "Poznaj nasz zespół",
+      primaryButtonUrl: "#team",
+      secondaryButtonText: "Zobacz przypadki użycia",
+      secondaryButtonUrl: "/case-studies",
+      imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "blog",
+      title: "Blog Automatyzatora",
+      subtitle: "Wiedza. Inspiracje. Trendy.",
+      description: "Dzielimy się wiedzą i doświadczeniem z zakresu automatyzacji, AI i najnowszych trendów technologicznych. Poznaj najnowsze artykuły z naszego bloga.",
+      primaryButtonText: "Najnowsze artykuły",
+      primaryButtonUrl: "#articles",
+      secondaryButtonText: "",
+      secondaryButtonUrl: "",
+      imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "trainings",
+      title: "Szkolenia",
+      subtitle: "Wiedza. Praktyka. Rozwój.",
+      description: "Profesjonalne szkolenia z zakresu automatyzacji procesów biznesowych, programowania i nowych technologii. Rozwijaj kompetencje swoje i swojego zespołu.",
+      primaryButtonText: "Zobacz ofertę szkoleń",
+      primaryButtonUrl: "#trainings-list",
+      secondaryButtonText: "Szkolenie indywidualne",
+      secondaryButtonUrl: "/contact?subject=Szkolenie%20indywidualne",
+      imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "templates",
+      title: "Gotowe Szablony",
+      subtitle: "Natychmiastowe. Konfigurowalne. Efektywne.",
+      description: "Skorzystaj z gotowych rozwiązań, które możesz wdrożyć od razu. Szablony automatyzacji procesów biznesowych dla różnych branż i zastosowań.",
+      primaryButtonText: "Przeglądaj szablony",
+      primaryButtonUrl: "#templates-list",
+      secondaryButtonText: "Szablon na zamówienie",
+      secondaryButtonUrl: "/contact?subject=Szablon%20na%20zamówienie",
+      imageUrl: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+
+    this.createHeroSetting({
+      pageKey: "case-studies",
+      title: "Case Studies",
+      subtitle: "Wdrożenia. Efekty. Referencje.",
+      description: "Zobacz, jak nasze rozwiązania pomogły innym firmom osiągnąć sukces. Rzeczywiste przykłady automatyzacji procesów biznesowych i ich rezultaty.",
+      primaryButtonText: "Wszystkie wdrożenia",
+      primaryButtonUrl: "#case-studies-list",
+      secondaryButtonText: "",
+      secondaryButtonUrl: "",
+      imageUrl: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      isEnabled: true
+    });
+    
     // Initialize section settings if not exists
     this.createSectionSetting({
       sectionKey: "services",
@@ -1472,6 +1613,155 @@ export class MemStorage implements IStorage {
       order: 3,
       language: "en"
     });
+    
+    // Initialize hero settings for each page
+    this.initializeHeroSettings();
+  }
+  
+  // Hero Settings methods
+  async getHeroSettings(): Promise<HeroSetting[]> {
+    return db.select().from(heroSettings);
+  }
+  
+  async getHeroSetting(id: number): Promise<HeroSetting | undefined> {
+    const [setting] = await db.select()
+      .from(heroSettings)
+      .where(eq(heroSettings.id, id));
+    return setting;
+  }
+  
+  async getHeroSettingByPageKey(pageKey: string): Promise<HeroSetting | undefined> {
+    const [setting] = await db.select()
+      .from(heroSettings)
+      .where(eq(heroSettings.pageKey, pageKey));
+    return setting;
+  }
+  
+  async createHeroSetting(setting: InsertHeroSetting): Promise<HeroSetting> {
+    const [newSetting] = await db.insert(heroSettings)
+      .values({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .returning();
+    return newSetting;
+  }
+  
+  async updateHeroSetting(id: number, setting: Partial<InsertHeroSetting>): Promise<HeroSetting> {
+    const [updatedSetting] = await db
+      .update(heroSettings)
+      .set({
+        ...setting,
+        updatedAt: new Date()
+      })
+      .where(eq(heroSettings.id, id))
+      .returning();
+    return updatedSetting;
+  }
+  
+  async deleteHeroSetting(id: number): Promise<void> {
+    await db.delete(heroSettings).where(eq(heroSettings.id, id));
+  }
+  
+  private async initializeHeroSettings() {
+    // Check if we already have hero settings
+    const existingSettings = await db.select().from(heroSettings).limit(1);
+    if (existingSettings.length > 0) return;
+    
+    // Initialize default hero settings for each page
+    await db.insert(heroSettings).values([
+      {
+        pageKey: "home",
+        title: "Automatyzator",
+        subtitle: "Automatyzuj. Integruj. Skaluj",
+        description: "Dostarczamy rozwiązania B2B, które automatyzują procesy, oszczędzają czas i zwiększają efektywność Twojego biznesu. Skorzystaj z naszego doświadczenia w AI, automatyzacji i integracji.",
+        primaryButtonText: "Rozpocznij projekt",
+        primaryButtonUrl: "/contact",
+        secondaryButtonText: "Zobacz demo Chatbota",
+        secondaryButtonUrl: "#",
+        imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "services",
+        title: "Nasze Usługi",
+        subtitle: "Automatyzacja. Integracja. Skalowalność.",
+        description: "Profesjonalne usługi automatyzacji procesów biznesowych dla Twojej firmy. Skorzystaj z naszej wiedzy i doświadczenia, aby przyspieszyć rozwój swojego biznesu.",
+        primaryButtonText: "Skontaktuj się",
+        primaryButtonUrl: "/contact",
+        secondaryButtonText: "Zobacz ofertę",
+        secondaryButtonUrl: "#services-list",
+        imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "why-us",
+        title: "Dlaczego Automatyzator?",
+        subtitle: "Doświadczenie. Jakość. Rezultaty.",
+        description: "Wybierając nas, wybierasz lata doświadczenia, terminowość i sprawdzone rozwiązania. Poznaj zalety współpracy z naszym zespołem ekspertów.",
+        primaryButtonText: "Poznaj nasz zespół",
+        primaryButtonUrl: "#team",
+        secondaryButtonText: "Zobacz przypadki użycia",
+        secondaryButtonUrl: "/case-studies",
+        imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "blog",
+        title: "Blog Automatyzatora",
+        subtitle: "Wiedza. Inspiracje. Trendy.",
+        description: "Dzielimy się wiedzą i doświadczeniem z zakresu automatyzacji, AI i najnowszych trendów technologicznych. Poznaj najnowsze artykuły z naszego bloga.",
+        primaryButtonText: "Najnowsze artykuły",
+        primaryButtonUrl: "#articles",
+        secondaryButtonText: "",
+        secondaryButtonUrl: "",
+        imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "trainings",
+        title: "Szkolenia",
+        subtitle: "Wiedza. Praktyka. Rozwój.",
+        description: "Profesjonalne szkolenia z zakresu automatyzacji procesów biznesowych, programowania i nowych technologii. Rozwijaj kompetencje swoje i swojego zespołu.",
+        primaryButtonText: "Zobacz ofertę szkoleń",
+        primaryButtonUrl: "#trainings-list",
+        secondaryButtonText: "Szkolenie indywidualne",
+        secondaryButtonUrl: "/contact?subject=Szkolenie%20indywidualne",
+        imageUrl: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "templates",
+        title: "Gotowe Szablony",
+        subtitle: "Natychmiastowe. Konfigurowalne. Efektywne.",
+        description: "Skorzystaj z gotowych rozwiązań, które możesz wdrożyć od razu. Szablony automatyzacji procesów biznesowych dla różnych branż i zastosowań.",
+        primaryButtonText: "Przeglądaj szablony",
+        primaryButtonUrl: "#templates-list",
+        secondaryButtonText: "Szablon na zamówienie",
+        secondaryButtonUrl: "/contact?subject=Szablon%20na%20zamówienie",
+        imageUrl: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      },
+      {
+        pageKey: "case-studies",
+        title: "Case Studies",
+        subtitle: "Wdrożenia. Efekty. Referencje.",
+        description: "Zobacz, jak nasze rozwiązania pomogły innym firmom osiągnąć sukces. Rzeczywiste przykłady automatyzacji procesów biznesowych i ich rezultaty.",
+        primaryButtonText: "Wszystkie wdrożenia",
+        primaryButtonUrl: "#case-studies-list",
+        secondaryButtonText: "",
+        secondaryButtonUrl: "",
+        imageUrl: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        isEnabled: true,
+        updatedAt: new Date()
+      }
+    ]);
   }
 }
 
