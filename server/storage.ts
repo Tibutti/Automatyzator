@@ -122,6 +122,49 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
   
+  async updateUserLoginAttempts(id: number, attempts: number): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ loginAttempts: attempts })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+  
+  async updateUserLockedUntil(id: number, lockedUntil: Date | null): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ lockedUntil: lockedUntil })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+  
+  async updateUserLastLogin(id: number): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ 
+        lastLoginAt: new Date(),
+        loginAttempts: 0,
+        lockedUntil: null 
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+  
+  async updateUserPassword(id: number, hashedPassword: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ 
+        password: hashedPassword,
+        passwordUpdatedAt: new Date()
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+  
   // Blog post methods
   async getBlogPosts(): Promise<BlogPost[]> {
     return db.select().from(blogPosts).orderBy(desc(blogPosts.publishedAt));
@@ -946,9 +989,69 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userCount++;
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      lastLoginAt: null,
+      loginAttempts: 0,
+      lockedUntil: null,
+      passwordUpdatedAt: new Date()
+    };
     this.users.set(id, user);
     return user;
+  }
+  
+  async updateUserLoginAttempts(id: number, attempts: number): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { ...user, loginAttempts: attempts };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+  
+  async updateUserLockedUntil(id: number, lockedUntil: Date | null): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { ...user, lockedUntil };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+  
+  async updateUserLastLogin(id: number): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { 
+      ...user, 
+      lastLoginAt: new Date(),
+      loginAttempts: 0,
+      lockedUntil: null
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+  
+  async updateUserPassword(id: number, hashedPassword: string): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { 
+      ...user, 
+      password: hashedPassword,
+      passwordUpdatedAt: new Date()
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
   }
   
   // Blog post methods

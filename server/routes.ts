@@ -15,8 +15,17 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import session from "express-session";
-import { randomBytes } from "crypto";
 import { generateChatResponse } from "./openai";
+import { 
+  hashPassword, 
+  comparePasswords, 
+  isAccountLocked, 
+  shouldLockAccount, 
+  calculateLockoutTime, 
+  timeUntilUnlock,
+  SESSION_MAX_AGE,
+  generateSecureToken
+} from "./security";
 
 // Interface for a user from the session
 interface SessionUser {
@@ -35,13 +44,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup session middleware
   app.use(
     session({
-      secret: "automatyzator-admin-panel-secret", // Stały sekret dla rozwoju
+      secret: process.env.SESSION_SECRET || generateSecureToken(),
       resave: false,
       saveUninitialized: false,
       cookie: {
-        secure: false, // Ustawione na false dla rozwoju
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        maxAge: SESSION_MAX_AGE,
+        sameSite: "lax"
       },
     })
   );
@@ -66,12 +76,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get user by username
       const user = await storage.getUserByUsername(username);
 
-      // Check if user exists and password matches
-      if (!user || user.password !== password) {
+      // Check if user exists
+      if (!user) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+      
+      // Check if account is locked
+      if (isAccountLocked(user)) {
+        const timeLeft = timeUntilUnlock(user.lockedUntil!);
+        return res.status(403).json({ 
+          message: `Account is locked. Please try again in ${Math.ceil(timeLeft / 60000)} minutes.` 
+        });
+      }
+      
+      // Verify password
+      const passwordValid = await comparePasswords(password, user.password);
+      
+      if (!passwordValid) {
+        // Increment login attempts
+        const newAttempts = (user.loginAttempts || 0) + 1;
+        await storage.updateUserLoginAttempts(user.id, newAttempts);
+        
+        // Check if account should be locked
+        if (shouldLockAccount(newAttempts)) {
+          const lockTime = calculateLockoutTime();
+          await storage.updateUserLockedUntil(user.id, lockTime);
+          return res.status(403).json({ 
+            message: `Too many failed login attempts. Account locked for 15 minutes.` 
+          });
+        }
+        
         return res.status(401).json({ message: "Invalid username or password" });
       }
 
-      // Set user in session (omit password)
+      // Successful login - reset login attempts and update last login
+      await storage.updateUserLastLogin(user.id);
+      
+      // Set user in session (omit password and security fields)
       req.session.user = {
         id: user.id,
         username: user.username,
@@ -80,6 +121,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         id: user.id,
         username: user.username,
+        lastLoginAt: user.lastLoginAt
       });
     } catch (error) {
       console.error("Login error:", error);
@@ -115,10 +157,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Admin user already exists" });
       }
       
-      // Create admin user
+      // Create admin user with a secure hashed password
+      const hashedPassword = await hashPassword("admin123");
       const user = await storage.createUser({
         username: "admin",
-        password: "admin123" // This would be hashed in a real application
+        password: hashedPassword
       });
       
       res.status(201).json({
