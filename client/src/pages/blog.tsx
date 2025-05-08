@@ -50,7 +50,7 @@ export default function Blog() {
           <TabsList className="flex flex-wrap justify-center max-w-3xl mx-auto mb-6">
             {categories.map(category => (
               <TabsTrigger key={category} value={category} className="capitalize">
-                {category}
+                {t(`blog.categories.${category.toLowerCase()}`)}
               </TabsTrigger>
             ))}
           </TabsList>

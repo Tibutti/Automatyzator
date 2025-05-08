@@ -96,7 +96,21 @@
     "backToBlog": "Powrót",
     "featured": "Wyróżniony",
     "views": "wyświetleń",
-    "authorDesc": "Ekspert automatyzacji procesów biznesowych"
+    "authorDesc": "Ekspert automatyzacji procesów biznesowych",
+    "searchPlaceholder": "Szukaj artykułów...",
+    "noResults": {
+      "title": "Brak artykułów spełniających kryteria",
+      "description": "Spróbuj zmienić kryteria wyszukiwania lub kategorię."
+    },
+    "categories": {
+      "all": "wszystkie",
+      "automation": "automatyzacja",
+      "business": "biznes",
+      "technology": "technologia",
+      "ai": "sztuczna inteligencja",
+      "rpa": "rpa",
+      "integration": "integracje"
+    }
   },
   "buttons": {
     "close": "Zamknij"

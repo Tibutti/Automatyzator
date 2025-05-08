@@ -101,6 +101,15 @@
     "noResults": {
       "title": "조건에 맞는 게시글이 없습니다",
       "description": "검색 조건이나 카테고리를 변경해 보세요."
+    },
+    "categories": {
+      "all": "전체",
+      "automation": "자동화",
+      "business": "비즈니스",
+      "technology": "기술",
+      "ai": "인공지능",
+      "rpa": "RPA",
+      "integration": "통합"
     }
   },
   "buttons": {

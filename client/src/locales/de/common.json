@@ -95,7 +95,21 @@
     "backToBlog": "Zurück",
     "featured": "Empfohlen",
     "views": "Aufrufe",
-    "authorDesc": "Experte für Geschäftsprozessautomatisierung"
+    "authorDesc": "Experte für Geschäftsprozessautomatisierung",
+    "searchPlaceholder": "Artikel suchen...",
+    "noResults": {
+      "title": "Keine Artikel entsprechen den Kriterien",
+      "description": "Versuchen Sie, Ihre Suchkriterien oder Kategorie zu ändern."
+    },
+    "categories": {
+      "all": "alle",
+      "automation": "automatisierung",
+      "business": "business",
+      "technology": "technologie",
+      "ai": "künstliche intelligenz",
+      "rpa": "rpa",
+      "integration": "integration"
+    }
   },
   "buttons": {
     "close": "Schließen"

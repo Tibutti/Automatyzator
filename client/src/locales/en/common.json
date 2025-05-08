@@ -96,7 +96,21 @@
     "backToBlog": "Back",
     "featured": "Featured",
     "views": "views",
-    "authorDesc": "Business process automation expert"
+    "authorDesc": "Business process automation expert",
+    "searchPlaceholder": "Search articles...",
+    "noResults": {
+      "title": "No articles matching criteria",
+      "description": "Try changing your search criteria or category."
+    },
+    "categories": {
+      "all": "all",
+      "automation": "automation",
+      "business": "business",
+      "technology": "technology",
+      "ai": "artificial intelligence",
+      "rpa": "rpa",
+      "integration": "integration"
+    }
   },
   "buttons": {
     "close": "Close"
