@@ -4,7 +4,7 @@ export default function TermsOfService() {
   const { t } = useTranslation('common');
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="container mx-auto pt-28 pb-12 px-4">
       <h1 className="text-3xl font-bold mb-8">{t('terms.title')}</h1>
       
       <div className="prose max-w-none dark:prose-invert prose-lg">

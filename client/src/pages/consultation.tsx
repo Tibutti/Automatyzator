@@ -76,8 +76,8 @@ export default function Consultation() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow">
-        <div className="container mx-auto px-4 py-20 md:py-28">
+      <main className="flex-grow pt-20">
+        <div className="container mx-auto px-4 py-10 md:py-20">
           <div className="max-w-4xl mx-auto">
             <Link href="/">
               <Button variant="ghost" className="mb-4">
