@@ -6,6 +6,7 @@
     "blog": "Blog",
     "shop": "Shop",
     "caseStudy": "Fallstudien",
+    "trainings": "Schulungen",
     "contact": "Kontakt"
   },
   "hero": {
@@ -104,6 +105,22 @@
     "viewAll": "Alle anzeigen",
     "buyNow": "Jetzt kaufen",
     "bestseller": "Bestseller"
+  },
+  "trainings": {
+    "title": "Schulungen",
+    "subtitle": "Erlernen Sie die Geheimnisse der Prozessautomatisierung",
+    "viewAll": "Alle anzeigen",
+    "readMore": "Mehr erfahren",
+    "register": "Anmelden",
+    "duration": "Dauer",
+    "level": "Niveau",
+    "price": "Preis",
+    "levels": {
+      "beginner": "Anfänger",
+      "intermediate": "Fortgeschritten",
+      "advanced": "Experte"
+    },
+    "featured": "Empfohlen"
   },
   "contact": {
     "title": "Kontakt",

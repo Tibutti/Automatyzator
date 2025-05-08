@@ -26,7 +26,7 @@ export function TrainingsSection() {
   return (
     <VisibilityGuard sectionKey="trainings">
       <section id="trainings" className="py-16 bg-muted/30">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 mx-auto max-w-6xl">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               {t("trainings.title")}
@@ -37,7 +37,7 @@ export function TrainingsSection() {
           </div>
           
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto max-w-6xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(3)].map((_, i) => (
                 <Card key={i} className="animate-pulse">
                   <CardHeader className="h-40 bg-muted"></CardHeader>
@@ -54,7 +54,7 @@ export function TrainingsSection() {
               ))}
             </div>
           ) : displayedTrainings.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto max-w-6xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayedTrainings.map((training) => (
                 <Card key={training.id} className="overflow-hidden transition-all hover:shadow-lg border border-border/40">
                   {training.imageUrl && (
