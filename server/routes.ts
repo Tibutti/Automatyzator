@@ -9,6 +9,7 @@ import {
   insertCaseStudySchema,
   insertWhyUsItemSchema,
   insertServiceSchema,
+  insertTrainingSchema,
   insertSectionSettingSchema
 } from "@shared/schema";
 import { z } from "zod";
@@ -975,6 +976,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting service:", error);
       return res.status(500).json({ message: "Failed to delete service" });
+    }
+  });
+  
+  // Szkolenia (Trainings) endpoints
+  app.get("/api/trainings", async (req: Request, res: Response) => {
+    try {
+      const lang = req.query.lang as string || 'pl';
+      const trainings = await storage.getTrainings(lang);
+      return res.json(trainings);
+    } catch (error) {
+      console.error("Error fetching trainings:", error);
+      return res.status(500).json({ message: "Failed to fetch trainings" });
+    }
+  });
+  
+  app.get("/api/trainings/featured", async (req: Request, res: Response) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const trainings = await storage.getFeaturedTrainings(limit);
+      return res.json(trainings);
+    } catch (error) {
+      console.error("Error fetching featured trainings:", error);
+      return res.status(500).json({ message: "Failed to fetch featured trainings" });
+    }
+  });
+  
+  app.get("/api/trainings/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const training = await storage.getTraining(id);
+      if (!training) {
+        return res.status(404).json({ message: "Training not found" });
+      }
+      
+      return res.json(training);
+    } catch (error) {
+      console.error("Error fetching training:", error);
+      return res.status(500).json({ message: "Failed to fetch training" });
+    }
+  });
+  
+  // Admin routes for trainings
+  app.post("/api/trainings", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const trainingData = insertTrainingSchema.parse(req.body);
+      const training = await storage.createTraining(trainingData);
+      return res.status(201).json(training);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid training data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error creating training:", error);
+      return res.status(500).json({ message: "Failed to create training" });
+    }
+  });
+  
+  app.put("/api/trainings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingTraining = await storage.getTraining(id);
+      if (!existingTraining) {
+        return res.status(404).json({ message: "Training not found" });
+      }
+      
+      const updatedTraining = await storage.updateTraining(id, req.body);
+      return res.json(updatedTraining);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Invalid training data", 
+          errors: error.errors 
+        });
+      }
+      console.error("Error updating training:", error);
+      return res.status(500).json({ message: "Failed to update training" });
+    }
+  });
+  
+  app.delete("/api/trainings/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID format" });
+      }
+      
+      const existingTraining = await storage.getTraining(id);
+      if (!existingTraining) {
+        return res.status(404).json({ message: "Training not found" });
+      }
+      
+      await storage.deleteTraining(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error("Error deleting training:", error);
+      return res.status(500).json({ message: "Failed to delete training" });
     }
   });
 

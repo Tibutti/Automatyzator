@@ -1165,17 +1165,24 @@ export class MemStorage implements IStorage {
     });
     
     this.createSectionSetting({
+      sectionKey: "trainings",
+      displayName: "Szkolenia",
+      isEnabled: true,
+      order: 5
+    });
+    
+    this.createSectionSetting({
       sectionKey: "blog",
       displayName: "Blog",
       isEnabled: true,
-      order: 5
+      order: 6
     });
     
     this.createSectionSetting({
       sectionKey: "shop",
       displayName: "Sklep",
       isEnabled: true,
-      order: 6
+      order: 7
     });
     
     // Sample Why Us items
@@ -1369,6 +1376,92 @@ export class MemStorage implements IStorage {
       tools: ["Zapier", "HubSpot"],
       tags: ["crm", "marketing", "integracja"],
       featured: true
+    });
+    
+    // Sample Trainings
+    this.createTraining({
+      title: "Automatyzacja procesów biznesowych bez kodu",
+      description: "Intensywne szkolenie praktyczne z wykorzystania narzędzi no-code do automatyzacji procesów biznesowych. Poznaj platformy takie jak Make.com, Zapier i Airtable.",
+      price: 149900, // 1499 PLN
+      duration: "2 dni (16h)",
+      level: "Podstawowy/Średni",
+      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 1,
+      language: "pl"
+    });
+    
+    this.createTraining({
+      title: "Budowa botów i asystentów AI",
+      description: "Warsztat praktyczny z tworzenia inteligentnych chatbotów i asystentów wykorzystujących najnowsze modele językowe OpenAI i Anthropic dla firm.",
+      price: 199900, // 1999 PLN
+      duration: "3 dni (24h)",
+      level: "Średni",
+      imageUrl: "https://images.unsplash.com/photo-1677695016583-14c18821a95e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 2,
+      language: "pl"
+    });
+    
+    this.createTraining({
+      title: "Integracja systemów biznesowych",
+      description: "Szkolenie dla działów IT i specjalistów ds. procesów o integracji różnych systemów biznesowych w firmie: CRM, ERP, marketing, księgowość, logistyka.",
+      price: 249900, // 2499 PLN
+      duration: "4 dni (32h)",
+      level: "Zaawansowany",
+      imageUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 3,
+      language: "pl"
+    });
+    
+    this.createTraining({
+      title: "Microsoft Power Automate dla biznesu",
+      description: "Kompleksowe szkolenie z wykorzystania platformy Microsoft Power Automate (dawniej Flow) do automatyzacji procesów w organizacji wykorzystującej rozwiązania Microsoft 365.",
+      price: 129900, // 1299 PLN
+      duration: "2 dni (16h)",
+      level: "Podstawowy",
+      imageUrl: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: false,
+      order: 4,
+      language: "pl"
+    });
+    
+    // English versions of the trainings
+    this.createTraining({
+      title: "No-code Business Process Automation",
+      description: "Intensive practical training on using no-code tools for business process automation. Learn platforms such as Make.com, Zapier, and Airtable.",
+      price: 149900, // 1499 PLN
+      duration: "2 days (16h)",
+      level: "Basic/Intermediate",
+      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 1,
+      language: "en"
+    });
+    
+    this.createTraining({
+      title: "Building AI Bots and Assistants",
+      description: "Practical workshop on creating intelligent chatbots and assistants using the latest language models from OpenAI and Anthropic for businesses.",
+      price: 199900, // 1999 PLN
+      duration: "3 days (24h)",
+      level: "Intermediate",
+      imageUrl: "https://images.unsplash.com/photo-1677695016583-14c18821a95e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 2,
+      language: "en"
+    });
+    
+    this.createTraining({
+      title: "Business Systems Integration",
+      description: "Training for IT departments and process specialists on integrating various business systems in the company: CRM, ERP, marketing, accounting, logistics.",
+      price: 249900, // 2499 PLN
+      duration: "4 days (32h)",
+      level: "Advanced",
+      imageUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      featured: true,
+      order: 3,
+      language: "en"
     });
   }
 }
