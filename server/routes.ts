@@ -24,7 +24,11 @@ import {
   calculateLockoutTime, 
   timeUntilUnlock,
   SESSION_MAX_AGE,
-  generateSecureToken
+  generateSecureToken,
+  generatePasswordResetToken,
+  isResetTokenValid,
+  isPasswordStrong,
+  PASSWORD_RESET_TOKEN_EXPIRY
 } from "./security";
 
 // Interface for a user from the session

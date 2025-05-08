@@ -27,6 +27,7 @@ export interface IStorage {
   setPasswordResetToken(id: number, token: string, expiry: Date): Promise<User>;
   getUserByResetToken(token: string): Promise<User | undefined>;
   clearPasswordResetToken(id: number): Promise<User>;
+  resetUserPassword(id: number, hashedPassword: string): Promise<User>;
   
   // Blog post methods
   getBlogPosts(): Promise<BlogPost[]>;
@@ -199,6 +200,20 @@ export class DatabaseStorage implements IStorage {
     const [user] = await db
       .update(users)
       .set({
+        resetToken: null,
+        resetTokenExpiresAt: null
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+  
+  async resetUserPassword(id: number, hashedPassword: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        password: hashedPassword,
+        passwordUpdatedAt: new Date(),
         resetToken: null,
         resetTokenExpiresAt: null
       })
@@ -1128,6 +1143,23 @@ export class MemStorage implements IStorage {
     
     const updatedUser = { 
       ...user, 
+      resetToken: null,
+      resetTokenExpiresAt: null
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+  
+  async resetUserPassword(id: number, hashedPassword: string): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    
+    const updatedUser = { 
+      ...user, 
+      password: hashedPassword,
+      passwordUpdatedAt: new Date(),
       resetToken: null,
       resetTokenExpiresAt: null
     };
