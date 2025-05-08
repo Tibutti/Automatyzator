@@ -195,3 +195,27 @@ export const insertSectionSettingSchema = createInsertSchema(sectionSettings).om
 
 export type SectionSetting = typeof sectionSettings.$inferSelect;
 export type InsertSectionSetting = z.infer<typeof insertSectionSettingSchema>;
+
+// Hero Settings dla podstron
+export const heroSettings = pgTable("hero_settings", {
+  id: serial("id").primaryKey(),
+  pageKey: text("page_key").notNull().unique(), // np. 'home', 'services', 'why-us', 'blog', 'trainings', 'templates'
+  title: text("title").notNull(),
+  subtitle: text("subtitle").notNull(),
+  description: text("description").notNull(),
+  primaryButtonText: text("primary_button_text"),
+  primaryButtonUrl: text("primary_button_url"),
+  secondaryButtonText: text("secondary_button_text"),
+  secondaryButtonUrl: text("secondary_button_url"),
+  imageUrl: text("image_url"),
+  isEnabled: boolean("is_enabled").notNull().default(true),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertHeroSettingSchema = createInsertSchema(heroSettings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type HeroSetting = typeof heroSettings.$inferSelect;
+export type InsertHeroSetting = z.infer<typeof insertHeroSettingSchema>;
