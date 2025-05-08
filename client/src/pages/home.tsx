@@ -35,22 +35,33 @@ export default function Home() {
   // Pobierz posortowane sekcje
   const sortedSections = getSortedVisibleSections();
   
-  // Renderuj sekcje w odpowiedniej kolejności
+  // Renderuj sekcje w odpowiedniej kolejności z identyfikatorami dla obserwatora
   const renderSections = () => {
     return sortedSections.map((section: SectionSetting) => {
       const SectionComponent = SectionComponents[section.sectionKey];
       if (!SectionComponent) return null;
       
-      return <SectionComponent key={section.sectionKey} />;
+      return (
+        <div id={`${section.sectionKey}-section`} key={section.sectionKey}>
+          <SectionComponent />
+        </div>
+      );
     });
   };
   
   return (
     <div className="overflow-x-hidden">
-      <InteractiveHeroSection />
+      <div id="hero-section">
+        <InteractiveHeroSection />
+      </div>
+      
       {renderSections()}
+      
       <CtaSection />
-      <ContactSection />
+      
+      <div id="contact-section">
+        <ContactSection />
+      </div>
     </div>
   );
 }
