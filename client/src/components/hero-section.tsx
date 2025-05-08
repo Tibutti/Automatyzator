@@ -151,10 +151,10 @@ export default function HeroSection({ pageKey }: HeroSectionProps) {
   
   // Pobierz ustawienia hero dla bieżącej strony
   const { data: heroSetting, isLoading, isError } = useQuery({
-    queryKey: [`/api/hero-settings/${currentPageKey}`],
+    queryKey: [`/api/hero-settings/page/${currentPageKey}`],
     queryFn: async () => {
       try {
-        const response = await apiRequest<HeroSetting>("GET", `/api/hero-settings/${currentPageKey}`);
+        const response = await apiRequest<HeroSetting>("GET", `/api/hero-settings/page/${currentPageKey}`);
         return response;
       } catch (err) {
         console.error(`Error fetching hero settings for ${currentPageKey}:`, err);
