@@ -42,7 +42,7 @@ export default function Trainings() {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-20">
       <HeroSection pageKey="trainings" />
       
       <div className="container mx-auto px-4 py-16">

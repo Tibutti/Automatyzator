@@ -32,7 +32,7 @@ export default function Blog() {
   const categories = posts ? ["all", ...(new Set(posts.map(post => post.category)) as any)] : ["all"];
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-20">
       <HeroSection pageKey="blog" />
       
       <div className="container mx-auto px-4 py-16">
