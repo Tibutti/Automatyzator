@@ -158,16 +158,18 @@ export default function HeroSection({ pageKey }: HeroSectionProps) {
         return response;
       } catch (err) {
         console.error(`Error fetching hero settings for ${currentPageKey}:`, err);
-        // W przypadku błędu zwróć domyślne ustawienia dla tej strony
-        return DEFAULT_HERO_SETTINGS[currentPageKey] || DEFAULT_HERO_SETTINGS.home;
+        // W przypadku błędu nie pokazujemy domyślnych ustawień
+        return null;
       }
     },
-    // Na początku, zanim API będzie zaimplementowane, użyj fallbacku
-    initialData: DEFAULT_HERO_SETTINGS[currentPageKey] || DEFAULT_HERO_SETTINGS.home
+    // Nie używamy initialData, żeby zawsze sprawdzać aktualny stan z bazy danych
+    staleTime: 0,
+    refetchOnMount: true
   });
   
-  // Jeśli sekcja jest wyłączona, nie renderuj jej
-  if (!heroSetting?.isEnabled) {
+  // Jeśli sekcja jest wyłączona, dane są null lub isEnabled jest false, nie renderuj jej
+  if (!heroSetting || heroSetting.isEnabled === false) {
+    console.log(`Hero section for ${currentPageKey} is disabled or not found`);
     return null;
   }
   
