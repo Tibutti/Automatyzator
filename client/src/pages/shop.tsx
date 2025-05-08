@@ -19,7 +19,7 @@ export default function Shop() {
   });
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-20">
       <HeroSection pageKey="shop" />
       
       <div className="container mx-auto px-4 py-16">

@@ -29,7 +29,7 @@ export default function Portfolio() {
   };
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-20">
       <HeroSection pageKey="case-studies" />
       
       <div className="container mx-auto px-4 py-16">
