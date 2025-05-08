@@ -130,6 +130,30 @@
     "includeUpdates": "1년 업데이트",
     "reviews": "리뷰"
   },
+  "trainings": {
+    "title": "교육",
+    "subtitle": "프로세스 자동화의 비밀 학습",
+    "viewAll": "모두 보기",
+    "readMore": "더 알아보기",
+    "register": "등록",
+    "duration": "기간",
+    "level": "레벨",
+    "price": "가격",
+    "levels": {
+      "beginner": "초급",
+      "intermediate": "중급",
+      "advanced": "고급"
+    },
+    "featured": "추천",
+    "pageTitle": "교육 과정",
+    "pageDescription": "비즈니스 프로세스 자동화, 통합 및 데이터 분석에 관한 모든 교육 과정을 살펴보세요",
+    "searchPlaceholder": "교육 과정 검색...",
+    "filterByLevel": "레벨별 필터링",
+    "allLevels": "모든 레벨",
+    "noResults": "교육 과정을 찾을 수 없습니다",
+    "tryDifferentFilters": "검색 조건을 변경하거나 다른 레벨을 선택해 보세요",
+    "clearFilters": "필터 지우기"
+  },
   "contact": {
     "title": "연락처",
     "description": "비즈니스 프로세스 자동화에 대해 문의하세요",
