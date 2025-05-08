@@ -21,15 +21,15 @@ export default function Footer() {
     <footer className="bg-[#1F1F1F] text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div className="flex items-center mb-4">
+          <div className="text-center md:text-left">
+            <div className="flex items-center mb-4 justify-center md:justify-start">
               <Logo />
               <span className="ml-2 text-xl font-montserrat font-bold text-white">Automatyzator</span>
             </div>
             <p className="text-gray-400 mb-4">
               {t('footer.description')}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 justify-center md:justify-start">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
@@ -45,7 +45,7 @@ export default function Footer() {
             </div>
           </div>
           
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.services')}</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.servicesList.makecom')}</a></li>
@@ -56,7 +56,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.resources')}</h3>
             <ul className="space-y-2">
               <li>
@@ -72,7 +72,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-montserrat font-bold mb-4 text-white">{t('footer.company')}</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</a></li>
