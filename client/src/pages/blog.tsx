@@ -91,7 +91,7 @@ export default function Blog() {
                     <CardContent className="pt-6">
                       <div className="flex items-center gap-2 mb-3">
                         <span className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                          {post.category}
+                          {t(`blog.categories.${post.category.toLowerCase()}`)}
                         </span>
                         <span className="text-sm text-gray-500 dark:text-gray-400">
                           {post.readTime} {t("blog.minRead")}
@@ -107,6 +107,7 @@ export default function Blog() {
                             <img 
                               src={post.authorImage} 
                               alt={post.author} 
+                              title={t("blog.authorDesc")}
                               className="w-8 h-8 rounded-full mr-2"
                             />
                           )}
