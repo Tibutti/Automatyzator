@@ -12,8 +12,12 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 app.use(payloadSizeHandler);
 
-// Limitowanie liczby zapytań
-app.use(dynamicRateLimiter);
+// Limitowanie liczby zapytań - tylko w produkcji
+if (process.env.NODE_ENV === 'production') {
+  app.use(dynamicRateLimiter);
+} else {
+  console.log('🚀 Rate limiter wyłączony w środowisku development');
+}
 
 app.use((req, res, next) => {
   const start = Date.now();
