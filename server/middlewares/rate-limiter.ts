@@ -11,11 +11,11 @@ const ipLimitMap = new Map<string, RateLimitEntry>();
 
 // Konfiguracja limitów domyślnych
 const DEFAULT_WINDOW_MS = 60 * 1000; // 1 minuta
-const DEFAULT_MAX_REQUESTS = 100;    // 100 żądań na minutę
+const DEFAULT_MAX_REQUESTS = 300;    // 300 żądań na minutę (zwiększone dla developmentu)
 
 // Konfiguracja limitów dla wrażliwych endpointów
 const STRICT_WINDOW_MS = 15 * 60 * 1000; // 15 minut
-const STRICT_MAX_REQUESTS = 10;          // 10 żądań na 15 minut
+const STRICT_MAX_REQUESTS = 30;          // 30 żądań na 15 minut (zwiększone dla developmentu)
 
 // Regularnie czyść starą zawartość mapy
 setInterval(() => {
@@ -87,9 +87,54 @@ export function strictRateLimiter() {
 }
 
 /**
+ * Funkcja do resetowania limitu dla określonego IP
+ * Używana podczas developmentu do usuwania limitu gdy zostanie osiągnięty
+ */
+export function resetRateLimitForIp(ip: string): boolean {
+  if (ipLimitMap.has(ip)) {
+    ipLimitMap.delete(ip);
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Funkcja do resetowania limitów dla wszystkich IPs
+ * Używana podczas developmentu
+ */
+export function resetAllRateLimits(): number {
+  const count = ipLimitMap.size;
+  ipLimitMap.clear();
+  return count;
+}
+
+/**
  * Middleware do identyfikacji wrażliwych endpointów i zastosowania odpowiednich limitów
  */
 export function dynamicRateLimiter(req: Request, res: Response, next: NextFunction) {
+  // Specjalny endpoint do czyszczenia limitów - tylko w środowisku development
+  if (process.env.NODE_ENV === 'development' && req.path === '/api/dev/reset-rate-limits') {
+    const ip = req.query.ip as string;
+    let message = '';
+    
+    if (ip) {
+      // Resetuj limit dla konkretnego IP
+      const success = resetRateLimitForIp(ip);
+      message = success 
+        ? `Zresetowano limit dla IP: ${ip}` 
+        : `Nie znaleziono IP: ${ip} w limitach`;
+    } else {
+      // Resetuj wszystkie limity
+      const count = resetAllRateLimits();
+      message = `Zresetowano limity dla ${count} adresów IP`;
+    }
+    
+    return res.json({
+      success: true,
+      message
+    });
+  }
+
   // Lista wrażliwych endpointów
   const sensitiveEndpoints = [
     '/api/admin/login',
