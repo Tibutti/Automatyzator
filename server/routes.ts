@@ -351,7 +351,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/blog-posts/:slug", async (req: Request, res: Response) => {
+  app.get("/api/blog-posts/:slug", validateParams(z.object({ slug: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const slugOrId = req.params.slug;
       let post;
@@ -436,7 +436,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Delete blog post
-  app.delete("/api/blog-posts/:id", requireAuth, async (req: Request, res: Response) => {
+  app.delete("/api/blog-posts/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -457,7 +457,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Get single blog post by ID for editing
-  app.get("/api/blog-posts/:id/edit", requireAuth, async (req: Request, res: Response) => {
+  app.get("/api/blog-posts/:id/edit", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -540,7 +540,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/templates/:slug", async (req: Request, res: Response) => {
+  app.get("/api/templates/:slug", validateParams(z.object({ slug: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const template = await storage.getTemplateBySlug(req.params.slug);
       if (!template) {
@@ -614,7 +614,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Delete template
-  app.delete("/api/templates/:id", requireAuth, async (req: Request, res: Response) => {
+  app.delete("/api/templates/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -635,7 +635,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Get single template by ID for editing
-  app.get("/api/templates/:id/edit", requireAuth, async (req: Request, res: Response) => {
+  app.get("/api/templates/:id/edit", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -742,7 +742,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/case-studies/:slug", async (req: Request, res: Response) => {
+  app.get("/api/case-studies/:slug", validateParams(z.object({ slug: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const caseStudy = await storage.getCaseStudyBySlug(req.params.slug);
       if (!caseStudy) {
@@ -781,7 +781,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Update case study
-  app.put("/api/case-studies/:id", requireAuth, async (req: Request, res: Response) => {
+  app.put("/api/case-studies/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), validateBody(caseStudySchema), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -816,7 +816,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Delete case study
-  app.delete("/api/case-studies/:id", requireAuth, async (req: Request, res: Response) => {
+  app.delete("/api/case-studies/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -837,7 +837,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Get single case study by ID for editing
-  app.get("/api/case-studies/:id/edit", requireAuth, async (req: Request, res: Response) => {
+  app.get("/api/case-studies/:id/edit", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -1231,7 +1231,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/section-settings/:key", async (req: Request, res: Response) => {
+  app.get("/api/section-settings/:key", validateParams(z.object({ key: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const setting = await storage.getSectionSettingByKey(req.params.key);
       if (!setting) {
@@ -1264,7 +1264,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Update section setting
-  app.put("/api/section-settings/:id", requireAuth, async (req: Request, res: Response) => {
+  app.put("/api/section-settings/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), validateBody(sectionSettingSchema), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -1287,19 +1287,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updatedSetting = await storage.updateSectionSetting(id, req.body);
       return res.json(updatedSetting);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid section setting data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error updating section setting:", error);
       return res.status(500).json({ message: "Failed to update section setting" });
     }
   });
   
   // Update section setting by key
-  app.put("/api/section-settings/key/:key", requireAuth, async (req: Request, res: Response) => {
+  app.put("/api/section-settings/key/:key", requireAuth, validateParams(z.object({ key: z.string().min(1) })), validateBody(z.object({
+    isEnabled: z.boolean().optional(),
+    showInMenu: z.boolean().optional(),
+    order: z.number().int().optional(),
+    metadata: z.string().nullable().optional()
+  })), async (req: Request, res: Response) => {
     try {
       const key = req.params.key;
       
@@ -1311,19 +1310,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updatedSetting = await storage.updateSectionSettingByKey(key, req.body);
       return res.json(updatedSetting);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Invalid section setting data", 
-          errors: error.errors 
-        });
-      }
       console.error("Error updating section setting:", error);
       return res.status(500).json({ message: "Failed to update section setting" });
     }
   });
   
   // Delete section setting
-  app.delete("/api/section-settings/:id", requireAuth, async (req: Request, res: Response) => {
+  app.delete("/api/section-settings/:id", requireAuth, validateParams(z.object({ id: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -1373,7 +1366,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/hero-settings/page/:pageKey", async (req: Request, res: Response) => {
+  app.get("/api/hero-settings/page/:pageKey", validateParams(z.object({ pageKey: z.string().min(1) })), async (req: Request, res: Response) => {
     try {
       const setting = await storage.getHeroSettingByPageKey(req.params.pageKey);
       if (!setting) {
@@ -1552,12 +1545,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Token has expired" });
       }
       
-      // Verify password strength
-      if (!isPasswordStrong(newPassword)) {
-        return res.status(400).json({ 
-          message: "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." 
-        });
-      }
+      // Password strength is already validated by the schema
       
       // Hash new password
       const hashedPassword = await hashPassword(newPassword);
@@ -1594,12 +1582,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Current password is incorrect" });
       }
       
-      // Verify password strength
-      if (!isPasswordStrong(newPassword)) {
-        return res.status(400).json({ 
-          message: "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." 
-        });
-      }
+      // Password strength is already validated by the schema
       
       // Hash new password
       const hashedPassword = await hashPassword(newPassword);

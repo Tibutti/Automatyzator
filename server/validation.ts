@@ -70,9 +70,9 @@ export const resetPasswordRequestSchema = z.object({
 
 export const resetPasswordSchema = z.object({
   token: z.string().min(1, "Token jest wymagany"),
-  password: passwordSchema,
+  newPassword: passwordSchema,
   confirmPassword: z.string().min(1, "Potwierdzenie hasła jest wymagane"),
-}).refine(data => data.password === data.confirmPassword, {
+}).refine(data => data.newPassword === data.confirmPassword, {
   message: "Hasła muszą być identyczne",
   path: ["confirmPassword"],
 });

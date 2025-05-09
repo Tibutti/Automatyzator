@@ -51,12 +51,6 @@ app.use((req, res, next) => {
   // Obsługa błędów walidacji - musi być po trasach
   app.use(validationErrorHandler);
   
-  // Obsługa nieistniejących tras
-  app.use(notFoundHandler);
-  
-  // Globalny handler błędów - musi być ostatni
-  app.use(errorHandler);
-
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
@@ -65,6 +59,12 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
+  
+  // Obsługa nieistniejących tras - po obsłudze frontendowej
+  app.use(notFoundHandler);
+  
+  // Globalny handler błędów - musi być ostatni
+  app.use(errorHandler);
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
