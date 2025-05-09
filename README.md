@@ -1,131 +1,122 @@
-# Automatyzator.com - Platforma Automatyzacji Biznesu
+# Automatyzator.com
 
-Automatyzator.com to nowoczesna platforma B2B oferująca usługi automatyzacji, gotowe szablony oraz treści edukacyjne, zbudowana z wykorzystaniem React.js i Express.js.
+![Automatyzator.com](./generated-icon.png)
 
-![Automatyzator.com Logo](https://example.com/logo.png)
+## Opis projektu
 
-## O Projekcie
-
-Automatyzator.com to kompleksowa platforma B2B zaprojektowana, aby pomóc firmom automatyzować procesy, integrować systemy oraz skalować działalność. Platforma oferuje:
-
-- **Usługi automatyzacji biznesowej**: Profesjonalne usługi konsultingowe i wdrożeniowe
-- **Gotowe szablony automatyzacji**: Biblioteka gotowych do użycia szablonów i rozwiązań
-- **Case studies i blog**: Treści edukacyjne pokazujące wartość automatyzacji
-- **Panel administracyjny**: Rozbudowany system zarządzania treścią
+Automatyzator.com to kompleksowa platforma B2B dostarczająca inteligentne, wielojęzyczne rozwiązania do automatyzacji procesów biznesowych. Platforma oferuje gotowe szablony automatyzacji, usługi dostosowywane do potrzeb klientów, szkolenia oraz edukacyjne treści blogowe.
 
 ## Technologie
 
 ### Frontend
-- **React**: Biblioteka JavaScript do budowania interfejsów użytkownika
-- **TypeScript**: Typowany superset JavaScript zapewniający bezpieczeństwo typów
-- **Tailwind CSS**: Framework CSS oparty na klasach utility
-- **Shadcn/ui**: Zestaw komponentów UI zbudowanych na Radix UI 
-- **Vite**: Nowoczesne narzędzie do budowania aplikacji
-- **React Hook Form**: Biblioteka do zarządzania formularzami
-- **Zod**: Walidacja schematów i typowanie danych
-- **TanStack Query (React Query)**: Zarządzanie stanem asynchronicznym i cachowaniem danych
-- **Wouter**: Lekki router dla aplikacji React
-- **Lucide React**: Ikony
-- **date-fns**: Biblioteka do manipulacji datami
+- React z TypeScript
+- Vite jako narzędzie do budowania
+- TanStack Query (React Query) do zarządzania stanem
+- Wouter do routingu
+- Tailwind CSS z komponentami shadcn/ui
+- React Hook Form z walidacją Zod
+- Wielojęzyczność (i18next)
+- Interaktywne animacje oparte na Canvas
 
 ### Backend
-- **Node.js**: Środowisko uruchomieniowe JavaScript
-- **Express**: Framework webowy dla Node.js
-- **TypeScript**: Typowany JavaScript dla backendu
-- **Drizzle ORM**: Typesafe ORM dla baz danych SQL
-- **PostgreSQL**: Relacyjna baza danych
-- **@neondatabase/serverless**: Biblioteka do pracy z Neon Database
-- **Passport.js**: Middleware do autentykacji
-- **express-session**: Middleware do zarządzania sesjami
-- **drizzle-zod**: Integracja Drizzle ORM z Zod dla walidacji
-
-## Struktura Projektu
-
-Projekt jest zorganizowany w następujący sposób:
-
-```
-automatyzator/
-├── client/                  # Kod frontendu
-│   ├── src/                 # Kod źródłowy React
-│   │   ├── components/      # Komponenty wielokrotnego użytku
-│   │   ├── hooks/           # Customowe hooki React
-│   │   ├── lib/             # Narzędzia i funkcje pomocnicze
-│   │   ├── pages/           # Komponenty stron
-│   │   └── ...
-│   └── ...
-├── server/                  # Kod backendu
-│   ├── index.ts             # Punkt wejścia aplikacji Express
-│   ├── routes.ts            # Definicje tras API
-│   ├── storage.ts           # Interfejs przechowywania danych
-│   └── ...
-├── shared/                  # Kod współdzielony między frontendem i backendem
-│   └── schema.ts            # Schematy i typy Drizzle ORM
-└── ...
-```
+- Node.js
+- Express.js z TypeScript
+- Drizzle ORM
+- PostgreSQL (via Neon Serverless)
+- Uwierzytelnianie bazujące na sesjach z express-session
+- Integracja z OpenAI dla funkcjonalności czatu
 
 ## Funkcje
 
-### Publiczna strona
-- Strona główna z informacjami o usługach
-- Blog z artykułami edukacyjnymi
-- Sklep z gotowymi szablonami automatyzacji
-- Strona z portfolio i case studies
-- Formularz kontaktowy
-- Wielojęzyczność (polski i angielski)
-- Wbudowany chatbot obsługiwany przez OpenAI
-  
-### Panel Administracyjny
-- Zabezpieczony system logowania
-- Zarządzanie treściami blogowymi
-- Zarządzanie szablonami
-- Zarządzanie case studies
-- Monitorowanie wiadomości kontaktowych
-- Zarządzanie subskrybentami newslettera
-- Rozbudowane ustawienia platformy:
-  - Konfiguracja konta
-  - Ustawienia strony
-  - Integracje API (OpenAI, Stripe)
-  - Zarządzanie językami
-  - Analityka
-  - Kopie zapasowe
-  - Personalizacja interfejsu
+### Publiczna strona internetowa
+- Nowoczesny, responsywny design z interaktywnym bohaterem (hero section)
+- Wielojęzyczność (PL, EN, DE, KR)
+- System blogowy z kategoriami i wyróżnionymi artykułami
+- Sklep szablonów automatyzacji
+- Sekcja studiów przypadku (portfolio)
+- Oferta szkoleniowa
+- Formularze kontaktowe i zapisy do newslettera
+- Widżet czatu AI zasilany OpenAI
 
-## Uruchamianie projektu
+### Panel administracyjny
+- System uwierzytelniania i zarządzania kontami administracyjnymi
+- Zarządzanie treścią (CRUD) dla blogów, szablonów, studiów przypadku
+- Konfiguracja widoczności i kolejności sekcji
+- Ustawianie opcji sekcji bohaterskich dla każdej podstrony
+- Zarządzanie ustawieniami strony
+
+## Zabezpieczenia
+
+Platforma została zaimplementowana z uwzględnieniem najlepszych praktyk bezpieczeństwa:
+
+- Bezpieczne uwierzytelnianie z blokadą konta po wielu nieudanych próbach logowania
+- Kompleksowa walidacja danych wejściowych przy użyciu Zod
+- Ochrona przed atakami XSS dzięki sanityzacji danych
+- Ochrona przed CSRF z wykorzystaniem tokenów
+- Odpowiednio skonfigurowane nagłówki bezpieczeństwa HTTP
+- Rate limiting dla endpointów API z osobną konfiguracją dla wrażliwych tras
+- Bezpieczne zarządzanie sesjami
+- Funkcjonalność resetowania hasła
+
+## Struktura projektu
+
+```
+├── client/              # Kod frontendu
+│   ├── src/
+│   │   ├── components/   # Komponenty React
+│   │   ├── contexts/     # Konteksty React
+│   │   ├── hooks/        # Niestandardowe hooki
+│   │   ├── lib/          # Narzędzia i konfiguracje
+│   │   ├── locales/      # Pliki tłumaczeń
+│   │   └── pages/        # Strony aplikacji
+├── server/              # Kod backendu
+│   ├── middlewares/     # Middleware Expressa
+│   └── ...              # Pozostałe moduły serwera
+└── shared/              # Kod współdzielony między frontend i backend
+    └── schema.ts        # Schemat bazy danych i walidacji
+```
+
+## Środowisko deweloperskie
 
 ### Wymagania
-- Node.js 18+
-- PostgreSQL 14+
+- Node.js 20+
+- PostgreSQL lub konto Neon Database
 
-### Instalacja i uruchomienie
+### Konfiguracja
+1. Sklonuj repozytorium
+2. Zainstaluj zależności: `npm install`
+3. Skonfiguruj zmienne środowiskowe w pliku `.env`:
+   ```
+   DATABASE_URL=...
+   OPENAI_API_KEY=...
+   ```
+4. Uruchom migrację bazy danych: `npm run db:push`
+5. Uruchom aplikację w trybie deweloperskim: `npm run dev`
 
-1. Klonowanie repozytorium:
-```bash
-git clone https://github.com/twoja-organizacja/automatyzator.git
-cd automatyzator
-```
+### Dostępne skrypty
 
-2. Instalacja zależności:
-```bash
-npm install
-```
+- `npm run dev` - Uruchamia serwer deweloperski (frontend + backend)
+- `npm run build` - Buduje aplikację do produkcji
+- `npm run start` - Uruchamia zbudowaną aplikację
+- `npm run db:push` - Aktualizuje strukturę bazy danych na podstawie schematu
 
-3. Ustawienie zmiennych środowiskowych:
-Stwórz plik `.env` w głównym katalogu projektu na podstawie `.env.example`.
+## Wdrażanie
 
-4. Uruchomienie projektu w trybie deweloperskim:
-```bash
-npm run dev
-```
+### Przygotowanie do produkcji
+1. Zbuduj aplikację: `npm run build`
+2. Ustaw zmienne środowiskowe w środowisku produkcyjnym
+3. Uruchom aplikację: `npm run start`
 
-5. Migracja bazy danych:
-```bash
-npm run db:push
-```
+### Środowisko produkcyjne
+W środowisku produkcyjnym aktywowane są dodatkowe zabezpieczenia:
+- Rate limiting dla endpointów API
+- Nagłówki bezpieczeństwa HTTP
+- Optymalizacje wydajności
 
 ## Licencja
 
-[MIT](LICENSE)
+Własnościowe oprogramowanie - wszystkie prawa zastrzeżone.
 
----
+## Kontakt
 
-Stworzone przez [Twoja Firma](https://twojafirma.com) © 2025
+Automatyzator.com - kontakt@automatyzator.com
